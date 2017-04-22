@@ -1,0 +1,125 @@
+!!!
+%html
+  %head
+    %title SmallTaskers - A platform for your online services
+    %meta{:content => "text/html;charset=UTF-8", "http-equiv" => "content-type"}/
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no", :name => "viewport"}/
+    %link{:href => asset_path('ico/60.png'), :rel => "apple-touch-icon"}/
+    %link{:href => asset_path('ico/76.png'), :rel => "apple-touch-icon", :sizes => "76x76"}/
+    %link{:href => asset_path('ico/120.png'), :rel => "apple-touch-icon", :sizes => "120x120"}/
+    %link{:href => asset_path('ico/152.png'), :rel => "apple-touch-icon", :sizes => "152x152"}/
+    %meta{:content => "yes", :name => "apple-mobile-web-app-capable"}/
+    %meta{:content => "yes", :name => "apple-touch-fullscreen"}/
+    %meta{:content => "default", :name => "apple-mobile-web-app-status-bar-style"}/
+    %meta{:content => "", :name => "description"}/
+    %meta{:content => "", :name => "author"}/
+
+    = csrf_meta_tags
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+
+  %body.pace-dark
+    / BEGIN HEADER
+    %nav.header.bg-header.transparent-dark{"data-pages" => "header", "data-pages-header" => "autoresize", "data-pages-resize-class" => "dark"}
+      .container.relative
+        / BEGIN LEFT CONTENT
+        .pull-left
+          / .header-inner Allows to vertically Align elements to the Center
+          .header-inner
+            / BEGIN LOGO
+            %a{href: root_url}
+              %img.logo{:alt => "", "data-src-retina" => asset_path("smalltaskers@2x.png"), :height => "21", :src => asset_path("smalltaskers.png")}/
+              %img.alt{:alt => "", "data-src-retina" => asset_path("smalltaskers_white@2x.png"), :height => "21", :src => asset_path("smalltaskers_white.png")}/
+        / BEGIN HEADER TOGGLE FOR MOBILE & TABLET
+        .pull-right
+          .header-inner
+            -# %a.search-toggle.visible-sm-inline.visible-xs-inline.p-r-10{"data-toggle" => "search", :href => "#"}
+            -#   %i.fs-14.pg-search
+            .visible-sm-inline.visible-xs-inline.menu-toggler.pull-right.p-l-10{"data-pages" => "header-toggle", "data-pages-element" => "#header"}
+              .one
+              .two
+              .three
+        / END HEADER TOGGLE FOR MOBILE & TABLET
+        / BEGIN RIGHT CONTENT
+        #header.menu-content.mobile-dark.pull-right.clearfix{"data-pages-direction" => "slideRight"}
+          / BEGIN HEADER CLOSE TOGGLE FOR MOBILE
+          .pull-right
+            %a.padding-10.visible-xs-inline.visible-sm-inline.pull-right.m-t-10.m-b-10.m-r-10{"data-pages" => "header-toggle", "data-pages-element" => "#header", :href => "#"}
+              %i.pg-close_line
+          / END HEADER CLOSE TOGGLE FOR MOBILE
+          / BEGIN MENU ITEMS
+          .header-inner
+            = render partial: "shared/storefront_menu"
+            -# %a.search-toggle.hidden-xs.hidden-sm{"data-toggle" => "search", :href => "#"}
+            -#   %i.fs-14.pg-search
+            / BEGIN COPYRIGHT FOR MOBILE
+            .font-arial.m-l-35.m-r-35.m-b-20.visible-sm.visible-xs.m-t-20
+              %p.fs-11.no-margin.small-text.p-b-20
+              %p.fs-11.small-text.muted Copyright &copy; #{Time.now.year} SmallTaskers
+            / END COPYRIGHT FOR MOBILE
+          / END MENU ITEMS
+    / END HEADER
+    .page-wrappers
+      / BEGIN JUMBOTRON
+      %section.jumbotron.full-vh{"data-pages" => "parallax"}
+        .inner.full-height
+          / BEGIN SLIDER
+          #hero.swiper-container
+            .swiper-wrapper
+              / BEGIN SLIDE
+              .swiper-slide.fit
+                / BEGIN IMAGE PARRALAX
+                .slider-wrapper
+                  .background-wrapper{"data-swiper-parallax" => "30%"}
+                    .background{"data-pages-bg-image" => "http://s3.amazonaws.com/smalltaskers/hero_1.jpeg"}
+                / END IMAGE PARRALAX
+                / BEGIN CONTENT
+                .content-layer
+                  .inner.full-height
+                    .container-xs-height.full-height
+                      .col-xs-height.col-middle.text-left
+                        .container
+                          .col-md-6.no-padding.col-xs-10.col-xs-offset-1
+                            %h1.light.sm-text-center{"data-swiper-parallax" => "-15%"} Online services platform crafted for you
+                            %h4.sm-text-center Whether your are doing social media, web development, copywriting and other online services.
+                            -# %h5.block-title.text-white.sm-text-center Watch how it works
+                            -# %p.fs-12.font-arial.hint-text.sm-text-center We vet creative experts from all over the globe.
+                            %a.btn.btn-lg.btn-round.btn-primary{href: ""} Get Started
+            .mouse-wrapper
+              .mouse
+                .mouse-scroll
+            / Add Navigation
+            .swiper-navigation.swiper-dark-solid.swiper-button-prev.auto-reveal
+            .swiper-navigation.swiper-dark-solid.swiper-button-next.auto-reveal
+        / END SLIDER
+      / END JUMBOTRON
+
+      / BEGIN CONTENT SECTION
+      %section.p-b-85.p-t-75.p-b-65.p-t-55#services
+        .container
+          .md-p-l-20.xs-no-padding.clearfix
+            %h4.m-b-30 Featured Services
+            .col-sm-4.no-padding
+              .p-r-30.md-pr-30
+                = image_tag "freelancers.jpg", class: "m-b-20", alt: "Freelancers"
+                %h6.block-title.p-b-30
+                  Freelancers
+              .visible-xs.b-b.b-grey-light.m-t-30.m-b-30
+            .col-sm-4.no-padding
+              .p-r-30.md-pr-30
+                = image_tag "service-agencies.jpg", class: "m-b-20", alt: "Service Agencies"
+                %h6.block-title.p-b-30
+                  Service Agencies
+              .visible-xs.b-b.b-grey-light.m-t-30.m-b-30
+            .col-sm-4.no-padding
+              .p-r-30.md-pr-30
+                = image_tag "digital-nomads.jpg", class: "m-b-20", alt: "Digital Nomads"
+                %h6.block-title.p-b-30
+                  Digital Nomads
+              .visible-xs.b-b.b-grey-light.m-t-30.m-b-30
+            .col-sm-12.text-center
+              %a.btn.btn-lg.btn-round.btn-primary View All Services
+    
+      / END FOOTER
+    / START OVERLAY SEARCH
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'

@@ -1,0 +1,10 @@
+%a{href: root_url, title: "SmallTaskers"}
+  %img{:alt => "smalltaskers", "data-src" => image_url("smalltaskers.png"), "data-src-retina" => image_url("smalltaskers@2x.png"), :height => "22", :src => image_url("smalltaskers.png")}/
+= form_tag redirector_url, class: "form p-t-15" do
+  .form-group
+    %label Enter your Company's URL
+    .input-group
+      %input.text-right{type: "text", placeholder: "your-company-url", required: "", class: "form-control", autofocus: true, name: "subdomain"}
+      .input-group-addon .smalltaskers.com
+    
+  %button.btn.btn-primary.btn-cons.m-t-10{:type => "submit"} Continue

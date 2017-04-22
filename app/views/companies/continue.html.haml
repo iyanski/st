@@ -1,0 +1,58 @@
+.container
+  .row
+    .col-md-12
+      .panel-heading
+        .panel-title
+          Complete your information
+      .panel-body
+        %h4
+          You're almost done. Tell us more about you.
+        = form_for @company do |f|
+          .form-group.form-group-default.required
+            %label Company Name
+            = f.text_field :name, class: "form-control", required: ""
+          .row
+            .col-sm-6
+              .form-group.form-group-default.required
+                %label First name
+                = text_field_tag "customer[first_name]", nil, class: "form-control", required: ""
+            .col-sm-6
+              .form-group.form-group-default.required
+                %label Last name
+                = text_field_tag "customer[last_name]", nil, class: "form-control", required: ""
+          .form-group.form-group-default.required
+            %label Address
+            = f.text_field :address, class: "form-control", required: ""
+          .form-group.form-group-default.required
+            %label Address 2
+            = f.text_field :address2, class: "form-control", required: ""
+          .row
+            .col-sm-6
+              .form-group.form-group-default.required
+                %label City
+                = f.text_field :city, class: "form-control", required: ""
+            .col-sm-6
+              .form-group.form-group-default.required
+                %label Country
+                = f.text_field :country, class: "form-control", required: ""
+          .row
+            .col-sm-6
+              .form-group.form-group-default.required
+                %label Postal Code
+                = f.text_field :postal_code, class: "form-control", required: ""
+            .col-sm-6
+              .form-group.form-group-default.required
+                %label Contact No.
+                = f.text_field :contact_no, class: "form-control", required: ""
+          .row
+            .col-sm-6
+              .form-group.form-group-default
+                %label Website
+                = f.text_field :website, class: "form-control"
+            .col-sm-6
+              .form-group.form-group-default
+                %label Blog
+                = f.text_field :blog, class: "form-control"
+          .row
+            .pull-right
+              = f.submit "Continue", class:"btn btn-lg btn-primary"

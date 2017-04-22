@@ -1,0 +1,168 @@
+!!!
+%html
+  %head
+    %title SmallTaskers - A platform for your online services
+    %meta{:content => "text/html;charset=UTF-8", "http-equiv" => "content-type"}/
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no", :name => "viewport"}/
+    %link{:href => asset_path('ico/60.png'), :rel => "apple-touch-icon"}/
+    %link{:href => asset_path('ico/76.png'), :rel => "apple-touch-icon", :sizes => "76x76"}/
+    %link{:href => asset_path('ico/120.png'), :rel => "apple-touch-icon", :sizes => "120x120"}/
+    %link{:href => asset_path('ico/152.png'), :rel => "apple-touch-icon", :sizes => "152x152"}/
+    %meta{:content => "yes", :name => "apple-mobile-web-app-capable"}/
+    %meta{:content => "yes", :name => "apple-touch-fullscreen"}/
+    %meta{:content => "default", :name => "apple-mobile-web-app-status-bar-style"}/
+    %meta{:content => "", :name => "description"}/
+    %meta{:content => "", :name => "author"}/
+
+    = csrf_meta_tags
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+
+  %body.pace-dark
+    / BEGIN HEADER
+    %nav.header.bg-header.transparent-dark{"data-pages" => "header", "data-pages-header" => "autoresize", "data-pages-resize-class" => "dark"}
+      .container.relative
+        / BEGIN LEFT CONTENT
+        .pull-left
+          / .header-inner Allows to vertically Align elements to the Center
+          .header-inner
+            / BEGIN LOGO
+            %a{href: root_url}
+              %img.logo{:alt => "", "data-src-retina" => asset_path("smalltaskers@2x.png"), :height => "21", :src => asset_path("smalltaskers.png")}/
+              %img.alt{:alt => "", "data-src-retina" => asset_path("smalltaskers_white@2x.png"), :height => "21", :src => asset_path("smalltaskers_white.png")}/
+        / BEGIN HEADER TOGGLE FOR MOBILE & TABLET
+        .pull-right
+          .header-inner
+            -# %a.search-toggle.visible-sm-inline.visible-xs-inline.p-r-10{"data-toggle" => "search", :href => "#"}
+            -#   %i.fs-14.pg-search
+            .visible-sm-inline.visible-xs-inline.menu-toggler.pull-right.p-l-10{"data-pages" => "header-toggle", "data-pages-element" => "#header"}
+              .one
+              .two
+              .three
+        / END HEADER TOGGLE FOR MOBILE & TABLET
+        / BEGIN RIGHT CONTENT
+        #header.menu-content.mobile-dark.pull-right.clearfix{"data-pages-direction" => "slideRight"}
+          / BEGIN HEADER CLOSE TOGGLE FOR MOBILE
+          .pull-right
+            %a.padding-10.visible-xs-inline.visible-sm-inline.pull-right.m-t-10.m-b-10.m-r-10{"data-pages" => "header-toggle", "data-pages-element" => "#header", :href => "#"}
+              %i.pg-close_line
+          / END HEADER CLOSE TOGGLE FOR MOBILE
+          / BEGIN MENU ITEMS
+          .header-inner
+            = render partial: "shared/menu"
+            -# %a.search-toggle.hidden-xs.hidden-sm{"data-toggle" => "search", :href => "#"}
+            -#   %i.fs-14.pg-search
+            / BEGIN COPYRIGHT FOR MOBILE
+            .font-arial.m-l-35.m-r-35.m-b-20.visible-sm.visible-xs.m-t-20
+              %p.fs-11.no-margin.small-text.p-b-20
+              %p.fs-11.small-text.muted Copyright &copy; #{Time.now.year} SmallTaskers
+            / END COPYRIGHT FOR MOBILE
+          / END MENU ITEMS
+    / END HEADER
+    .page-wrappers
+      / BEGIN JUMBOTRON
+      %section.jumbotron.full-vh{"data-pages" => "parallax"}
+        .inner.full-height
+          / BEGIN SLIDER
+          #hero.swiper-container
+            .swiper-wrapper
+              / BEGIN SLIDE
+              .swiper-slide.fit
+                / BEGIN IMAGE PARRALAX
+                .slider-wrapper
+                  .background-wrapper{"data-swiper-parallax" => "30%"}
+                    .background{"data-pages-bg-image" => "http://s3.amazonaws.com/smalltaskers/hero_1.jpeg"}
+                / END IMAGE PARRALAX
+                / BEGIN CONTENT
+                .content-layer
+                  .inner.full-height
+                    .container-xs-height.full-height
+                      .col-xs-height.col-middle.text-left
+                        .container
+                          .col-md-6.no-padding.col-xs-10.col-xs-offset-1
+                            %h1.light.sm-text-center{"data-swiper-parallax" => "-15%"} Online services platform crafted for you
+                            %h4.sm-text-center Whether your are doing social media, web development, copywriting and other online services.
+                            -# %h5.block-title.text-white.sm-text-center Watch how it works
+                            -# %p.fs-12.font-arial.hint-text.sm-text-center We vet creative experts from all over the globe.
+                            .input-group
+                              %input.form-control.input-lg#email{autofocus: true, placeholder: "Enter your email address"}
+                              %a.input-group-addon.btn.btn-primary.btn-lg.m-t-20{data: {start: "email"}, style: "background: #6d5cae; color: white;"} Get started
+            .mouse-wrapper
+              .mouse
+                .mouse-scroll
+            / Add Navigation
+            .swiper-navigation.swiper-dark-solid.swiper-button-prev.auto-reveal
+            .swiper-navigation.swiper-dark-solid.swiper-button-next.auto-reveal
+        / END SLIDER
+      / END JUMBOTRON
+      / BEGIN CONTENT SECTION
+      %section.bg-master-lightest.p-b-85.p-t-75
+        .container
+          .md-p-l-20.md-p-r-20.xs-no-padding
+            %h5.block-title.hint-text.no-margin Why?
+            .row
+              .col-sm-5.col-md-4
+                %h1.m-t-5 Simple, efficient and reliable
+              .col-sm-7.col-md-8.no-padding.xs-p-l-15.xs-p-r-15
+                .p-t-20.p-l-35.md-p-l-5.md-p-t-15
+                  %p Our mission is simple. To provide entrepreneurs an efficient and reliable tool for engaging with their clients, receiving upfront payments online and growing their business.
+      / END CONTENT SECTION
+      / BEGIN CONTENT SECTION
+      %section.p-b-85.p-t-75.p-b-65.p-t-55
+        .container
+          .md-p-l-20.xs-no-padding.clearfix
+            %h4.m-b-30 Who is SmallTaskers for?
+            .col-sm-4.no-padding
+              .p-r-30.md-pr-30
+                = image_tag "freelancers.jpg", class: "m-b-20", alt: "Freelancers"
+                %h6.block-title.p-b-30
+                  Freelancers
+              .visible-xs.b-b.b-grey-light.m-t-30.m-b-30
+            .col-sm-4.no-padding
+              .p-r-30.md-pr-30
+                = image_tag "service-agencies.jpg", class: "m-b-20", alt: "Service Agencies"
+                %h6.block-title.p-b-30
+                  Service Agencies
+              .visible-xs.b-b.b-grey-light.m-t-30.m-b-30
+            .col-sm-4.no-padding
+              .p-r-30.md-pr-30
+                = image_tag "digital-nomads.jpg", class: "m-b-20", alt: "Digital Nomads"
+                %h6.block-title.p-b-30
+                  Digital Nomads
+              .visible-xs.b-b.b-grey-light.m-t-30.m-b-30
+      %section.p-b-85.p-b-85.text-center
+        %h1.p-b-45 Try it now while it's still free
+        %a.btn.btn-primary.btn-lg{data: {toggle:"modal", target:"#getstarted"}} Get Started
+      .modal#getstarted.fade{:role => "dialog", :tabindex => "-1"}
+        .modal-dialog{:role => "document"}
+          .modal-content
+            .modal-header
+              %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+                %span{"aria-hidden" => "true"} &#215;
+              %h4.modal-title 
+                .text-left Get Started
+            .modal-body
+              %form.form.p-t-20#setup
+                .form-group
+                  %label{for: "email-address"} Email Address
+                  %input.input-lg.form-control#email-address{type: "text", name: "email"}
+                  %em.auth.small.email.hidden{style: "color: red;"}
+                .form-group
+                  %label{for: "password"} Password
+                  %input.input-lg.form-control#password{type: "password", name: "password"}
+                  %em.small.password.hidden{style: "color: red;"}
+                .form-group
+                  %label{for: "subdomain"} Store URL
+                  .input-group
+                    %input.input-lg.form-control#subdomain{type: "text", name: "subdomain"}
+                    .input-group-addon
+                      .disabled .smalltaskers.com
+                  %em.small.subdomain.hidden{style: "color: red;"}
+                .form-group
+                  %button.btn.btn-primary Setup Shop
+      
+
+      = render partial: "shared/footer"
+      / END FOOTER
+    / START OVERLAY SEARCH
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'

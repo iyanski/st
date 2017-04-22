@@ -1,0 +1,26 @@
+!!!
+%html
+  %head
+    %title SmallTaskers
+    
+    %meta{:content => "text/html;charset=UTF-8", "http-equiv" => "content-type"}/
+    %meta{:charset => "utf-8"}/
+    
+    %meta{:content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no", :name => "viewport"}/
+    %link{:href => asset_path('ico/60.png'), :rel => "apple-touch-icon"}/
+    %link{:href => asset_path('ico/76.png'), :rel => "apple-touch-icon", :sizes => "76x76"}/
+    %link{:href => asset_path('ico/120.png'), :rel => "apple-touch-icon", :sizes => "120x120"}/
+    %link{:href => asset_path('ico/152.png'), :rel => "apple-touch-icon", :sizes => "152x152"}/
+    %meta{:content => "yes", :name => "apple-mobile-web-app-capable"}/
+    %meta{:content => "yes", :name => "apple-touch-fullscreen"}/
+    %meta{:content => "default", :name => "apple-mobile-web-app-status-bar-style"}/
+    %meta{:content => "", :name => "description"}/
+    %meta{:content => "", :name => "author"}/
+
+
+    = csrf_meta_tags
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+
+  %body
+    .m-t-60
+      = yield

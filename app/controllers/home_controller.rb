@@ -1,5 +1,6 @@
 class HomeController < ApplicationController
-
+  before_action :authenticate_user!, only: [:admin]
+  
   def index
     if current_company
       render 'storefront', layout: 'storefront'
@@ -44,5 +45,17 @@ class HomeController < ApplicationController
 
   def redirector
     redirect_to root_url(subdomain: params[:subdomain])
+  end
+
+  def app
+    render layout: "app"
+  end
+
+  def dashboard
+    render layout: "dashboard"
+  end
+
+  def admin
+    render layout: "admin"
   end
 end

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: {
+    sessions: 'users/sessions',
+  }
   root to: "home#index"
   match "/contact" => "home#contact", via: [:get], as: :contact
   match "/pricing" => "home#pricing", via: [:get], as: :pricing
@@ -11,6 +13,9 @@ Rails.application.routes.draw do
   match "/features" => "home#features", via: [:get], as: :features
   match "/login" => "home#login", via: [:get], as: :login
   match "/redirector" => "home#redirector", via: [:post, :get], as: :redirector
+  match "/app" => "home#app", via: [:get], as: :app                      # customers
+  match "/dashboard" => "home#dashboard", via: [:get], as: :dashboard    # experts
+  match "/admin" => "home#admin", via: [:get], as: :admin                # administrator
 
   resources :companies do
     collection do

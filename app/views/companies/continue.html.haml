@@ -15,11 +15,11 @@
             .col-sm-6
               .form-group.form-group-default.required
                 %label First name
-                = text_field_tag "customer[first_name]", nil, class: "form-control", required: ""
+                = text_field_tag "user[first_name]", nil, class: "form-control", required: ""
             .col-sm-6
               .form-group.form-group-default.required
                 %label Last name
-                = text_field_tag "customer[last_name]", nil, class: "form-control", required: ""
+                = text_field_tag "user[last_name]", nil, class: "form-control", required: ""
           .form-group.form-group-default.required
             %label Address
             = f.text_field :address, class: "form-control", required: ""

@@ -1,0 +1,98 @@
+!!!
+%html{ng: {app: "SmallTaskers"}}
+  %head
+    %title SmallTaskers
+    
+    %meta{:content => "text/html;charset=UTF-8", "http-equiv" => "content-type"}/
+    %meta{:charset => "utf-8"}/
+    
+    %meta{:content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no", :name => "viewport"}/
+    %link{:href => asset_path('ico/60.png'), :rel => "apple-touch-icon"}/
+    %link{:href => asset_path('ico/76.png'), :rel => "apple-touch-icon", :sizes => "76x76"}/
+    %link{:href => asset_path('ico/120.png'), :rel => "apple-touch-icon", :sizes => "120x120"}/
+    %link{:href => asset_path('ico/152.png'), :rel => "apple-touch-icon", :sizes => "152x152"}/
+    %meta{:content => "yes", :name => "apple-mobile-web-app-capable"}/
+    %meta{:content => "yes", :name => "apple-touch-fullscreen"}/
+    %meta{:content => "default", :name => "apple-mobile-web-app-status-bar-style"}/
+    %meta{:content => "", :name => "description"}/
+    %meta{:content => "", :name => "author"}/
+    = Gon::Base.render_data
+    = csrf_meta_tags
+    = javascript_include_tag 'auth'
+    = yield :scripts
+    = stylesheet_link_tag    'auth', media: 'all', 'data-turbolinks-track': 'reload'
+    :javascript
+      Stripe.setPublishableKey('pk_test_lA6WPdWdOmwzy5wGMTLaOL25');
+      Dropzone.autoDiscover = false;
+      Dropzone.options.myAwesomeDropzone = false;
+
+    
+  %body.fixed-header
+    / START PAGE-CONTAINER
+    .page-container
+      / START HEADER
+      .header
+        / START MOBILE CONTROLS
+        / LEFT SIDE
+        .pull-left.full-height.visible-sm.visible-xs
+          / START ACTION BAR
+          .sm-action-bar
+            %a.btn-link.toggle-sidebar{"data-toggle" => "sidebar", :href => "#"}
+              %span.icon-set.menu-hambuger
+          / END ACTION BAR
+          .sm-action-bar
+            %a#horizontal-menu-toggle.hidden{:href => "#"}
+              %span.icon-set.menu-hambuger
+        / RIGHT SIDE
+        .pull-right.full-height.visible-sm.visible-xs
+          / START ACTION BAR
+          .sm-action-bar
+            %a.btn-link{"data-toggle" => "quickview", "data-toggle-element" => "#quickview", :href => "#"}
+              %span.icon-set.menu-hambuger-plus
+          / END ACTION BAR
+        / END MOBILE CONTROLS
+        .pull-center.sm-table
+          .header-inner
+            %a.toggle-secondary-sidebar{:href => "#"}
+              Inbox
+              %span.text-info (12)
+              %span.caret
+            .brand.inline
+              %img{:alt => "smalltaskers", "data-src" => asset_path("smalltaskers.png"), "data-src-retina" => asset_path("smalltaskers@2x.png"), :height => "22", :src => asset_path("smalltaskers.png")}/
+        .pull-right
+          / START User Info
+          - if current_user
+            .visible-lg.visible-md.m-t-10
+              .pull-left.p-r-10.p-t-10.fs-16.font-heading
+                %span.semi-bold= current_user.first_name
+                %span.text-master= current_user.last_name
+              .dropdown.pull-right
+                %button.profile-dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+                  %span.thumbnail-wrapper.d32.circular.inline.m-t-5
+                    -# %img{:alt => "", "data-src" => asset_path(current_user.avatar), "data-src-retina" => asset_path(current_user.avatar), :height => "32", :src => asset_path(current_user.avatar), :width => "32"}/
+                %ul.dropdown-menu.profile-dropdown{:role => "menu"}
+                  %li
+                    %a{:href => "#/settings"}
+                      %i.pg-settings_small
+                      Settings
+                  %li
+                    %a{:href => "#"}
+                      %i.pg-outdent
+                      Feedback
+                  %li
+                    %a{:href => "#"}
+                      %i.pg-signals
+                      Help
+                  %li.bg-master-lighter
+                    %a.clearfix{:href => "/users/sign_out"}
+                      %span.pull-left Logout
+                      %span.pull-right
+                        %i.pg-power
+          / END User Info
+      / END HEADER
+      / START PAGE CONTENT WRAPPER
+      = yield
+      
+    / START QUICKVIEW
+    
+    = javascript_include_tag 'pages'

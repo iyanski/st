@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :customers
+  devise_for :experts
   devise_for :users, controllers: {
     sessions: 'users/sessions',
   }
@@ -21,6 +23,27 @@ Rails.application.routes.draw do
     collection do
       post :check
       get :continue
+    end
+  end
+
+  namespace :api do
+    namespace :users do
+      resources :jobs
+      resources :experts
+      resources :customers
+      resources :services do
+        resources :benefits
+        resources :requirements
+        resources :faqs
+        member do
+          put :upload
+        end
+      end
+      resources :companies do
+        collection do
+          post :domain
+        end
+      end
     end
   end
 end

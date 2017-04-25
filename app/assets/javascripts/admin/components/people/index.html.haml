@@ -1,0 +1,52 @@
+.panel
+  %ul.nav.nav-tabs.nav-tabs-simple
+    %li.active
+      %a{"data-toggle" => "tab", ng: {click: "openTab('tab1')"}} Experts {{}}
+    -# %li
+    -#   %a{"data-toggle" => "tab", ng: {click: "openTab('tab2Profile')"}} Profile Settings
+    %li
+      %a{"data-toggle" => "tab", ng: {click: "openTab('tab2')"}} Customers
+      
+  .tab-content
+    #tab1.tab-pane.active
+      .row.column-seperation
+        .col-md-12
+          .panel{ng: {show: "!experts.length"}}
+            .panel-body
+              .col-md-12.text-center
+                %a.btn.btn-lg.btn-primary.btn-rounded{ng: {href: "#/experts/new"}} Add expert
+          .panel{ng: {show: "experts.length"}}
+            .panel-body
+              %a.btn.btn-primary.pull-right{ng: {href: "#/experts/new"}} Add expert
+              %table.clearfix.table.table-hover.table-condensed.dataTable.no-footer{:role => "grid"}
+                %thead
+                  %tr{:role => "row"}
+                    %th{"aria-controls" => "condensedTable", "aria-label" => "Title", :colspan => "1", :rowspan => "1", :style => "width: 20%", :tabindex => "0"} Name
+                    %th{"aria-controls" => "condensedTable", "aria-label" => "Title", :colspan => "1", :rowspan => "1", :style => "width: 40%", :tabindex => "0"} Email
+                    %th{"aria-controls" => "condensedTable", "aria-label" => "Date Updated", :colspan => "1", :rowspan => "1", :style => "width: 20%;", :tabindex => "0"} Updated On
+                %tbody
+                  %tr.link{:role => "row", ng: {repeat: "expert in experts", click: "gotoItem(expert)"}}
+                    %td.v-align-top.semi-bold {{expert.first_name}} {{expert.last_name}}
+                    %td.v-align-top.semi-bold {{expert.email}}
+                    %td.v-align-top.semi-bold {{expert.updated_at | amDateFormat:'MMM DD, YYYY hh:mm a'}}
+
+    #tab2.tab-pane
+      .row
+        .col-md-12
+          .panel{ng: {show: "!customers.length"}}
+            .panel-body
+              .col-md-12.text-center
+                No Customers Yet
+          .panel{ng: {show: "customers.length"}}
+            .panel-body
+              %table.clearfix.table.table-hover.table-condensed.dataTable.no-footer{:role => "grid", }
+                %thead
+                  %tr{:role => "row"}
+                    %th{"aria-controls" => "condensedTable", "aria-label" => "Title", :colspan => "1", :rowspan => "1", :style => "width: 20%", :tabindex => "0"} Name
+                    %th{"aria-controls" => "condensedTable", "aria-label" => "Title", :colspan => "1", :rowspan => "1", :style => "width: 40%", :tabindex => "0"} Email
+                    %th{"aria-controls" => "condensedTable", "aria-label" => "Date Updated", :colspan => "1", :rowspan => "1", :style => "width: 20%;", :tabindex => "0"} Updated On
+                %tbody
+                  %tr.link{:role => "row", ng: {repeat: "customer in customers", click: "gotoItem(customer)"}}
+                    %td.v-align-top.semi-bold {{customer.first_name}} {{customer.last_name}}
+                    %td.v-align-top.semi-bold {{customer.email}}
+                    %td.v-align-top.semi-bold {{customer.updated_at | amDateFormat:'MMM DD, YYYY hh:mm a'}}

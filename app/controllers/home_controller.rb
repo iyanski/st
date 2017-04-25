@@ -2,9 +2,6 @@ class HomeController < ApplicationController
   before_action :authenticate_user!, only: [:admin]
   
   def index
-    if current_company
-      render 'storefront', layout: 'storefront'
-    end
   end
 
   def contact
@@ -56,6 +53,11 @@ class HomeController < ApplicationController
   end
 
   def admin
+    gon.company = current_company
+    gon.user = current_user
+    gon.avatar = current_user.avatar
+    @jobs = Job.all.order("updated_at DESC")
+    gon.rabl
     render layout: "admin"
   end
 end

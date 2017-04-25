@@ -1,0 +1,19 @@
+.row.m-t-20.m-b-20.m-r-20.m-l-20
+  .col-md-12
+    %h4.bold Services
+  .col-md-12
+    .panel.panel-default
+      .panel-body.text-center
+        %a.btn.btn-lg.btn-primary.btn-rounded{ng: {href: "#/services/new"}} Add New Service
+    .row
+      .col-md-4{ng: {repeat: "service in services"}}
+        .panel.panel-default.panel-services.cursor{ng: {click: "goto(service.id)"}}
+          .panel-heading
+            %img{ng: {src: "{{service.photo.url}}"}, style: "width: 100%"}
+            .panel-title.p-t-30
+              {{service.title}}
+            .small{ng: {if: "service.service_type == 0"}} {{service.price | currency : "$" : 2}}/hr
+            .small{ng: {if: "service.service_type == 1"}}  {{service.price | currency : "$" : 2}}/mo
+          .panel-body
+            %p
+              {{service.description | limitTo: 165}}

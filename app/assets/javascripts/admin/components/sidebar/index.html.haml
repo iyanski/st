@@ -1,0 +1,32 @@
+%ul.main-menu
+  %li{ng: {class: "{'active': activemenu == 'page-dashboard'}"}}
+    %a{:href => "#/"}
+      %span.title
+        %i.pg-inbox
+        Dashboard
+  %li{ng: {class: "{'active': activemenu == 'page-home'}", show: "jobs.length"}}
+    %a{:href => "#/jobs"}
+      %span.title
+        %i.pg-inbox
+        Tasks
+      %span.badge.pull-right {{jobs.length}}
+  %li{ng: {class: "{'active': activemenu == 'page-services'}"}}
+    %a{:href => "#/services"}
+      %span.title
+        %i.pg-inbox
+        Services
+  %li{ng: {class: "{'active': activemenu == 'page-people'}"}}
+    %a{:href => "#/people"}
+      %span.title
+        %i.pg-inbox
+        People
+  %li{ng: {class: "{'active': activemenu == 'page-transactions'}"}}
+    %a{:href => "#/"}
+      %span.title
+        %i.pg-inbox
+        Transactions
+  %li{ng: {class: "{'active': activemenu == 'page-settings'}"}}
+    %a{:href => "#/settings"}
+      %span.title
+        %i.pg-settings
+        Settings

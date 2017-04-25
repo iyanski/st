@@ -20,7 +20,7 @@ module Smalltasker
     config.generators.javascripts = false
     config.generators.stylesheets = false
     config.angular_templates.module_name    = 'templates'
-    config.angular_templates.ignore_prefix  = %w(user/templates/ customer/templates/ expert/templates/)
+    config.angular_templates.ignore_prefix  = %w(admin/templates/ customer/templates/ expert/templates/)
     config.angular_templates.markups        = %w(haml)
     config.angular_templates.htmlcompressor = false
 

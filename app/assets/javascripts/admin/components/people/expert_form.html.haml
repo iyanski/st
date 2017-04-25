@@ -1,0 +1,27 @@
+-# t.string   "title"
+-# t.text     "description",  limit: 65535
+-# t.float    "price",        limit: 24
+-# t.integer  "service_type",               default: 0
+.row.m-t-20.m-b-50.m-r-20.m-l-20#main
+  .col-md-6.col-md-offset-3
+    %h4.bold New Expert
+  .col-md-6.col-md-offset-3
+    .panel.panel-default
+      .panel-body
+        %form{:role => "form"}
+          .row
+            .col-md-6
+              .form-group.required
+                %label First Name
+                %input.form-control{:required => "", :type => "text", autofocus: true, ng: {model: "expert.first_name"}}/
+            .col-md-6
+              .form-group.required
+                %label Last Name
+                %input.form-control{:required => "", :type => "text", ng: {model: "expert.last_name"}}/
+
+          .form-group.required
+            %label Email
+            %input.form-control{:required => "", :type => "text", ng: {model: "expert.email"}}/
+          .form-group.required
+            .btn.btn-primary{ng: {click: "saveExpertAccount()"}} Save Account
+            %a.btn.btn-default{ng: {href: "#/people"}} Cancel

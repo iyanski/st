@@ -1,0 +1,69 @@
+.row.m-t-20
+  .col-md-6.col-md-offset-3
+    %h4.bold Welcome to SmallTaskers
+    %h5 Now, let's get you started
+    -# .panel.panel-default
+    -#   .panel-heading
+    -#     .panel-title
+    -#       Store Front
+    -#   .panel-body{:style => "display: block;"}
+    -#     %p
+    -#       Configure your tagline, store front colors, background, logos and other contents to reflect your store front with your brand.
+    -#     .btn.btn-default Customize Store Front
+
+    .panel.panel-default{ng: {hide: "services.length"}}
+      .panel-heading
+        .panel-title
+          Services
+      .panel-body{:style => "display: block;"}
+        %p
+          Start adding services that you offer. Whatever you legally do for other your fellow humans
+        %a.btn.btn-default{ng: {href: "#/services/new"}} Add Services
+
+    .panel.panel-default
+      .panel-heading
+        .panel-title
+          Team
+      .panel-body{:style => "display: block;"}
+        %p
+          Running the whole show alone is great. But in SmallTaskers, it is a number game. The more people, the better chance of success. Invite people who you can rely on and share the same vision like yours.
+        %a.btn.btn-default{ng: {href: "#/experts/new"}} Add Experts
+
+    .panel.panel-default{ng: {hide: "company.domain.length"}}
+      .panel-heading
+        .panel-title
+          Domain
+      .panel-body{:style => "display: block;"}
+        %p
+          Your current domain is <strong>{{company.url}}.smalltaskers.com</strong>. It would be best to have your own domain to help your clients remember your service.
+        .input-group{ng: {show: "showDomainForm"}}
+          %input.form-control{type: "text", ng: {model: "company.domain"}, placeholder: "ex. www.example.com"}
+          .input-group-addon.btn.btn-primary{ng: {click: "saveDomain()"}, style: "background: #6d5cae; color: white;"} Use Domain
+        .btn.btn-default{ng: {click: "showDomainForm = true", hide: "showDomainForm"}} Add Domain
+
+    -# .panel.panel-default
+    -#   .panel-heading
+    -#     .panel-title
+    -#       Terms
+    -#   .panel-body{:style => "display: block;"}
+    -#     %p
+    -#       Set your terms and conditions. Should you need some sample templates to start with, hit us an email at legal@smalltaskers.com
+    -#     .btn.btn-default Set Terms and Conditions
+
+    -# .panel.panel-default
+    -#   .panel-heading
+    -#     .panel-title
+    -#       Privacy Policy
+    -#   .panel-body{:style => "display: block;"}
+    -#     %p
+    -#       If you are not a lawyer and you don't have one. Shoot an email so we can help you out start up with a Privacy Policy template at legal@smalltaskers.com
+    -#     .btn.btn-default Set Privacy Policy
+
+    -# .panel.panel-default
+    -#   .panel-heading
+    -#     .panel-title
+    -#       Refund Policy (Optional)
+    -#   .panel-body{:style => "display: block;"}
+    -#     %p
+    -#       Having a good, clear, concise, understand refund policy can help your brand establish 'trust' and 'loyalty' with your customers. Should you need help with your refund policy, shoot as an email to start with a Refund Policy template at legal@smalltaskers.com
+    -#     .btn.btn-default Set Refund Policy

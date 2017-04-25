@@ -1,0 +1,143 @@
+-# t.string   "title"
+-# t.text     "description",  limit: 65535
+-# t.float    "price",        limit: 24
+-# t.integer  "service_type",               default: 0
+.row.m-t-20.m-b-50.m-r-20.m-l-20#main
+  .col-md-6.col-md-offset-3
+    %h4.bold{ng: {show: "service.id"}} Edit Service
+    %h4.bold{ng: {show: "!service.id"}} New Service
+  .col-md-6.col-md-offset-3
+    .panel.panel-default
+      .panel-heading
+        .panel-title
+          Information
+      .panel-body
+        %h5
+          Tell us more about this service
+        %form{:role => "form"}
+
+          .form-group.required
+            %label Title
+            %input.form-control{:required => "", :type => "text", autofocus: true, ng: {model: "service.title"}}/
+          .form-group
+            %label{for: "description"} Description
+            %textarea.form-control#description{ng: {model: "service.description"}, rows: 20}
+          .row
+            .col-sm-8
+              .form-group
+                %label Service Type
+                .radio.radio-success
+                  .row
+                    .col-md-6
+                      %input#yes{ng: {model: "service.service_type"}, value: "0", type: "radio"}/
+                      %label{:for => "yes"} Hourly
+                    .col-md-6
+                      %input#no{ng: {model: "service.service_type"}, value: "1", type: "radio"}/
+                      %label{:for => "no"} Monthly
+              .row
+                .col-md-6
+                  .form-group.required
+                    %label Price per {{service.service_type ? 'month' : 'hour'}}
+                    .input-group
+                      %input.form-control.text-right{:required => "", :type => "number", ng: {model: "service.price"}}/
+                      .input-group-addon
+                        USD
+                .col-md-6
+                  .form-group.required
+                    %label Expert's Commission
+                    .input-group
+                      %input.form-control.text-right{:required => "", :type => "number", ng: {model: "service.experts_rate"}}/
+                      .input-group-addon
+                        {{"%"}}
+            .col-md-8
+              .form-group
+                %label Platform Fee:
+                .input-group
+                  {{service.price * service.platform_fee / 100 | currency : "$" : 2}} ({{service.platform_fee}}%)
+              .form-group
+                %label You will earn:
+                .input-group.bold
+                  {{service.price * (88 - service.experts_rate) / 100 | currency : "$" : 2}}
+              
+          %hr
+          .form-group
+            .btn.btn-lg.btn-primary{ng: {show: "service.id", click: "save()"}} Update
+            .btn.btn-lg.btn-primary{ng: {hide: "service.id", click: "save()"}} Continue
+
+    .panel.panel-default#benefits{ng: {show: "service.id"}}
+      .panel-heading
+        .panel-title
+          Benefits
+      .panel-body
+        %h5
+          What can your clients expect?
+        %form{:role => "form"}
+          .form-group.form-group-default.required
+            %label{for: "benefit"} One item at a time
+            %input.form-control#benefit{:required => "", :type => "text", ng: {model: "benefit.description"}}/
+          %ul
+            %li{ng: {repeat: "item in benefits"}} {{item.description}}
+          %hr
+          .form-group
+            .btn.btn-lg.btn-primary{ng: {click: "addBenefit()"}} Add
+
+
+    .panel.panel-default{ng: {show: "service.id"}}
+      .panel-heading
+        .panel-title
+          Requirements
+      .panel-body
+        %h5
+          What do you need from your client?
+        %form{:role => "form"}
+          .form-group.form-group-default.required
+            %label{for: "requirement"} One item at a time
+            %input.form-control#requirement{:required => "", :type => "text", ng: {model: "requirement.description"}}/
+          %ul
+            %li{ng: {repeat: "item in requirements"}} {{item.description}}
+          %hr
+          .form-group
+            .btn.btn-lg.btn-primary{ng: {click: "addRequirement()"}} Add
+
+
+    .panel.panel-default{ng: {show: "service.id"}}
+      .panel-heading
+        .panel-title
+          FAQ
+      .panel-body
+        %h5
+          What questions do your clients usually ask about this service?
+        %form{:role => "form"}
+          .form-group.form-group-default.required
+            %label{for: "question"} Question
+            %input.form-control#question{:required => "", :type => "text", ng: {model: "faq.question"}}/
+          .form-group.required
+            %label{for: "answer"} Answer
+            %textarea.form-control#answer{ng: {model: "faq.answer"}, rows: 4}
+          %ol
+            %li{ng: {repeat: "item in faqs"}}
+              %p.bold Question: 
+              %p {{item.question}}
+              %p.bold Answer: 
+              %p {{item.answer}}
+          %hr
+          .form-group
+            .btn.btn-lg.btn-primary{ng: {click: "addFaq()"}} Add
+
+    .panel.panel-default{ng: {show: "service.id"}}
+      .panel-heading
+        .panel-title
+          Cover Photo
+      .panel-body.no-scroll.no-padding{style: "position: relative; overflow: hidden;"}
+        %label.upload-trigger{:for => "uploadField"}
+          %img.featured_image{ng: {src: "{{service.photo.url}}"}, style: "max-width: 100%; position: absolute; top: 50%; transform: translateY(-50%);"}
+          %form.dropzone.no-margin
+            %span.dropzone-text
+              Drop files to
+              %strong upload
+              %small or click here
+            .fallback.hide
+              %input#uploadField{:name => "file", :type => "file"}/
+  .col-md-12.text-center.m-t-20
+    %a.btn.btn-lg.btn-default.btn-rounded{ng: {href: "#/dashboard"}} Go to Dashboard
+    %a.btn.btn-lg.btn-primary.btn-rounded{ng: {href: "#/services/new"}} Add another Service

@@ -18,11 +18,10 @@
     %meta{:content => "", :name => "author"}/
     = Gon::Base.render_data
     = csrf_meta_tags
-    = javascript_include_tag 'auth'
+    = javascript_include_tag 'admin'
     = yield :scripts
-    = stylesheet_link_tag    'auth', media: 'all', 'data-turbolinks-track': 'reload'
+    = stylesheet_link_tag    'app', media: 'all', 'data-turbolinks-track': 'reload'
     :javascript
-      Stripe.setPublishableKey('pk_test_lA6WPdWdOmwzy5wGMTLaOL25');
       Dropzone.autoDiscover = false;
       Dropzone.options.myAwesomeDropzone = false;
 

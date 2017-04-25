@@ -1,0 +1,31 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ * BEGIN VENDOR CSS FOR PAGES
+ *= require font-awesome
+ *= require pace/pace-theme-flash
+ *= require bootstrapv3/css/bootstrap.min
+ *= require jquery-scrollbar/jquery.scrollbar
+ *= require bootstrap-select2/select2
+ *= require switchery/css/switchery.min
+ *= require bootstrap3-wysihtml5/bootstrap3-wysihtml5.min
+ *= require jquery-menuclipper/jquery.menuclipper
+ *= require bootstrap-datepicker/css/datepicker
+ *= require appcss/pages-icons
+ *= require appcss/pages
+ *= require photoswipe
+ *= require default-skin
+ *= require toastr
+ *= require nprogress
+ *= require common
+ *= require plugins/dropzone/css/dropzone.css
+ */

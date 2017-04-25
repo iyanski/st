@@ -49,7 +49,7 @@
           / END HEADER CLOSE TOGGLE FOR MOBILE
           / BEGIN MENU ITEMS
           .header-inner
-            = render partial: "shared/menu"
+            = render partial: "shared/storefront_menu"
             -# %a.search-toggle.hidden-xs.hidden-sm{"data-toggle" => "search", :href => "#"}
             -#   %i.fs-14.pg-search
             / BEGIN COPYRIGHT FOR MOBILE
@@ -81,12 +81,10 @@
                         .container
                           .col-md-6.no-padding.col-xs-10.col-xs-offset-1
                             %h1.light.sm-text-center{"data-swiper-parallax" => "-15%"} Online services platform crafted for you
-                            %h4.sm-text-center Whether your are doing social media, web development, copywriting and other online services.
+                            %h4.sm-text-center.m-b-35 Whether your are doing social media, web development, copywriting and other online services.
                             -# %h5.block-title.text-white.sm-text-center Watch how it works
                             -# %p.fs-12.font-arial.hint-text.sm-text-center We vet creative experts from all over the globe.
-                            .input-group
-                              %input.form-control.input-lg#email{autofocus: true, placeholder: "Enter your email address"}
-                              %a.input-group-addon.btn.btn-primary.btn-lg.m-t-20{data: {start: "email"}, style: "background: #6d5cae; color: white;"} Get started
+                            %a.btn.btn-lg.btn-round.btn-primary{href: ""} Get Started
             .mouse-wrapper
               .mouse
                 .mouse-scroll
@@ -95,23 +93,12 @@
             .swiper-navigation.swiper-dark-solid.swiper-button-next.auto-reveal
         / END SLIDER
       / END JUMBOTRON
+
       / BEGIN CONTENT SECTION
-      %section.bg-master-lightest.p-b-85.p-t-75
-        .container
-          .md-p-l-20.md-p-r-20.xs-no-padding
-            %h5.block-title.hint-text.no-margin Why?
-            .row
-              .col-sm-5.col-md-4
-                %h1.m-t-5 Simple, efficient and reliable
-              .col-sm-7.col-md-8.no-padding.xs-p-l-15.xs-p-r-15
-                .p-t-20.p-l-35.md-p-l-5.md-p-t-15
-                  %p Our mission is simple. To provide entrepreneurs an efficient and reliable tool for engaging with their clients, receiving upfront payments online and growing their business.
-      / END CONTENT SECTION
-      / BEGIN CONTENT SECTION
-      %section.p-b-85.p-t-75.p-b-65.p-t-55
+      %section.p-b-85.p-t-75.p-b-65.p-t-55#services
         .container
           .md-p-l-20.xs-no-padding.clearfix
-            %h4.m-b-30 Who is SmallTaskers for?
+            %h4.m-b-30 Featured Services
             .col-sm-4.no-padding
               .p-r-30.md-pr-30
                 = image_tag "freelancers.jpg", class: "m-b-20", alt: "Freelancers"
@@ -130,39 +117,9 @@
                 %h6.block-title.p-b-30
                   Digital Nomads
               .visible-xs.b-b.b-grey-light.m-t-30.m-b-30
-      %section.p-b-85.p-b-85.text-center
-        %h1.p-b-45 Try it now while it's still free
-        %a.btn.btn-primary.btn-lg{data: {toggle:"modal", target:"#getstarted"}} Get Started
-      .modal#getstarted.fade{:role => "dialog", :tabindex => "-1"}
-        .modal-dialog{:role => "document"}
-          .modal-content
-            .modal-header
-              %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
-                %span{"aria-hidden" => "true"} &#215;
-              %h4.modal-title 
-                .text-left Get Started
-            .modal-body
-              %form.form.p-t-20#setup
-                .form-group
-                  %label{for: "email-address"} Email Address
-                  %input.input-lg.form-control#email-address{type: "text", name: "email"}
-                  %em.auth.small.email.hidden{style: "color: red;"}
-                .form-group
-                  %label{for: "password"} Password
-                  %input.input-lg.form-control#password{type: "password", name: "password"}
-                  %em.small.password.hidden{style: "color: red;"}
-                .form-group
-                  %label{for: "subdomain"} Store URL
-                  .input-group
-                    %input.input-lg.form-control#subdomain{type: "text", name: "subdomain"}
-                    .input-group-addon
-                      .disabled .smalltaskers.com
-                  %em.small.subdomain.hidden{style: "color: red;"}
-                .form-group
-                  %button.btn.btn-primary Setup Shop
-      
-
-      = render partial: "shared/footer"
+            .col-sm-12.text-center
+              %a.btn.btn-lg.btn-round.btn-primary View All Services
+    
       / END FOOTER
     / START OVERLAY SEARCH
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'

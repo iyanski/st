@@ -31,16 +31,13 @@
   / END COMPOSE BUTTON
 .row.m-t-20.m-b-50.m-r-20.m-l-20#main{ng: {show: "composeJob"}}
   .col-md-6.col-md-offset-3
-    %h4.bold{ng: {show: "service.id"}} Edit Service
-    %h4.bold{ng: {show: "!service.id"}} New Service
-  .col-md-6.col-md-offset-3
     .panel.panel-default
       .panel-heading
         .panel-title
-          Information
+          New Task
       .panel-body
         %h5
-          Tell us more about this service
+          Tell us more about this task
         %form{:role => "form"}
 
           .form-group.required
@@ -51,10 +48,9 @@
             %select.form-control.c-select{ng: {model: "newJob.category_id"}}
               %option{ng: {repeat: "category in categories", value: "category.id"}, value: "category.id"} {{category.name}}
           .form-group
-            %label Describe your Job
+            %label Describe this Task
             .wysiwyg5-wrapper.b-a.b-grey.m-b-10
               %textarea#wysiwyg5.wysiwyg{rows: 20, ng: {model: "newJob.description"}}
-          %hr
           .form-group
             %button.btn.btn-primary.btn-cons{ng: {click: "publishJob()", class: "{'disabled': !newJob.title.length}"}} Publish
             %button.btn.btn-white.btn-cons{ng: {click: "draftJob()", class: "{'disabled': !newJob.title.length}"}} Draft

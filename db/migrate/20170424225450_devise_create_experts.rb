@@ -32,6 +32,7 @@ class DeviseCreateExperts < ActiveRecord::Migration[5.0]
       t.references :company
       t.string  :first_name
       t.string  :last_name
+      t.string :avatar
       t.datetime :suspended_at
       t.timestamps null: false
     end

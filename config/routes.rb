@@ -45,5 +45,41 @@ Rails.application.routes.draw do
         end
       end
     end
+
+
+    namespace :experts do
+      resource :account do
+        member do
+          post :upload
+        end
+      end
+      resource :settings
+      resources :jobs do
+        member do
+          put :claim
+          put :estimate
+          put :submit
+          put :upload
+          post :chat
+          post :upload
+        end
+      end
+    end
+
+
+    namespace :customers do
+      resources :jobs do
+        member do
+          put :publish
+          put :unpublish
+          put :decline
+          put :cancel
+          put :complete
+          post :chat
+          post :pay
+          post :upload
+        end
+      end
+    end
   end
 end

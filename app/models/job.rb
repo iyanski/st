@@ -7,13 +7,13 @@ class Job < ApplicationRecord
   # has_many :job_attachments
   # validates :title, presence: true
 
-  # # scope :pending, -> {
-  # #   where(published_at: nil, expert_id: nil).order("created_at DESC")
-  # # }
-
   # scope :pending, -> {
-  #   where(status: 1, expert_id: nil).order("created_at DESC")
+  #   where(published_at: nil, expert_id: nil).order("created_at DESC")
   # }
+
+  scope :pending, -> {
+    where(status: 1, expert_id: nil).order("created_at DESC")
+  }
 
   # def code
   #   id + 699

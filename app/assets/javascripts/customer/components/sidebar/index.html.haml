@@ -1,0 +1,13 @@
+%a.btn.btn-complete.btn-block.btn-compose.m-b-30{ng: {click: "compose()"}} New Job
+%ul.main-menu
+  %li{ng: {class: "{'active': activepage == 'page-home'}"}}
+    %a{:href => "#/"}
+      %span.title
+        %i.pg-inbox
+        Tasks
+      %span.badge.pull-right {{jobs.length}}
+  %li{ng: {class: "{'active': activepage == 'page-settings'}"}}
+    %a{:href => "#/settings"}
+      %span.title
+        %i.pg-settings
+        Settings

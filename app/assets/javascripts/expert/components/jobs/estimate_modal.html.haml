@@ -1,0 +1,55 @@
+/ Trigger the modal with a button
+-# %button.btn.btn-info.btn-lg{"data-target" => "#estimate-modal", "data-toggle" => "modal", :type => "button"} Open Modal
+/ Modal
+#estimate-modal.modal.fade{:role => "dialog"}
+  .modal-dialog
+    / Modal content
+    .modal-content
+      .modal-header
+        %button.close{"data-dismiss" => "modal", :type => "button"} &#215;
+        %h4.modal-title Make an Estimate
+      .modal-body
+        %form.form
+          .form-group
+            %label Estimated Hours:
+            .clearfix
+            .radio.radio-success
+              %input#option1{ng: {model: "estimate.hours"}, :name => "estimate", :type => "radio", :value => 1}/
+              %label{:for => "option1"} 1
+              %input#option2{ng: {model: "estimate.hours"}, :name => "estimate", :type => "radio", :value => 2}/
+              %label{:for => "option2"} 2
+              %input#option3{ng: {model: "estimate.hours"}, :name => "estimate", :type => "radio", :value => 3}/
+              %label{:for => "option3"} 3
+              %input#option4{ng: {model: "estimate.hours"}, :name => "estimate", :type => "radio", :value => 4}/
+              %label{:for => "option4"} 4
+              %input#option5{ng: {model: "estimate.hours"}, :name => "estimate", :type => "radio", :value => 5}/
+              %label{:for => "option5"} 5
+              %input#option6{ng: {model: "estimate.hours"}, :name => "estimate", :type => "radio", :value => 6}/
+              %label{:for => "option6"} 6
+              %input#option7{ng: {model: "estimate.hours"}, :name => "estimate", :type => "radio", :value => 7}/
+              %label{:for => "option7"} 7
+              %input#option8{ng: {model: "estimate.hours"}, :name => "estimate", :type => "radio", :value => 8}/
+              %label{:for => "option8"} 8
+          .form-group
+            .row
+              .col-md-4
+                Revenue:
+                %span.bold {{(estimate.hours * rate) - ((percentage / 100) * (estimate.hours * rate)) | currency : "$" : 2}}
+              .col-md-4 {{estimate.hours}} Hour(s)
+              .col-md-4 Fee: {{ ((percentage / 100) * (estimate.hours * rate)) | currency : "$" : 2 }}
+          .clearfix
+          .form-group
+            %label{for: "etc"} Turn-around Time
+            %select.form-control{ng: {model: "estimate.etc"}, id: "etc", "convert-to-number": ""}
+              %option{value: 1} Next Day Turn-over
+              %option{value: 2} 2 Days
+              %option{value: 3} 3 Days
+          .form-group
+            %label{for: "starts_at"} Start Date
+            #start-date.input-group.date.col-sm-12
+              %input.form-control{ng: {model: "estimate.starts_at"}, :type => "text"}/
+              %span.input-group-addon
+                %i.fa.fa-calendar
+
+      .modal-footer
+        %button.btn.btn-primary{ng: {class: "{'disabled': !estimate.etc}", click: "sendEstimate()"}} Send Estimate

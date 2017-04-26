@@ -6,6 +6,9 @@
   max-height: 358px;
   overflow: hidden;
 }
+.panel-services{
+  min-height: 385px;
+}
 .red{
   color: red;
 }
@@ -68,10 +71,4 @@
       opacity: 1;
     }
   }
-
-
-}
-
-.panel-services{
-  min-height: 385px;
 }

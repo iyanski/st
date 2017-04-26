@@ -1,0 +1,108 @@
+.panel
+  %ul.nav.nav-tabs.nav-tabs-simple
+    %li.active
+      %a{"data-toggle" => "tab", ng: {click: "openTab('tab2Account')"}} Account Settings
+    -# %li
+    -#   %a{"data-toggle" => "tab", ng: {click: "openTab('tab2Profile')"}} Profile Settings
+    %li
+      %a{"data-toggle" => "tab", ng: {click: "openTab('tab2Notifications')"}} Notification Settings
+    %li
+      %a{"data-toggle" => "tab", ng: {click: "openTab('tab2Secure')"}} Security Settings
+      
+  .tab-content
+    #tab2Account.tab-pane.active
+      .row.column-seperation
+        .col-md-6
+          %h3
+            Account Settings
+          .panel.panel-default
+            .panel-heading
+              .panel-title
+                Account
+            .panel-body
+              %form{:role => "form"}
+                .row
+                  .col-sm-6
+                    .form-group.form-group-default.required
+                      %label First name
+                      %input.form-control{required: "", type: "text", autofocus: true, ng: {model: "user.first_name"}}/
+                  .col-sm-6
+                    .form-group.form-group-default
+                      %label Last name
+                      %input.form-control{type: "text", ng: {model: "user.last_name"}}/
+                .form-group.form-group-default.disabled
+                  %label Email
+                  %input.form-control{:disabled => "disabled", :type => "email", ng: {model: "user.email"}}/
+                .btn.btn-primary.pull-right{ng: {click: "save()"}} Save my Changes
+
+        .col-md-6
+          .panel.panel-default.clearfix
+            .panel-body.no-scroll.no-padding
+              %label.upload-trigger{:for => "uploadField"}
+                %img.photo{ng: {src: "{{avatar}}"}, style: "max-width: 100%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"}
+                %form.dropzone.no-margin
+                  %span.dropzone-text
+                    Drop photo to change your
+                    %strong Avatar
+                    %small or click here
+                  .fallback.hide
+                    %input#uploadField{:name => "file", :type => "file"}/
+    #tab2Notifications.tab-pane
+      .row
+        .col-md-12
+          %h3
+            Notification Settings
+          .panel.panel-default
+            .panel-heading
+              .panel-title
+                Email me when...
+            .panel-body
+              .checkbox.check-success
+                %input#checkbox1{ng: {model: "settings.email_when_expert_claims", true: {value: "true"}, false: {value: "false"}, change: "updateSetting()"}, :type => "checkbox"}/
+                %label{:for => "checkbox1"} an expert claims my job request.
+              .checkbox.check-success
+                %input#checkbox2{ng: {model: "settings.email_when_expert_waives_claims", true: {value: "true"}, false: {value: "false"}, change: "updateSetting()"}, :type => "checkbox"}/
+                %label{:for => "checkbox2"} an expert waives his claim to my job request.
+              .checkbox.check-success
+                %input#checkbox3{ng: {model: "settings.email_when_expert_sends_estimate", true: {value: "true"}, false: {value: "false"}, change: "updateSetting()"}, :type => "checkbox"}/
+                %label{:for => "checkbox3"} an expert sends me an estimate.
+              .checkbox.check-success
+                %input#checkbox4{ng: {model: "settings.email_when_expert_cancels_estimate", true: {value: "true"}, false: {value: "false"}, change: "updateSetting()"}, :type => "checkbox"}/
+                %label{:for => "checkbox4"} an expert cancelled his/her estimate.
+              .checkbox.check-success
+                %input#checkbox5{ng: {model: "settings.email_when_expert_submits_work", true: {value: "true"}, false: {value: "false"}, change: "updateSetting()"}, :type => "checkbox"}/
+                %label{:for => "checkbox5"} an expert submits his work for approval.
+
+    #tab2Secure.tab-pane
+      .row.column-seperation
+        .col-md-6
+          %h3
+            Security Settings
+          .panel.panel-default
+            .panel-heading
+              .panel-title
+                Password
+            .panel-body
+              %form{:role => "form"}
+                .form-group.form-group-default
+                  %label Current Password
+                  %input.form-control{:required => "", :type => "password", ng: {model: "user.current_password"}, autofocus: true}/
+                .row
+                  .col-sm-6
+                    .form-group.form-group-default.required
+                      %label New Password
+                      %input.form-control{:required => "", :type => "password", ng: {model: "user.password"}}/
+                  .col-sm-6
+                    .form-group.form-group-default
+                      %label Confirm Password
+                      %input.form-control{:type => "password", ng: {model: "user.password_confirmation"}}/
+                .btn.btn-primary.pull-right{ng: {click: "save()"}} Change my Password
+
+        .col-md-6
+          %h3.semi-bold
+            Password Tips
+          %ul
+            %li Do not give out your passwords to anyone.
+            %li Use a combination of small, big capital characters and numbers.
+            %li Change your password from time to time.
+            %li If you forgot your current password, log-out from the system and click the "Forgot Password" link.

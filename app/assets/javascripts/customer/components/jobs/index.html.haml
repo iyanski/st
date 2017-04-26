@@ -1,0 +1,58 @@
+.split-view{ng: {hide: "composeJob"}}
+  / START SPLIT LIST VIEW
+  .split-list
+    .list-view{"data-email" => "list"}
+      %h2.list-view-fake-header Tasks
+      / START EMAIL LIST SORTED BY DATE
+      / END EMAIL LIST SORTED BY DATE
+      .list-view-wrapper{"data-ios" => "false"}
+        .list-view-group-container
+          %ul.no-padding
+            %li.item.padding-15{"data-email-id" => "{{item.id}}", ng: {repeat: "item in jobs | orderBy:'-updated_at'", click: "selectJob(item)", class: "{'active' : item.id == job.id}"}}
+              .thumbnail-wrapper.d32.circular.bordered.expert-avatar.b-grey{data: {expert: {id: "{{item.expert.id}}"}}}
+                %img{:alt => "", :height => "40", ng: {src: "{{item.expert.avatar}}", show: "item.expert"}, :width => "40"}/
+                %img{:alt => "", :height => "40", ng: {src: "/images/missing/thumb/missing.png", hide: "item.expert"}, :width => "40"}/
+              .inline.m-l-15
+                %p.recipients.no-margin.hint-text.small{ng: {show: "item.expert"}} {{item.expert.name}}
+                %p.recipients.no-margin.hint-text.small{ng: {show: "!item.expert && item.status == 0"}} Draft
+                %p.recipients.no-margin.hint-text.small{ng: {show: "!item.expert && item.status == 1"}} Unclaimed
+                %p.subject.no-margin Task# {{item.code}}: {{item.title}}
+                %p.body.no-margin{ng: {bind: {html: "item.description | stripTags"}}}
+                %span.label.label-default {{item.status | job_status}}
+              .datetime {{item.updated_at | amDateFormat:'MMM DD, YYYY hh:mm a'}}
+              .clearfix
+  / END SPLIT LIST VIEW
+  %job
+  / END SPLIT DETAILS
+  / START COMPOSE BUTTON FOR TABS
+  .compose-wrapper.visible-xs
+    -# %a.compose-email.text-info.pull-right.m-r-10.m-t-10{:href => "email_compose.html"}
+    -#   %i.fa.fa-pencil-square-o
+  / END COMPOSE BUTTON
+
+.row.p-t-10.p-b-10.p-r-10.p-l-10{ng: {show: "composeJob"}}
+  .col-sm-1
+    %button.btn.btn-complete.pull-left
+      %i.pg-save
+  .col-sm-11
+    %button.btn.btn-white.btn-cons.pull-right{ng: {click: "cancelCompose()"}} Cancel
+    %button.btn.btn-white.btn-cons.pull-right{ng: {click: "draftJob()", class: "{'disabled': !newJob.title.length}"}} Draft
+    %button.btn.btn-complete.btn-cons.pull-right{ng: {click: "publishJob()", class: "{'disabled': !newJob.title.length}"}} Publish
+
+.form-group-attached{ng: {show: "composeJob"}}
+  .row.clearfix
+    .col-sm-6
+      .form-group.form-group-default
+        %label Title:
+        %input.form-control{:name => "cc", :placeholder => "", :type => "text", autofocus: true, ng: {model: "newJob.title"}}/
+    .col-sm-6
+      .form-group.form-group-default
+        %label Category:
+        %select.form-control.c-select{ng: {model: "newJob.category_id"}}
+          %option{ng: {repeat: "category in categories", value: "category.id"}, value: "category.id"} {{category.name}}
+  .form-group.form-group-default
+    %label Describe your Job
+    .wysiwyg5-wrapper.b-a.b-grey.m-b-10
+      %textarea#wysiwyg5.wysiwyg{rows: 30, ng: {model: "newJob.description"}}
+
+

@@ -1,0 +1,138 @@
+/ START SPLIT DETAILS
+.split-details{"data-email" => "opened"}
+  .no-result{ng: {hide: "job"}}
+    %h1 No job has been selected
+  .email-content-wrapper{ng: {show: "job"}}
+    .actions-wrapper.menuclipper.bg-master-lightest
+      %ul.actions.menuclipper-menu.no-margin.p-l-20
+        %li.visible-sm-inline-block.visible-xs-inline-block
+          %a.split-list-toggle{:href => "#"}
+            %i.fa.fa-angle-left
+            All Inboxes
+        %li.no-padding{ng: {show: "job.status == 1"}}
+          %a.cursor{ng: {click: "claim(job)"}} Claim
+        %li.no-padding{ng: {show: "job.status == 2"}}
+          %a{ng: {click: "makeEstimate()"}} Make an Estimate
+        %li.no-padding{ng: {show: "job.status == 3"}}
+          %a{ng: {click: "editEstimate()"}} Change Estimate
+        %li.no-padding{ng: {show: "job.status == 3"}}
+          %a.text-danger{ng: {click: "cancelClaim(job)"}} Unclaim
+        %li.no-padding{ng: {show: "job.status == 4"}}
+          %a{ng: {click: "submit(job)"}} Submit for Review
+      
+      %ul.actions.menuclipper-menu.no-margin.p-r-20.pull-right
+        %li.no-padding{ng: {if: "job.status == 1"}}
+          %a{ng: {click: "attachFile()"}} Attach File
+        %li.no-padding{ng: {show: "job.status > 0"}}
+          %a{:href => "#", ng: {click: "showDetails($event)"}} Details
+        %li.no-padding{ng: {show: "job.status > 1"}}
+          %a{:href => "#", ng: {click: "showConversations($event)"}} Conversation
+        %li.no-padding{ng: {show: "job.status > 0"}}
+          %a{:href => "#", ng: {click: "showFiles($event)"}} Files
+        -# %li.no-padding
+        -#   %a{:href => "#"} Report an Issue
+
+      .clearfix
+    .email-content
+      #details.email-content-header{ng: {show: "show_mode == 1"}}
+        %span{ng: {show: "job.user"}}
+          .thumbnail-wrapper.d48.circular.bordered
+            %img{:alt => "", "data-src" => "{{job.user.avatar}}", "data-src-retina" => "{{job.user.avatar}}", :height => "40", :src => "{{job.user.avatar}}", :width => "40"}/
+          .sender.inline.m-l-10
+            %p.name.no-margin.bold {{job.user.name}}
+            %p.website.no-margin http://yahoo.com
+          .clearfix
+        .subject.m-t-20.m-b-20.semi-bold
+          .subject.m-t-20.m-b-20.semi-bold
+            %h4 Job# {{job.code}}: {{job.title}}
+          %p.m-t-10
+            %span.label.label-default {{job.category.name}}
+          %p.no-margin
+            %span.bold Posted On:
+            {{job.created_at | amDateFormat:'MMM DD, YYYY hh:mm a'}}
+          %p.no-margin{ng: {show: "job.estimate"}}
+            %span.bold Estimate:
+            %span{ng: {show: "job.estimate == 1"}} {{job.estimate}} hour - {{rate * job.estimate | currency : "$" : 2}}
+            %span{ng: {show: "job.estimate > 1"}} {{job.estimate}} hours - {{rate * job.estimate | currency : "$" : 2}}
+          %p.no-margin{ng: {show: "job.etc"}}
+            %span.bold Turn Around Time:
+            Next Day Delivery
+          %p.no-margin{ng: {show: "job.starts_at"}}
+            %span.bold Starts on:
+            {{job.starts_at | amDateFormat:'MMM DD, YYYY hh:mm a'}}
+          %p.no-margin{ng: {show: "job.submitted_at"}}
+            %span.bold Submitted on:
+            {{job.submitted_at | amDateFormat:'MMM DD, YYYY hh:mm a'}}
+          %p.no-margin{ng: {show: "job.completed_at"}}
+            %span.bold Completed on:
+            {{job.completed_at | amDateFormat:'MMM DD, YYYY hh:mm a'}}
+        .subject.m-t-20.m-b-20.semi-bold
+          %p{ng: {bind: {html: "job.description | nl2br | str2link"}}}
+
+      #conversation.conversation.m-t-20{ng: {show: "show_mode == 2"}}
+        %p.text-center.m-y-1{ng: {show: "job.status == 1"}}
+          %i 
+            Be the first expert to
+            %a.cursor{ng: {show: "job.status == 1", click: "claim(job)"}} claim
+            this job
+        .chat{ng: {show: "job.status > 1"}}
+          .text-center{ng: {show: "!messages.length"}} Loading...
+          %div{ng: {repeat: "message in messages"}}
+            %div
+              .p-b-10.clearfix{ng: {show: "!message.sender_type"}}
+                %span
+                  %strong TaskBot
+                  %small.pull-right {{ message.created_at }}
+                .clearfix
+                  %span {{message.sender}}
+                  %span{"ng-bind-html" => "message.content | nl2br | str2link"}
+              .p-b-10.clearfix{ng: {show: "message.sender_type"}}
+                %span{ng: {show: "message.sender_type == 'Expert'"}}
+                  %strong you
+                  %small.pull-right {{ message.created_at }}
+                %span{ng: {show: "message.sender_type == 'User'"}}
+                  %strong {{message.sender}}
+                  %small.pull-right {{ message.created_at }}
+                %div{"ng-bind-html" => "message.content | nl2br | str2link"}
+      #attachments{ng: {show: "show_mode == 3"}}
+        .panel.panel-default{ng: {show: "showUploader"}}
+          .panel-heading
+            .panel-title.pull-left
+              Share Files
+            .panel-title.pull-right
+              %a.text-success{href: "", ng: {click: "showUploader = false"}} Close
+            .tools.clearfix
+              %a.collapse{:href => "javascript:;"}
+              %a.config{"data-toggle" => "modal", :href => "#grid-config"}
+              %a.reload{:href => "javascript:;"}
+              %a.remove{:href => "javascript:;"}
+          .panel-body.no-scroll.no-padding
+            %form.dropzone.no-margin
+              .fallback
+                %input{:multiple => "multiple", :name => "file", :type => "file"}/
+        
+          %hr.clearfix
+        .panel.panel-default{ng: {hide: "job.job_attachments.length || showUploader"}}
+          .panel-body.no-scroll
+            .col-md-12.text-center
+              %a.btn.btn-lg.btn-primary{ng: {click: "attachFile()"}} Start adding files
+        .panel.panel-default{ng: {show: "job.job_attachments.length"}}
+          .panel-heading
+            .panel-title.pull-left
+              Shared Files
+            .tools.clearfix
+              %a.collapse{:href => "javascript:;"}
+              %a.config{"data-toggle" => "modal", :href => "#attachment-grid-config"}
+              %a.reload{:href => "javascript:;"}
+              %a.remove{:href => "javascript:;"}
+          .panel-body.no-scroll.no-padding
+            .row.slide-list
+              .col-md-3.p-b-20{ng: {repeat: "item in job.job_attachments track by $index"}}
+                %div{ng: {if: "item.file.thumb.url", href: "{{item.file.thumb.url}}", click: "openImagePreview($index, $event)"}, style: "height: 200px; cursor: pointer"}
+                  %strong Attachment-{{$index}}
+                  %img.thumbnail.img-responsive{ng: {src: "{{item.file.thumb.url}}"}}
+      %div{ng: {show: "show_mode == 2"}}
+        .wysiwyg5-wrapper.b-a.b-grey.m-t-30{ng: {show: "job.status > 1 && messages.length"}}
+          %textarea.form-control{rows: 2, ng: {model: "msg", keyUp: "sendMessage($event)"}}
+        %button.send.btn.btn-secondary.pull-right{ng: {click: "shiftSendMessage()", class: "{'disabled': !msg}", show: "job.status > 1 && messages.length"}} Send
+%estimatemodal{ng: {show: "showModalEstimate"}}

@@ -55,7 +55,7 @@ Apartment.configure do |config|
   # Specifies whether to use PostgreSQL schemas or create a new database per Tenant.
   # The default behaviour is true.
   #
-  config.use_schemas = true
+  # config.use_schemas = false
 
   # Apartment can be forced to use raw SQL dumps instead of schema.rb for creating new schemas.
   # Use this when you are using some extra features in PostgreSQL that can't be respresented in

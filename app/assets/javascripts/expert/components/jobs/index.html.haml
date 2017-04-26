@@ -1,0 +1,28 @@
+.split-view{ng: {hide: "composeJob"}}
+  / START SPLIT LIST VIEW
+  .split-list
+    .list-view{"data-email" => "list"}
+      %h2.list-view-fake-header Tasks
+      / START EMAIL LIST SORTED BY DATE
+      / END EMAIL LIST SORTED BY DATE
+      .list-view-wrapper{"data-ios" => "false"}
+        .list-view-group-container
+          %ul.no-padding
+            %li.item.padding-15{"data-email-id" => "{{item.id}}", ng: {repeat: "item in jobs | orderBy:'-updated_at'", click: "selectJob(item)", class: "{'active' : item.id == job.id}"}}
+              .thumbnail-wrapper.d32.circular.bordered.user-avatar.b-grey{data: {user: {id: "{{item.user.id}}"}}}
+                %img{:alt => "", :height => "40", ng: {src: "{{item.user.avatar}}"}, :width => "40"}/
+              .inline.m-l-15
+                %p.recipients.no-margin.hint-text.small{ng: {show: "item.user"}} {{item.user.name}}
+                %p.subject.no-margin Job# {{item.code}}: {{item.title}}
+                %p.body.no-margin {{item.description | stripTags}}
+                %span.label.label-default {{item.status | job_status}}
+              .datetime {{item.updated_at | amDateFormat:'MMM DD, YYYY hh:mm a'}}
+              .clearfix
+  / END SPLIT LIST VIEW
+  %job
+  / END SPLIT DETAILS
+  / START COMPOSE BUTTON FOR TABS
+  -# .compose-wrapper.visible-xs
+  -#   %a.compose-email.text-info.pull-right.m-r-10.m-t-10{:href => "email_compose.html"}
+  -#     %i.fa.fa-pencil-square-o
+  / END COMPOSE BUTTON

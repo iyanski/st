@@ -1,0 +1,10 @@
+- if current_user or current_expert or current_customer
+  - content_for :scripts do
+    :javascript
+      var config = {
+        apiKey: '#{ENV['firebase_secret_key']}',
+        authDomain: '#{ENV['firebase_domain']}',
+        databaseURL: '#{ENV['firebase_base_uri']}'
+      };
+      firebase.initializeApp(config);
+.page-content-wrapper.full-height{ng: {view: ""}}

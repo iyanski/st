@@ -1,0 +1,2 @@
+object @settings
+attributes :id, :email_when_new_job_arrives, :email_when_user_approves_estimate, :email_when_user_approves_job, :email_when_user_cancels_claimed_job, :email_when_user_cancels_estimated_job, :email_when_user_cancels_ongoing_job, :updated_at

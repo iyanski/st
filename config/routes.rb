@@ -68,6 +68,12 @@ Rails.application.routes.draw do
 
 
     namespace :customers do
+      resource :account do
+        member do
+          post :upload
+        end
+      end
+      resource :settings
       resources :jobs do
         member do
           put :publish

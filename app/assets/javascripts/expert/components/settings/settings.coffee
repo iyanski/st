@@ -9,6 +9,7 @@ do ->
         toastr.warning "Your passwords does not match"
       else
         $scope.expert.$update (data, xhr)->
+          location.reload()
           toastr.success "Updated successfully"
         , (res)->
           toastr.warning res.data.error

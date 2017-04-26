@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170426201533) do
+ActiveRecord::Schema.define(version: 20170426220412) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,18 @@ ActiveRecord::Schema.define(version: 20170426201533) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "customer_settings", force: :cascade do |t|
+    t.integer  "customer_id"
+    t.boolean  "email_when_expert_claims",           default: true
+    t.boolean  "email_when_expert_waives_claims",    default: true
+    t.boolean  "email_when_expert_sends_estimate",   default: true
+    t.boolean  "email_when_expert_cancels_estimate", default: true
+    t.boolean  "email_when_expert_submits_work",     default: true
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
+    t.index ["customer_id"], name: "index_customer_settings_on_customer_id", using: :btree
+  end
+
   create_table "customers", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -51,13 +63,11 @@ ActiveRecord::Schema.define(version: 20170426201533) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.integer  "company_id"
     t.string   "avatar"
     t.string   "first_name"
     t.string   "last_name"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-    t.index ["company_id"], name: "index_customers_on_company_id", using: :btree
     t.index ["email"], name: "index_customers_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_customers_on_reset_password_token", unique: true, using: :btree
   end
@@ -108,7 +118,6 @@ ActiveRecord::Schema.define(version: 20170426201533) do
   end
 
   create_table "jobs", force: :cascade do |t|
-    t.integer  "company_id"
     t.integer  "customer_id"
     t.integer  "expert_id"
     t.integer  "category_id"
@@ -125,7 +134,6 @@ ActiveRecord::Schema.define(version: 20170426201533) do
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
     t.index ["category_id"], name: "index_jobs_on_category_id", using: :btree
-    t.index ["company_id"], name: "index_jobs_on_company_id", using: :btree
     t.index ["customer_id"], name: "index_jobs_on_customer_id", using: :btree
     t.index ["expert_id"], name: "index_jobs_on_expert_id", using: :btree
   end
@@ -139,7 +147,6 @@ ActiveRecord::Schema.define(version: 20170426201533) do
   end
 
   create_table "services", force: :cascade do |t|
-    t.integer  "company_id"
     t.string   "title"
     t.text     "description"
     t.float    "price"
@@ -151,7 +158,6 @@ ActiveRecord::Schema.define(version: 20170426201533) do
     t.datetime "deleted_at"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
-    t.index ["company_id"], name: "index_services_on_company_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|

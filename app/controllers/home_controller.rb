@@ -50,7 +50,7 @@ class HomeController < ApplicationController
     Apartment::Tenant.switch!(current_company.subdomain)
     gon.customer = current_customer
     gon.avatar = current_customer.avatar
-    # gon.settings = current_customer.expert_setting
+    gon.settings = current_customer.customer_setting
     @jobs = Job.pending + current_customer.jobs.order("updated_at DESC")
     gon.rabl
     render 'app', layout: "app"
@@ -60,7 +60,7 @@ class HomeController < ApplicationController
     Apartment::Tenant.switch!(current_company.subdomain)
     gon.expert = current_expert
     gon.avatar = current_expert.avatar
-    # gon.settings = current_expert.expert_setting
+    gon.settings = current_expert.expert_setting
     @jobs = Job.pending + current_expert.jobs.order("updated_at DESC")
     gon.rabl
     render 'app', layout: "dashboard"

@@ -5,8 +5,14 @@ class Customer < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
   belongs_to :company
   has_many :jobs
+  has_one :customer_setting
+  after_create :generate_default_settings
 
   def name
     [first_name, last_name].join(" ")
   end
+  private
+    def generate_default_settings
+      CustomerSetting.create(customer: self)
+    end
 end

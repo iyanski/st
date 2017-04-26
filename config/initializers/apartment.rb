@@ -79,6 +79,7 @@ Apartment.configure do |config|
   # Uncomment the line below if you want to disable this behaviour in production.
   #
   # config.prepend_environment = !Rails.env.production?
+  config.use_postgres_schemas = true
 end
 
 # Setup a custom Tenant switching middleware. The Proc should return the name of the Tenant that
@@ -91,3 +92,5 @@ end
 # Rails.application.config.middleware.use 'Apartment::Elevators::Subdomain'
 # Rails.application.config.middleware.use 'Apartment::Elevators::FirstSubdomain'
 # Rails.application.config.middleware.insert_before 'Warden::Manager', 'Apartment::Elevators::Subdomain'
+Rails.application.config.middleware.insert_before 'Warden::Manager', 'Apartment::Elevators::Subdomain'
+Apartment::Elevators::Subdomain.excluded_subdomains = ['www', 'blog', 'developer']

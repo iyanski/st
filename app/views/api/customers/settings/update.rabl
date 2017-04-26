@@ -1,0 +1,2 @@
+object @settings
+attributes :id, :email_when_expert_claims, :email_when_expert_waives_claims, :email_when_expert_sends_estimate, :email_when_expert_cancels_estimate, :email_when_expert_submits_work, :updated_at

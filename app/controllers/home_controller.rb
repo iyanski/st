@@ -49,6 +49,7 @@ class HomeController < ApplicationController
   def app
     Apartment::Tenant.switch!(current_company.subdomain)
     gon.customer = current_customer
+    gon.services = Service.where(service_type: 0)
     gon.avatar = current_customer.avatar
     gon.settings = current_customer.customer_setting
     @jobs = Job.pending + current_customer.jobs.order("updated_at DESC")

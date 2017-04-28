@@ -2,13 +2,12 @@ class Api::Customers::JobsController < Api::CustomersController
   skip_before_action :verify_authenticity_token, :only => :pay
   def index
     # @@data = File.read("#{Rails.root}/public/emails.json")
-    @jobs = current_user.jobs
+    @jobs = current_customer.jobs
     # render json: @@data
   end
 
   def create
-    @job = current_user.jobs.build job_params
-    @job.company = current_company
+    @job = current_customer.jobs.build job_params
     puts (job_params[:status].to_i == 1).inspect
     if job_params[:status].to_i == 1
       puts "========================"
@@ -23,32 +22,32 @@ class Api::Customers::JobsController < Api::CustomersController
   end
 
   def show
-    @job = current_user.jobs.where(id: params[:id]).first()
+    @job = current_customer.jobs.where(id: params[:id]).first()
   end
 
   def update
-    @job = current_user.jobs.where(id: params[:id]).first()
+    @job = current_customer.jobs.where(id: params[:id]).first()
     unless @job.update_attributes job_params
       render json: {error: "Job not found"}, status: 401
     end
   end
 
   def publish
-    @job = current_user.jobs.where(id: params[:id]).first
+    @job = current_customer.jobs.where(id: params[:id]).first
     unless @job.publish
       render json: {error: "Job not found"}, status: 401
     end
   end
 
   def unpublish
-    @job = current_user.jobs.where(id: params[:id]).first
+    @job = current_customer.jobs.where(id: params[:id]).first
     unless @job.unpublish
       render json: {error: "Job not found"}, status: 401
     end
   end
 
   def decline
-    @job = current_user.jobs.where(id: params[:id]).first
+    @job = current_customer.jobs.where(id: params[:id]).first
     unless @job.decline
       render json: {error: "Job not found"}, status: 401
     else
@@ -57,7 +56,7 @@ class Api::Customers::JobsController < Api::CustomersController
   end
 
   def complete
-    @job = current_user.jobs.where(id: params[:id]).first
+    @job = current_customer.jobs.where(id: params[:id]).first
     unless @job.complete
       render json: {error: "Job not found"}, status: 401
     else
@@ -66,7 +65,7 @@ class Api::Customers::JobsController < Api::CustomersController
   end
 
   def cancel
-    @job = current_user.jobs.where(id: params[:id]).first
+    @job = current_customer.jobs.where(id: params[:id]).first
     unless @job.cancel
       render json: {error: "Job not found"}, status: 401
     else
@@ -75,7 +74,7 @@ class Api::Customers::JobsController < Api::CustomersController
   end
 
   def chat
-    @job = current_user.jobs.where(id: params[:id]).first
+    @job = current_customer.jobs.where(id: params[:id]).first
     @job.chat_to @job.expert, params[:content]
     render json: {content: params[:content]}
   end
@@ -83,7 +82,7 @@ class Api::Customers::JobsController < Api::CustomersController
   def pay
     require "stripe"
     Stripe.api_key = "sk_test_w4DScZiWDQFiNubpgAO3z45g"
-    job = current_user.jobs.where(id: params[:id]).first
+    job = current_customer.jobs.where(id: params[:id]).first
     rate = 59
     if !job.nil?
       amount = (job.estimate * rate * 100).to_i
@@ -111,6 +110,6 @@ class Api::Customers::JobsController < Api::CustomersController
   private
 
     def job_params
-      params.require(:job).permit(:title, :description, :category_id, :status)
+      params.require(:job).permit(:title, :description, :category_id, :status, :service_id)
     end
 end

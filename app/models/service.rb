@@ -3,7 +3,8 @@ class Service < ApplicationRecord
   friendly_id :title, :use => :slugged
   mount_uploader :photo, MediaUploader
   
-  belongs_to :company
+  # belongs_to :company
+  has_many :jobs
   has_many :benefits
   has_many :requirements
   has_many :faqs

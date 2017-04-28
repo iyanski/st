@@ -39,14 +39,17 @@
         %h5
           Tell us more about this task
         %form{:role => "form"}
-
           .form-group.required
             %label Title:
             %input.form-control{:name => "cc", :placeholder => "", :type => "text", autofocus: true, ng: {model: "newJob.title"}}/
+          -# .form-group
+          -#   %label Category:
+          -#   %select.form-control.c-select{ng: {model: "newJob.category_id"}}
+          -#     %option{ng: {repeat: "category in categories", value: "category.id"}, value: "category.id"} {{category.name}}
           .form-group
             %label Category:
-            %select.form-control.c-select{ng: {model: "newJob.category_id"}}
-              %option{ng: {repeat: "category in categories", value: "category.id"}, value: "category.id"} {{category.name}}
+            %select.form-control.c-select{ng: {model: "newJob.service_id"}}
+              %option{ng: {repeat: "service in services", value: "service.id"}, value: "service.id"} {{service.title}}
           .form-group
             %label Describe this Task
             .wysiwyg5-wrapper.b-a.b-grey.m-b-10

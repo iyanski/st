@@ -5,14 +5,14 @@ class Api::Users::ServicesController < Api::UsersController
   end
 
   def create
-    @service = current_company.services.build service_params
+    @service = Service.new service_params
     unless @service.save
       render json: {error: @service.errors.full_messages.first}, status: 401
     end
   end
 
   def update
-    @service = current_company.services.where(id: params[:id]).first
+    @service = Servie.where(id: params[:id]).first
     unless @service.update_attributes service_params
       render json: {error: @service.errors.full_messages.first}, status: 401
     end

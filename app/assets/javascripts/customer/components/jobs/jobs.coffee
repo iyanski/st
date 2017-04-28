@@ -4,7 +4,8 @@ do ->
     $scope.showUploader = false
     $scope.loadUpdates = false
     $scope.job_id = gon.job_id
-    $scope.categories = gon.categories
+    # $scope.categories = gon.categories
+    $scope.services = gon.services
     
     $scope.initJobUpdates = ->
       jobsRef = ChatService.ref("updates").limitToLast(1)

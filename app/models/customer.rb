@@ -9,7 +9,7 @@ class Customer < ApplicationRecord
   after_create :generate_default_settings
 
   def name
-    [first_name, last_name].join(" ")
+    [first_name, last_name].join(" ").strip
   end
   private
     def generate_default_settings

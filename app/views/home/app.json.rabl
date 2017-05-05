@@ -3,12 +3,12 @@ attributes :id, :expert, :customer, :category, :title, :description, :status, :p
 child(:customer) do
   attributes :id, :email, :first_name, :last_name, :name
   node(:avatar) do |item|
-    item.try(:avatar).try(:url, :thumb)
+    item.avatar.try(:url)
   end
 end
 child(:expert) do
   attributes :id, :email, :first_name, :last_name, :name
   node(:avatar) do |item|
-    item.try(:avatar).try(:url, :thumb)
+    item.avatar.try(:url)
   end
 end

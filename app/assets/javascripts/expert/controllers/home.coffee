@@ -1,9 +1,8 @@
 do ->
-  homePageCtrl = ($scope, $route, pageview, Job, ChatService) ->
+  homePageCtrl = ($scope, $route, $rootScope, pageview, Job, ChatService) ->
     $scope.page_title = "Dashboard"
     $scope.content = pageview.page[$route.current.activepage]
     $scope.activepage = $route.current.activepage
-    
     $scope.selectJob = {}
     $scope.rate = gon.rate
     $scope.percentage = 25
@@ -19,11 +18,11 @@ do ->
           job = result
       callback(job)
 
-
     $scope.showOnline = (id)->
       angular.element(".user-avatar[data-user-id=" + id + "]").addClass("b-success").removeClass('b-grey')
-      console.log angular.element(".user-avatar").length
-      console.log id
+      # console.log angular.element(".user-avatar").length
+      # console.log id
+      true
 
     $scope.showOffline = (id)->
       angular.element(".user-avatar[data-user-id=" + id + "]").removeClass("b-success").addClass('b-grey')
@@ -45,40 +44,46 @@ do ->
           con.onDisconnect().remove()
 
     $scope.initNewJobRequest = ->
-      console.log angular.element(".user-avatar").length
+      # console.log angular.element(".user-avatar").length
       notificationsRef = ChatService.ref("jobs").limitToLast(1)
       notificationsRef.on 'child_added', (snapshot)->
         if snapshot.val()
           $scope.find_job_by_id snapshot.key, (job)->
-            unless job
-              job = new Job(id: snapshot.key)
-              job.$get (data, xhr)->
-                if data.status > 0
-                  $scope.jobs.unshift data
-                  setTimeout ->
-                    $scope.showOnline(data.user.id)
-                    toastr.success [snapshot.val().sender, snapshot.val().content].join(" ")
-                  , 100
+            console.log snapshot.val().content
+            if snapshot.val().content == "cancelled the job"
+              pos = $scope.jobs.indexOf(job)
+              $scope.jobs.splice(pos, 1)
             else
-              console.log "Job found"
+              unless job
+                job = new Job(id: snapshot.key)
+                job.$get (data, xhr)->
+                  if data.status > 0
+                    $scope.jobs.unshift data
+                    setTimeout ->
+                      $scope.showOnline(data.customer.id)
+                      toastr.success [snapshot.val().sender, snapshot.val().content].join(" ")
+                    , 100
+              else
+                console.log "Job found"
 
     $scope.initNewJobRequest()
     $scope.initMyPresence()
     $scope.loadImagePreviewer = (job)->
       items = []
-      for item in job.job_attachments
-        if item.file.url
-          arr = item.file.url.match(/\-(\d+)x(\d+)\.(.*)/)
-        if arr
-          width = arr[1]
-          height = arr[2]
-          items.push
-            src: item.file.url
-            w: width
-            h: height
+      if job.job_attachments
+        for item in job.job_attachments
+          if item.file.url
+            arr = item.file.url.match(/\-(\d+)x(\d+)\.(.*)/)
+          if arr
+            width = arr[1]
+            height = arr[2]
+            items.push
+              src: item.file.url
+              w: width
+              h: height
       $scope.slides = items
     
 
   viewControllers = angular.module('app.home.page.controller', [])
   viewControllers.controller 'homePageCtrl', homePageCtrl
-  homePageCtrl.$inject = [ '$scope', '$route', 'pageview', 'Job', 'ChatService']
+  homePageCtrl.$inject = [ '$scope', '$route', '$rootScope', 'pageview', 'Job', 'ChatService']

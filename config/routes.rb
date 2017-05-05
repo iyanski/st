@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount ActionCable.server => '/suck8ts'
+  
   devise_for :customers
   devise_for :experts
   devise_for :users, controllers: {
@@ -25,6 +27,9 @@ Rails.application.routes.draw do
       get :continue
     end
   end
+
+  resources :conversations, params: :slug
+  resources :messages
 
   namespace :api do
     namespace :users do
@@ -57,6 +62,7 @@ Rails.application.routes.draw do
       resources :jobs do
         member do
           put :claim
+          put :unclaim
           put :estimate
           put :submit
           put :upload
@@ -88,4 +94,5 @@ Rails.application.routes.draw do
       end
     end
   end
+  resources :job
 end

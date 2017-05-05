@@ -25,14 +25,14 @@
                   .col-sm-6
                     .form-group.form-group-default.required
                       %label First name
-                      %input.form-control{required: "", type: "text", autofocus: true, ng: {model: "user.first_name"}}/
+                      %input.form-control{required: "", type: "text", autofocus: true, ng: {model: "customer.first_name"}}/
                   .col-sm-6
                     .form-group.form-group-default
                       %label Last name
-                      %input.form-control{type: "text", ng: {model: "user.last_name"}}/
+                      %input.form-control{type: "text", ng: {model: "customer.last_name"}}/
                 .form-group.form-group-default.disabled
                   %label Email
-                  %input.form-control{:disabled => "disabled", :type => "email", ng: {model: "user.email"}}/
+                  %input.form-control{:disabled => "disabled", :type => "email", ng: {model: "customer.email"}}/
                 .btn.btn-primary.pull-right{ng: {click: "save()"}} Save my Changes
 
         .col-md-6
@@ -86,16 +86,16 @@
               %form{:role => "form"}
                 .form-group.form-group-default
                   %label Current Password
-                  %input.form-control{:required => "", :type => "password", ng: {model: "user.current_password"}, autofocus: true}/
+                  %input.form-control{:required => "", :type => "password", ng: {model: "customer.current_password"}, autofocus: true}/
                 .row
                   .col-sm-6
                     .form-group.form-group-default.required
                       %label New Password
-                      %input.form-control{:required => "", :type => "password", ng: {model: "user.password"}}/
+                      %input.form-control{:required => "", :type => "password", ng: {model: "customer.password"}}/
                   .col-sm-6
                     .form-group.form-group-default
                       %label Confirm Password
-                      %input.form-control{:type => "password", ng: {model: "user.password_confirmation"}}/
+                      %input.form-control{:type => "password", ng: {model: "customer.password_confirmation"}}/
                 .btn.btn-primary.pull-right{ng: {click: "save()"}} Change my Password
 
         .col-md-6

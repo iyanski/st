@@ -1,5 +1,5 @@
 do ->
-  homePageCtrl = ($scope, $route, $location, pageview, Job, ChatService) ->
+  homePageCtrl = ($scope, $route, $rootScope, $location, pageview, Job, ChatService) ->
     $scope.page_title = "Dashboard"
     $scope.online = []
     $scope.offline = []
@@ -41,28 +41,29 @@ do ->
           con = presenceRef.push true
           con.onDisconnect().remove()
 
-    # $scope.updatePresence = ->
-    #   angular.forEach $scope.online, (item)->
-    #     $scope.showOnline(item)
-    #   angular.forEach $scope.offline, (item)->
-    #     $scope.showOffline(item)
+    $scope.updatePresence = ->
+      angular.forEach $scope.online, (item)->
+        $scope.showOnline(item)
+      angular.forEach $scope.offline, (item)->
+        $scope.showOffline(item)
 
     $scope.initMyPresence()
     $scope.loadImagePreviewer = (job)->
       items = []
-      for item in job.job_attachments
-        if item.file.url
-          arr = item.file.url.match(/\-(\d+)x(\d+)\.(.*)/)
-        if arr
-          width = arr[1]
-          height = arr[2]
-          items.push
-            src: item.file.url
-            w: width
-            h: height
+      if job.job_attachments
+        for item in job.job_attachments
+          if item.file.url
+            arr = item.file.url.match(/\-(\d+)x(\d+)\.(.*)/)
+          if arr
+            width = arr[1]
+            height = arr[2]
+            items.push
+              src: item.file.url
+              w: width
+              h: height
       $scope.slides = items
 
     
   viewControllers = angular.module('app.home.page.controller', [])
   viewControllers.controller 'homePageCtrl', homePageCtrl
-  homePageCtrl.$inject = [ '$scope', '$route', '$location', 'pageview', 'Job', 'ChatService']
+  homePageCtrl.$inject = [ '$scope', '$route', '$rootScope', '$location', 'pageview', 'Job', 'ChatService']

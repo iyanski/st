@@ -7,10 +7,9 @@ class Api::Customers::JobsController < Api::CustomersController
   end
 
   def create
+    Apartment::Tenant.switch!(current_company.subdomain)
     @job = current_customer.jobs.build job_params
-    puts (job_params[:status].to_i == 1).inspect
     if job_params[:status].to_i == 1
-      puts "========================"
       unless @job.save_and_publish
         render json: {error: @job.errors.full_messages.first}, status: 401
       end
@@ -23,6 +22,9 @@ class Api::Customers::JobsController < Api::CustomersController
 
   def show
     @job = current_customer.jobs.where(id: params[:id]).first()
+    if @job.nil?
+      render json: {error: "Job not found"}, status: 401
+    end
   end
 
   def update
@@ -102,7 +104,7 @@ class Api::Customers::JobsController < Api::CustomersController
 
   def upload
     @job = Job.find(params[:id])
-    unless @job.attach params[:file], current_user
+    unless @job.attach params[:file], current_customer
       render json: {error: @job.errors.full_messages.first}, status: 401
     end
   end

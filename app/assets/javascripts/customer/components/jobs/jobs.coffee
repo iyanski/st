@@ -150,9 +150,9 @@ do ->
     $scope.showUploader = false
     $scope.showDetails = true
     $scope.show_mode = 1
-
+    
     dropzone = new Dropzone ".dropzone",
-      url: Routes.api_users_jobs_path()
+      url: Routes.api_customers_jobs_path()
       params:
         'authenticity_token': $('meta[name="csrf-token"]').attr('content')
 
@@ -175,7 +175,7 @@ do ->
         dropzone.removeAllFiles()
 
     $scope.attachFile = ->
-      dropzone.options.url = Routes.upload_api_users_job_path($scope.job.id)
+      dropzone.options.url = Routes.upload_api_customers_job_path($scope.job.id)
       $scope.showUploader = true
       $scope.showUploaderScreen()
 
@@ -248,9 +248,9 @@ do ->
       $scope.interactive = true
       $scope.msg = ""
       payload = 
-        sender_type: "User"
+        sender_type: "Customer"
         content: msg
-        sender : [$scope.user.first_name, $scope.user.last_name].join(" ")
+        sender : [$scope.customer.first_name, $scope.customer.last_name].join(" ")
         recipient_id: $scope.job.expert.id
         sender_id: $scope.job.customer.id
         created_at: moment()

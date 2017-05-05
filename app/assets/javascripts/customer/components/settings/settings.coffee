@@ -5,7 +5,7 @@ do ->
     $scope.avatar = gon.avatar
 
     $scope.save = ->
-      $scope.user = new Account($scope.customerr)
+      $scope.customer = new Account($scope.customer)
       if $scope.customer.current_password and $scope.customer.password isnt $scope.customer.password_confirmation
         toastr.warning "Your passwords does not match"
       else

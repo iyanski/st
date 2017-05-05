@@ -2,7 +2,7 @@ do ->
   settingsPageCtrl = ($scope, $route, pageview) ->
     $scope.page_title = "Settings"
     $scope.jobs = gon.rabl
-    $scope.user = gon.user
+    $scope.customer = gon.customer
     $scope.content = pageview.page[$route.current.activepage]
     $scope.activepage = $route.current.activepage
     

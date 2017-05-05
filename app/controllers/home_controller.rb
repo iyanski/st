@@ -52,7 +52,7 @@ class HomeController < ApplicationController
     gon.services = Service.where(service_type: 0)
     gon.avatar = current_customer.avatar
     gon.settings = current_customer.customer_setting
-    @jobs = Job.pending + current_customer.jobs.order("updated_at DESC")
+    @jobs = current_customer.jobs.order("updated_at DESC")
     gon.rabl
     render 'app', layout: "app"
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170427163552) do
+ActiveRecord::Schema.define(version: 20170505162601) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,14 @@ ActiveRecord::Schema.define(version: 20170427163552) do
     t.string   "logo"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "conversations", force: :cascade do |t|
+    t.integer  "job_id"
+    t.string   "topic"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["job_id"], name: "index_conversations_on_job_id", using: :btree
   end
 
   create_table "customer_settings", force: :cascade do |t|
@@ -117,6 +125,18 @@ ActiveRecord::Schema.define(version: 20170427163552) do
     t.index ["service_id"], name: "index_faqs_on_service_id", using: :btree
   end
 
+  create_table "job_attachments", force: :cascade do |t|
+    t.integer  "customer_id"
+    t.integer  "expert_id"
+    t.integer  "job_id"
+    t.string   "file"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["customer_id"], name: "index_job_attachments_on_customer_id", using: :btree
+    t.index ["expert_id"], name: "index_job_attachments_on_expert_id", using: :btree
+    t.index ["job_id"], name: "index_job_attachments_on_job_id", using: :btree
+  end
+
   create_table "jobs", force: :cascade do |t|
     t.integer  "customer_id"
     t.integer  "expert_id"
@@ -134,10 +154,23 @@ ActiveRecord::Schema.define(version: 20170427163552) do
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
     t.integer  "service_id"
+    t.datetime "starts_at"
+    t.float    "estimate"
+    t.integer  "etc",          default: 0
     t.index ["category_id"], name: "index_jobs_on_category_id", using: :btree
     t.index ["customer_id"], name: "index_jobs_on_customer_id", using: :btree
     t.index ["expert_id"], name: "index_jobs_on_expert_id", using: :btree
     t.index ["service_id"], name: "index_jobs_on_service_id", using: :btree
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.integer  "conversation_id"
+    t.integer  "user_id"
+    t.text     "content"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["conversation_id"], name: "index_messages_on_conversation_id", using: :btree
+    t.index ["user_id"], name: "index_messages_on_user_id", using: :btree
   end
 
   create_table "requirements", force: :cascade do |t|

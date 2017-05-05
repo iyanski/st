@@ -64,7 +64,7 @@ do ->
           console.log snapshot.val().system
           if !$scope.interactive
             $scope.pushMessage snapshot.val()
-          else if $scope.interactive && snapshot.val().sender_type is "User"
+          else if $scope.interactive && snapshot.val().sender_type is "Customer"
             $scope.pushMessage snapshot.val()
           console.log snapshot.val()
           setTimeout ->

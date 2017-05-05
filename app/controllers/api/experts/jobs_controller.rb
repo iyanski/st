@@ -4,7 +4,7 @@ class Api::Experts::JobsController < Api::ExpertsController
   end
 
   def show
-    @job = Job.find params[:id]
+    @job = current_customer.jobs.where(id: params[:id]).first()
     if @job.nil?
       render json: {error: "Job not found"}, status: 401
     end
@@ -18,8 +18,17 @@ class Api::Experts::JobsController < Api::ExpertsController
     end
   end
 
+  def unclaim
+    @job = Job.find(params[:id])
+    unless @job.unclaim_by current_expert
+      puts @job.inspect
+      render json: {error: "Job not found"}, status: 401
+    end
+  end
+
   def estimate
     @job = Job.find(params[:id])
+    puts params[:job].inspect
     unless @job.estimates params[:job][:estimate], Date.strptime(params[:job][:starts_at], "%m/%d/%Y"), params[:job][:etc]
       render json: {error: "Job not found"}, status: 401
     end

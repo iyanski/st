@@ -18,6 +18,7 @@
     %meta{:content => "", :name => "author"}/
     = Gon::Base.render_data
     = csrf_meta_tags
+    = action_cable_meta_tag
     = javascript_include_tag 'customer'
     = yield :scripts
     = stylesheet_link_tag    'app', media: 'all', 'data-turbolinks-track': 'reload'
@@ -60,15 +61,15 @@
               %img{:alt => "smalltaskers", "data-src" => asset_path("smalltaskers.png"), "data-src-retina" => asset_path("smalltaskers@2x.png"), :height => "22", :src => asset_path("smalltaskers.png")}/
         .pull-right
           / START User Info
-          - if current_expert
+          - if current_customer
             .visible-lg.visible-md.m-t-10
               .pull-left.p-r-10.p-t-10.fs-16.font-heading
-                %span.semi-bold= current_expert.first_name
-                %span.text-master= current_expert.last_name
+                %span.semi-bold= current_customer.first_name
+                %span.text-master= current_customer.last_name
               .dropdown.pull-right
                 %button.profile-dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
                   %span.thumbnail-wrapper.d32.circular.inline.m-t-5
-                    -# %img{:alt => "", "data-src" => asset_path(current_expert.avatar), "data-src-retina" => asset_path(current_expert.avatar), :height => "32", :src => asset_path(current_expert.avatar), :width => "32"}/
+                    -# %img{:alt => "", "data-src" => asset_path(current_customer.avatar), "data-src-retina" => asset_path(current_customer.avatar), :height => "32", :src => asset_path(current_customer.avatar), :width => "32"}/
                 %ul.dropdown-menu.profile-dropdown{:role => "menu"}
                   %li
                     %a{:href => "#/settings"}

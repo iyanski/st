@@ -18,6 +18,7 @@
     %meta{:content => "", :name => "author"}/
     = Gon::Base.render_data
     = csrf_meta_tags
+    = action_cable_meta_tag
     = javascript_include_tag 'admin'
     = yield :scripts
     = stylesheet_link_tag    'app', media: 'all', 'data-turbolinks-track': 'reload'

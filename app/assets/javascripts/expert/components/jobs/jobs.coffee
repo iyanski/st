@@ -61,27 +61,13 @@ do ->
         $scope.messages = []
         console.log $scope.job
         $scope.form_action = ["/api/experts/jobs", job.id, "pay"].join("/")
-        if job and job.expert and job.user
-          $scope.initChat()
+        if job and job.expert and job.customer
           $scope.loadImagePreviewer(job)
+          $scope.initChat()
           setTimeout ->
             $scope.$apply()
             $scope.scrollToBottom()
           , 100
-
-    # $scope.selectJob = (job)->
-    #   $scope.job = job
-    #   $scope.messages = []
-    #   if job and job.expert and job.user
-    #     $scope.initChat()
-    #     $scope.loadImagePreviewer(job)
-    #     setTimeout ->
-    #       $scope.scrollToBottom()
-    #       $scope.$apply()
-    #     , 100
-    #     # notificationsRef = ChatService.ref("messages/" + job.id + [job.expert.id, job.user.id].join("-"))
-    #     # notificationsRef.on 'child_added', (snapshot)->
-    #     #   stimulant = snapshot.val().action
 
     $scope.initChat = ->
       console.log "init job"
@@ -89,12 +75,10 @@ do ->
       if $scope.on and $scope.job
         $scope.msg = ""
         console.log $scope.job
-        $scope.notificationsRef = ChatService.ref("messages/" + $scope.job.id + "/" + [$scope.job.expert.id, $scope.job.user.id].join("/"))
+        $scope.notificationsRef = ChatService.ref("messages/" + $scope.job.id + "/" + [$scope.job.expert.id, $scope.job.customer.id].join("/"))
         $scope.notificationsRef.on 'child_added', (snapshot)->
           console.log snapshot.val().system
-          if !$scope.interactive
-            $scope.pushMessage snapshot.val()
-          else if $scope.interactive && snapshot.val().sender_type is "User"
+          if !$scope.interactive || $scope.interactive && snapshot.val().sender_type is "User"
             $scope.pushMessage snapshot.val()
           console.log snapshot.val()
           setTimeout ->
@@ -121,8 +105,8 @@ do ->
       restrict: 'EA'
       templateUrl: 'expert/components/jobs/index.html'
       controller: 'jobsCtrl'
-      link: ($scope, element, attrs) ->
-        # $('#wysiwyg5').wysihtml5()
+      # link: ($scope, $el, attrs) ->
+
     }
 
   
@@ -132,11 +116,11 @@ do ->
 
 
 do ->
-  jobCtrl = ($scope, $location, Job, ChatService, Message) ->
+  jobCtrl = ($scope, $location, Job, Message) ->
     console.log 'job controller'
     $scope.on = true
     $scope.messages = []
-
+    
     dropzone = new Dropzone ".dropzone",
       url: Routes.api_experts_jobs_path()
       params:
@@ -175,6 +159,21 @@ do ->
         $scope.job = $scope.jobs[pos]
         setTimeout ->
           $scope.initChat()
+        , 100
+
+    $scope.unClaim = (job)->
+      pos = $scope.jobs.indexOf(job)
+      job = new Job(job)
+      $scope.jobs[pos].status = 1
+      $scope.jobs[pos].claimed_at = moment()
+      job.$unclaim (data, xhr)->
+        console.log data
+        $scope.jobs[pos] = job
+        $scope.job = $scope.jobs[pos]
+        console.log $scope.job
+        setTimeout ->
+          $scope.initChat()
+          $scope.$apply()
         , 100
 
     $scope.sendMessage = (e)->
@@ -279,7 +278,7 @@ do ->
 
   viewControllers = angular.module('app.job.controller', [])
   viewControllers.controller 'jobCtrl', jobCtrl
-  jobCtrl.$inject = [ '$scope', '$location', 'Job', 'ChatService', 'Message']
+  jobCtrl.$inject = [ '$scope', '$location', 'Job', 'Message']
 
 do ->
   job = ->

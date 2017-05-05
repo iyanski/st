@@ -10,8 +10,18 @@ class UserMailer < ApplicationMailer
     @job = job
     @recipient = job.customer
     @expert = job.expert
-    @name = job.customer.first_name
+    @name = job.customer.name
     mail(:to => @recipient.email, :subject => "#{@expert.name} will be getting in touch with your regarding your job# #{job.code}: #{job.title}") do |format|
+      format.html
+    end
+  end
+
+  def unclaim(job, expert)
+    @job = job
+    @recipient = job.customer
+    @expert = expert
+    @name = job.customer.name
+    mail(:to => @recipient.email, :subject => "#{@expert.name} unclaimed the job# #{job.code}: #{job.title}") do |format|
       format.html
     end
   end
@@ -19,7 +29,7 @@ class UserMailer < ApplicationMailer
   def estimates(job)
     @job = job
     @recipient = job.customer
-    @name = job.customer.first_name
+    @name = job.customer.name
     mail(:to => @recipient.email, :subject => "An estimate is available for your job# #{job.code}: #{job.title}") do |format|
       format.html
     end
@@ -28,7 +38,7 @@ class UserMailer < ApplicationMailer
   def approved(job)
     @job = job
     @recipient = job.expert
-    @name = job.expert.first_name
+    @name = job.expert.name
     mail(:to => @recipient.email, :subject => "Your estimate for job# #{job.code}: #{job.title} has been approved") do |format|
       format.html
     end
@@ -37,7 +47,7 @@ class UserMailer < ApplicationMailer
   def submit(job)
     @job = job
     @recipient = job.customer
-    @name = job.customer.first_name
+    @name = job.customer.name
     mail(:to => @recipient.email, :subject => "Please check and approve the job# #{job.code}: #{job.title}") do |format|
       format.html
     end
@@ -46,16 +56,16 @@ class UserMailer < ApplicationMailer
   def cancel(job)
     @job = job
     @recipient = job.expert
-    @name = job.expert.first_name
+    @name = job.expert.name
     mail(:to => @recipient.email, :subject => "The client cancelled the job# #{job.code}: #{job.title}") do |format|
       format.html
     end
   end
 
-  def declined(job)
+  def decline(job)
     @job = job
     @recipient = job.expert
-    @name = job.expert.first_name
+    @name = job.expert.name
     mail(:to => @recipient.email, :subject => "Updates for the job# #{job.code}: #{job.title}") do |format|
       format.html
     end
@@ -64,7 +74,7 @@ class UserMailer < ApplicationMailer
   def completed(job)
     @job = job
     @recipient = job.expert
-    @name = job.expert.first_name
+    @name = job.expert.name
     mail(:to => @recipient.email, :subject => "The job# #{job.code}: #{job.title} is now complete") do |format|
       format.html
     end

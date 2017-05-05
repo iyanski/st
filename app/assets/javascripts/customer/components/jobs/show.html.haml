@@ -1,7 +1,8 @@
 / START SPLIT DETAILS
 .split-details{"data-email" => "opened"}
   .no-result{ng: {hide: "job"}}
-    %h1 No job has been selected
+    %h1{ng: {show: "jobs.length"}} No task has been selected
+    %h1{ng: {show: "!jobs.length"}} Start posting a task
   .email-content-wrapper{ng: {show: "job"}}
     .actions-wrapper.menuclipper.bg-master-lightest
       %ul.actions.menuclipper-menu.no-margin.p-l-20
@@ -34,7 +35,7 @@
           %a{ng: {click: "attachFile()"}} Attach File
         %li.no-padding{ng: {show: "job.status > 0"}}
           %a{:href => "#", ng: {click: "showDetails($event)"}} Details
-        %li.no-padding{ng: {show: "job.status > 1"}}
+        %li.no-padding{ng: {show: "job.status > 0"}}
           %a{:href => "#", ng: {click: "showConversations($event)"}} Conversation
         %li.no-padding{ng: {show: "job.status > 0"}}
           %a{:href => "#", ng: {click: "showFiles($event)"}} Files
@@ -45,11 +46,10 @@
     .email-content
       #details.email-content-header{ng: {show: "show_mode == 1"}}
         %span{ng: {show: "job.expert"}}
-          .thumbnail-wrapper.d48.circular.bordered
+          .thumbnail-wrapper.d48.circular.bordered{ng: {show: ""}}
             %img{:alt => "", "data-src" => "{{job.expert.avatar}}", "data-src-retina" => "{{job.expert.avatar}}", :height => "40", :src => "{{job.expert.avatar}}", :width => "40"}/
           .sender.inline.m-l-10
             %p.name.no-margin.bold {{job.expert.name}}
-            %p.website.no-margin http://yahoo.com
           .clearfix
         .subject.m-t-20.m-b-20.semi-bold
           .subject.m-t-20.m-b-20.semi-bold
@@ -116,7 +116,6 @@
             %form.dropzone.no-margin
               .fallback
                 %input{:multiple => "multiple", :name => "file", :type => "file"}/
-          %hr.clearfix
         .panel.panel-default{ng: {hide: "job.job_attachments.length || showUploader"}}
           .panel-body.no-scroll
             .col-md-12.text-center

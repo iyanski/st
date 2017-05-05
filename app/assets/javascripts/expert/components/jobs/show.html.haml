@@ -1,7 +1,8 @@
 / START SPLIT DETAILS
 .split-details{"data-email" => "opened"}
   .no-result{ng: {hide: "job"}}
-    %h1 No job has been selected
+    %h1{ng: {show: "jobs.length"}} No task has been selected
+    %h1{ng: {show: "!jobs.length"}} No tasks available
   .email-content-wrapper{ng: {show: "job"}}
     .actions-wrapper.menuclipper.bg-master-lightest
       %ul.actions.menuclipper-menu.no-margin.p-l-20
@@ -13,10 +14,12 @@
           %a.cursor{ng: {click: "claim(job)"}} Claim
         %li.no-padding{ng: {show: "job.status == 2"}}
           %a{ng: {click: "makeEstimate()"}} Make an Estimate
+        %li.no-padding{ng: {show: "job.status == 2"}}
+          %a.text-danger{ng: {click: "unClaim(job)"}} Unclaim
         %li.no-padding{ng: {show: "job.status == 3"}}
           %a{ng: {click: "editEstimate()"}} Change Estimate
         %li.no-padding{ng: {show: "job.status == 3"}}
-          %a.text-danger{ng: {click: "cancelClaim(job)"}} Unclaim
+          %a.text-danger{ng: {click: "cancelEstimate(job)"}} Cancel Estimate
         %li.no-padding{ng: {show: "job.status == 4"}}
           %a{ng: {click: "submit(job)"}} Submit for Review
       
@@ -35,12 +38,11 @@
       .clearfix
     .email-content
       #details.email-content-header{ng: {show: "show_mode == 1"}}
-        %span{ng: {show: "job.user"}}
+        %span{ng: {show: "job.customer"}}
           .thumbnail-wrapper.d48.circular.bordered
-            %img{:alt => "", "data-src" => "{{job.user.avatar}}", "data-src-retina" => "{{job.user.avatar}}", :height => "40", :src => "{{job.user.avatar}}", :width => "40"}/
+            %img{:alt => "", "data-src" => "{{job.customer.avatar}}", "data-src-retina" => "{{job.customer.avatar}}", :height => "40", :src => "{{job.customer.avatar}}", :width => "40"}/
           .sender.inline.m-l-10
-            %p.name.no-margin.bold {{job.user.name}}
-            %p.website.no-margin http://yahoo.com
+            %p.name.no-margin.bold {{job.customer.name}}
           .clearfix
         .subject.m-t-20.m-b-20.semi-bold
           .subject.m-t-20.m-b-20.semi-bold
@@ -111,15 +113,16 @@
               .fallback
                 %input{:multiple => "multiple", :name => "file", :type => "file"}/
         
-          %hr.clearfix
         .panel.panel-default{ng: {hide: "job.job_attachments.length || showUploader"}}
           .panel-body.no-scroll
             .col-md-12.text-center
               %a.btn.btn-lg.btn-primary{ng: {click: "attachFile()"}} Start adding files
         .panel.panel-default{ng: {show: "job.job_attachments.length"}}
           .panel-heading
-            .panel-title.pull-left
-              Shared Files
+            .panel-title.col-md-12
+              .pull-left
+                Shared Files
+              .pull-right.btn.btn-sm.btn-primary{ng: {click: "attachFile()", hide: "showUploader"}} Attach File
             .tools.clearfix
               %a.collapse{:href => "javascript:;"}
               %a.config{"data-toggle" => "modal", :href => "#attachment-grid-config"}

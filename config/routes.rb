@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   match "/app" => "home#app", via: [:get], as: :app                      # customers
   match "/dashboard" => "home#dashboard", via: [:get], as: :dashboard    # experts
   match "/admin" => "home#admin", via: [:get], as: :admin                # administrator
+  match "/notify" => "orders#notify", via: [:post, :get], as: :notify
 
   resources :companies do
     collection do
@@ -80,6 +81,11 @@ Rails.application.routes.draw do
         end
       end
       resource :settings
+      resource :orders do
+        collection do
+          get 'express/:job_id' => "orders#express", via: [:post], as: :express
+        end
+      end
       resources :jobs do
         member do
           put :publish
@@ -95,4 +101,10 @@ Rails.application.routes.draw do
     end
   end
   resources :job
+  resources :orders do
+    collection do
+      get :return
+      get :cancel
+    end
+  end
 end

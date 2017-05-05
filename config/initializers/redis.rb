@@ -1,0 +1,1 @@
+$redis = Redis::Namespace.new("smalltaskers", :redis => Redis.new)

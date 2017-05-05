@@ -47,7 +47,9 @@ class HomeController < ApplicationController
   end
 
   def app
-    Apartment::Tenant.switch!(current_company.subdomain)
+    company = current_company
+    Apartment::Tenant.switch!(company.subdomain)
+    gon.company = company
     gon.customer = current_customer
     gon.services = Service.where(service_type: 0)
     gon.avatar = current_customer.avatar
@@ -58,7 +60,9 @@ class HomeController < ApplicationController
   end
 
   def dashboard
-    Apartment::Tenant.switch!(current_company.subdomain)
+    company = current_company
+    Apartment::Tenant.switch!(company.subdomain)
+    gon.company = company
     gon.expert = current_expert
     gon.avatar = current_expert.avatar
     gon.settings = current_expert.expert_setting
@@ -68,8 +72,9 @@ class HomeController < ApplicationController
   end
 
   def admin
-    Apartment::Tenant.switch!(current_company.subdomain)
-    gon.company = current_company
+    company = current_company
+    Apartment::Tenant.switch!(company.subdomain)
+    gon.company = company
     gon.user = current_user
     gon.avatar = current_user.avatar
     @jobs = Job.all.order("updated_at DESC")

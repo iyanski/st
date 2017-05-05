@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170505162601) do
+ActiveRecord::Schema.define(version: 20170505190555) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -157,7 +157,9 @@ ActiveRecord::Schema.define(version: 20170505162601) do
     t.datetime "starts_at"
     t.float    "estimate"
     t.integer  "etc",          default: 0
+    t.integer  "company_id"
     t.index ["category_id"], name: "index_jobs_on_category_id", using: :btree
+    t.index ["company_id"], name: "index_jobs_on_company_id", using: :btree
     t.index ["customer_id"], name: "index_jobs_on_customer_id", using: :btree
     t.index ["expert_id"], name: "index_jobs_on_expert_id", using: :btree
     t.index ["service_id"], name: "index_jobs_on_service_id", using: :btree
@@ -171,6 +173,37 @@ ActiveRecord::Schema.define(version: 20170505162601) do
     t.datetime "updated_at",      null: false
     t.index ["conversation_id"], name: "index_messages_on_conversation_id", using: :btree
     t.index ["user_id"], name: "index_messages_on_user_id", using: :btree
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer  "customer_id"
+    t.integer  "job_id"
+    t.string   "ip"
+    t.string   "express_token"
+    t.string   "express_payer_id"
+    t.float    "price"
+    t.boolean  "status"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["customer_id"], name: "index_orders_on_customer_id", using: :btree
+    t.index ["job_id"], name: "index_orders_on_job_id", using: :btree
+  end
+
+  create_table "payment_transactions", force: :cascade do |t|
+    t.integer  "company_id"
+    t.integer  "job_id"
+    t.integer  "customer_id"
+    t.integer  "expert_id"
+    t.float    "cost"
+    t.float    "commission"
+    t.float    "fee"
+    t.datetime "release_at"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["company_id"], name: "index_payment_transactions_on_company_id", using: :btree
+    t.index ["customer_id"], name: "index_payment_transactions_on_customer_id", using: :btree
+    t.index ["expert_id"], name: "index_payment_transactions_on_expert_id", using: :btree
+    t.index ["job_id"], name: "index_payment_transactions_on_job_id", using: :btree
   end
 
   create_table "requirements", force: :cascade do |t|

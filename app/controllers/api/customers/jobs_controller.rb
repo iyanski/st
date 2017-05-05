@@ -1,5 +1,5 @@
 class Api::Customers::JobsController < Api::CustomersController
-  skip_before_action :verify_authenticity_token, :only => :pay
+  # skip_before_action :verify_authenticity_token, :only => :pay
   def index
     # @@data = File.read("#{Rails.root}/public/emails.json")
     @jobs = current_customer.jobs
@@ -9,6 +9,7 @@ class Api::Customers::JobsController < Api::CustomersController
   def create
     Apartment::Tenant.switch!(current_company.subdomain)
     @job = current_customer.jobs.build job_params
+    @job.company = current_company
     if job_params[:status].to_i == 1
       unless @job.save_and_publish
         render json: {error: @job.errors.full_messages.first}, status: 401
@@ -81,26 +82,26 @@ class Api::Customers::JobsController < Api::CustomersController
     render json: {content: params[:content]}
   end
 
-  def pay
-    require "stripe"
-    Stripe.api_key = "sk_test_w4DScZiWDQFiNubpgAO3z45g"
-    job = current_customer.jobs.where(id: params[:id]).first
-    rate = 59
-    if !job.nil?
-      amount = (job.estimate * rate * 100).to_i
-      charge = Stripe::Charge.create(
-        :amount => amount,
-        :currency => "usd",
-        :source => params[:stripeToken],
-        :description => "Charge for Job(#{job.id})",
-        :metadata => { id: job.id, job: job.title }
-      )
-      if charge.paid && job.approved
-        PaymentTransaction.create_for_(job)
-        redirect_to root_url + "/#/job/#{job.id}"
-      end
-    end
-  end
+  # def pay
+  #   require "stripe"
+  #   Stripe.api_key = "sk_test_w4DScZiWDQFiNubpgAO3z45g"
+  #   job = current_customer.jobs.where(id: params[:id]).first
+  #   rate = 59
+  #   if !job.nil?
+  #     amount = (job.estimate * rate * 100).to_i
+  #     charge = Stripe::Charge.create(
+  #       :amount => amount,
+  #       :currency => "usd",
+  #       :source => params[:stripeToken],
+  #       :description => "Charge for Job(#{job.id})",
+  #       :metadata => { id: job.id, job: job.title }
+  #     )
+  #     if charge.paid && job.approved
+  #       PaymentTransaction.create_for_(job)
+  #       redirect_to root_url + "/#/job/#{job.id}"
+  #     end
+  #   end
+  # end
 
   def upload
     @job = Job.find(params[:id])

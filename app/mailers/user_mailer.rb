@@ -62,10 +62,10 @@ class UserMailer < ApplicationMailer
     end
   end
 
-  def decline(job)
+  def decline(job, expert)
     @job = job
-    @recipient = job.expert
-    @name = job.expert.name
+    @recipient = expert
+    @name = expert.name
     mail(:to => @recipient.email, :subject => "Updates for the job# #{job.code}: #{job.title}") do |format|
       format.html
     end

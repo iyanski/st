@@ -4,7 +4,7 @@ do ->
     $scope.job_id = gon.job_id
 
     $scope.initJobUpdates = ->
-      jobsRef = ChatService.ref("updates").limitToLast(1)
+      jobsRef = ChatService.ref("updates/" + gon.company.id).limitToLast(1)
       jobsRef.on 'child_added', (snapshot)->
         if $scope.loadUpdates
           job = new Job(id: snapshot.val().job_id)
@@ -59,7 +59,7 @@ do ->
       if $scope.on and $scope.job
         $scope.msg = ""
         console.log $scope.job
-        $scope.notificationsRef = ChatService.ref("messages/" + $scope.job.id + "/" + [$scope.job.expert.id, $scope.job.user.id].join("/"))
+        $scope.notificationsRef = ChatService.ref("messages/" + gon.company.id + "/" + $scope.job.id + "/" + [$scope.job.expert.id, $scope.job.user.id].join("/"))
         $scope.notificationsRef.on 'child_added', (snapshot)->
           console.log snapshot.val().system
           if !$scope.interactive

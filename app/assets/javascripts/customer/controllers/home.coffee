@@ -34,7 +34,7 @@ do ->
       $scope.composeJob = false
 
     $scope.initMyPresence = ->
-      presenceRef = ChatService.ref(['presence','users',$scope.customer.id,'connections'].join("/"))
+      presenceRef = ChatService.ref(['presence',gon.company.id,'users',$scope.customer.id,'connections'].join("/"))
       connectedRef = ChatService.ref('.info/connected')
       connectedRef.on 'value', (snap)->
         if snap.val() is true

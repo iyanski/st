@@ -6,7 +6,7 @@ do ->
     $scope.job_id = gon.job_id
 
     $scope.initJobUpdates = ->
-      jobsRef = ChatService.ref("updates").limitToLast(1)
+      jobsRef = ChatService.ref("updates/" + gon.company.id).limitToLast(1)
       jobsRef.on 'child_added', (snapshot)->
         if $scope.loadUpdates
           job = new Job(id: snapshot.val().job_id)
@@ -23,6 +23,11 @@ do ->
                 $scope.initPresence()
                 $scope.$apply()
               , 100
+            , (res)->
+              if res.data.error is "Job not found"
+                pos = $scope.jobs.indexOf(item)
+                $scope.jobs.splice(pos, 1)
+
         $scope.loadUpdates = true
 
     $scope.initJobUpdates()
@@ -39,7 +44,7 @@ do ->
       gallery.init()
 
     $scope.initPresence = ->
-      presenceRef = ChatService.ref(['presence','users'].join("/"))
+      presenceRef = ChatService.ref(['presence',gon.company.id,'users'].join("/"))
       presenceRef.on 'value', (snap)->
         angular.forEach snap.val(), (value, key)->
           $scope.showOnline(key)
@@ -57,25 +62,27 @@ do ->
         $scope.notificationsRef.off 'child_added'
       if $scope.job != job
         $scope.job = job
+        customer = job.customer
+        expert = job.expert
         $scope.showUploader = false
         $scope.messages = []
         console.log $scope.job
         $scope.form_action = ["/api/experts/jobs", job.id, "pay"].join("/")
         if job and job.expert and job.customer
           $scope.loadImagePreviewer(job)
-          $scope.initChat()
+          $scope.initChat(customer, expert)
           setTimeout ->
             $scope.$apply()
             $scope.scrollToBottom()
           , 100
 
-    $scope.initChat = ->
+    $scope.initChat = (customer, expert)->
       console.log "init job"
       $scope.interactive = false
       if $scope.on and $scope.job
         $scope.msg = ""
         console.log $scope.job
-        $scope.notificationsRef = ChatService.ref("messages/" + $scope.job.id + "/" + [$scope.job.expert.id, $scope.job.customer.id].join("/"))
+        $scope.notificationsRef = ChatService.ref("messages/" + gon.company.id + "/" + $scope.job.id + "/" + [expert.id, customer.id].join("/"))
         $scope.notificationsRef.on 'child_added', (snapshot)->
           console.log snapshot.val().system
           if !$scope.interactive || $scope.interactive && snapshot.val().sender_type is "User"
@@ -151,6 +158,8 @@ do ->
     $scope.claim = (job)->
       pos = $scope.jobs.indexOf(job)
       job = new Job(job)
+      customer = job.customer
+      expert = job.expert
       $scope.jobs[pos].status = 2
       $scope.jobs[pos].claimed_at = moment()
       job.$claim (data, xhr)->
@@ -158,10 +167,12 @@ do ->
         $scope.jobs[pos] = job
         $scope.job = $scope.jobs[pos]
         setTimeout ->
-          $scope.initChat()
+          $scope.initChat(customer, expert)
         , 100
 
     $scope.unClaim = (job)->
+      customer = job.customer
+      expert = job.expert
       pos = $scope.jobs.indexOf(job)
       job = new Job(job)
       $scope.jobs[pos].status = 1
@@ -172,7 +183,7 @@ do ->
         $scope.job = $scope.jobs[pos]
         console.log $scope.job
         setTimeout ->
-          $scope.initChat()
+          $scope.initChat(customer, expert)
           $scope.$apply()
         , 100
 

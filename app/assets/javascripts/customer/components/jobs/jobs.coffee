@@ -1,5 +1,5 @@
 do ->
-  jobsCtrl = ($scope, $location, Job, ChatService, $routeParams) ->
+  jobsCtrl = ($scope, $location, Job, ChatService, $routeParams, Order) ->
     console.log 'jobs controller'
     $scope.showUploader = false
     $scope.loadUpdates = false
@@ -8,7 +8,7 @@ do ->
     $scope.services = gon.services
     
     $scope.initJobUpdates = ->
-      jobsRef = ChatService.ref("updates").limitToLast(1)
+      jobsRef = ChatService.ref("updates/" + gon.company.id).limitToLast(1)
       jobsRef.on 'child_added', (snapshot)->
         if $scope.loadUpdates
           job = new Job(id: snapshot.val().job_id)
@@ -25,6 +25,10 @@ do ->
                 $scope.$apply()
                 $scope.initPresence()
               , 100
+            , (res)->
+              if res.data.error is "Job not found"
+                pos = $scope.jobs.indexOf(item)
+                $scope.jobs.splice(pos, 1)
         $scope.loadUpdates = true
 
     $scope.initJobUpdates()
@@ -41,7 +45,7 @@ do ->
       gallery.init()
 
     $scope.initPresence = ->
-      presenceRef = ChatService.ref(['presence','experts'].join("/"))
+      presenceRef = ChatService.ref(['presence',gon.company.id,'experts'].join("/"))
       presenceRef.on 'value', (snap)->
         angular.forEach snap.val(), (value, key)->
           $scope.showOnline(key)
@@ -83,7 +87,7 @@ do ->
       $scope.interactive = false
       if $scope.on and $scope.job
         $scope.msg = ""
-        $scope.notificationsRef = ChatService.ref("messages/" + $scope.job.id + "/" + [$scope.job.expert.id, $scope.job.customer.id].join("/"))
+        $scope.notificationsRef = ChatService.ref("messages/" + gon.company.id + "/" + $scope.job.id + "/" + [$scope.job.expert.id, $scope.job.customer.id].join("/"))
         $scope.notificationsRef.on 'child_added', (snapshot)->
           if !$scope.interactive
             $scope.pushMessage snapshot.val()
@@ -117,14 +121,14 @@ do ->
 
     $scope.approveAndPay = (job)->
       $scope.processing = true
-      # order = new Order()
-      # order.job_id = $scope.job.id
-      # order.$paypal_url (data, xhr)->
-      #   location.href = data.proceed_url
+      order = new Order()
+      order.job_id = $scope.job.id
+      order.$paypal_url (data, xhr)->
+        location.href = data.proceed_url
 
   viewControllers = angular.module('app.jobs.controller', [])
   viewControllers.controller 'jobsCtrl', jobsCtrl
-  jobsCtrl.$inject = [ '$scope', '$location', 'Job', 'ChatService', '$routeParams']
+  jobsCtrl.$inject = [ '$scope', '$location', 'Job', 'ChatService', '$routeParams', 'Order']
 
 do ->
   jobs = ->

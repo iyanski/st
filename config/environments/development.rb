@@ -58,4 +58,14 @@ Rails.application.configure do
   config.action_cable.mount_path = '/suck8ts'
   config.action_cable.disable_request_forgery_protection = true
   config.active_job.queue_adapter     = :sidekiq
+
+  config.after_initialize do
+    ActiveMerchant::Billing::Base.mode = :test
+      paypal_options = {
+        :login => ENV["paypal_login"],
+        :password => ENV["paypal_password"],
+        :signature => ENV["paypal_signature"]
+      }
+    ::EXPRESS_GATEWAY = ActiveMerchant::Billing::PaypalExpressGateway.new(paypal_options)
+  end
 end

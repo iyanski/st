@@ -36,7 +36,7 @@ do ->
       $scope.composeJob = false
 
     $scope.initMyPresence = ->
-      presenceRef = ChatService.ref(['presence','experts',$scope.expert.id,'connections'].join("/"))
+      presenceRef = ChatService.ref(['presence',gon.company.id,'experts',$scope.expert.id,'connections'].join("/"))
       connectedRef = ChatService.ref('.info/connected')
       connectedRef.on 'value', (snap)->
         if snap.val() is true
@@ -45,7 +45,7 @@ do ->
 
     $scope.initNewJobRequest = ->
       # console.log angular.element(".user-avatar").length
-      notificationsRef = ChatService.ref("jobs").limitToLast(1)
+      notificationsRef = ChatService.ref("jobs/" + gon.company.id).limitToLast(1)
       notificationsRef.on 'child_added', (snapshot)->
         if snapshot.val()
           $scope.find_job_by_id snapshot.key, (job)->

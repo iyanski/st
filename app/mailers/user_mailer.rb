@@ -53,6 +53,15 @@ class UserMailer < ApplicationMailer
     end
   end
 
+  def cancel_estimates(job, expert)
+    @job = job
+    @recipient = expert
+    @name = expert.name
+    mail(:to => @recipient.email, :subject => "The estimate has been cancelled for the job# #{job.code}: #{job.title}") do |format|
+      format.html
+    end
+  end
+
   def cancel(job)
     @job = job
     @recipient = job.expert

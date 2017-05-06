@@ -4,7 +4,6 @@ do ->
     $scope.showUploader = false
     $scope.loadUpdates = false
     $scope.job_id = gon.job_id
-    # $scope.categories = gon.categories
     $scope.services = gon.services
     
     $scope.initJobUpdates = ->
@@ -13,22 +12,27 @@ do ->
         if $scope.loadUpdates
           job = new Job(id: snapshot.val().job_id)
           $scope.find_job_by_id job.id, (item)->
+            $scope.selectJob($scope.job)
+            customer = expert = {}
+            angular.copy item.customer, customer
+            angular.copy item.expert, expert
             job.$get (data, xhr)->
-              $scope.jobs[$scope.jobs.indexOf(item)] = job
+              $scope.jobs[$scope.jobs.indexOf(item)] = new Job(data)
               if $scope.job and $scope.job.id is job.id
                 $scope.job = data
                 $scope.refreshCurrentJob(job)
-                console.log "You are looking at the current job"
               else
                 console.log "A job has been updated"
+                toastr.success ["The job", data.title, "has been updated"].join(" ")
               setTimeout ->
-                $scope.$apply()
                 $scope.initPresence()
+                $scope.$apply()
               , 100
             , (res)->
               if res.data.error is "Job not found"
                 pos = $scope.jobs.indexOf(item)
                 $scope.jobs.splice(pos, 1)
+
         $scope.loadUpdates = true
 
     $scope.initJobUpdates()
@@ -59,7 +63,9 @@ do ->
       $scope.messages = []
       $scope.loadImagePreviewer(job)
       if job and job.expert and job.customer
-        $scope.initChat()
+        console.log $scope.job.status
+        if job.status > 1
+          $scope.initChat()
         setTimeout ->
           $scope.$apply()
           $scope.scrollToBottom()
@@ -87,6 +93,7 @@ do ->
       $scope.interactive = false
       if $scope.on and $scope.job
         $scope.msg = ""
+        console.log "show chat", $scope.job.expert.id, $scope.job.customer.id
         $scope.notificationsRef = ChatService.ref("messages/" + gon.company.id + "/" + $scope.job.id + "/" + [$scope.job.expert.id, $scope.job.customer.id].join("/"))
         $scope.notificationsRef.on 'child_added', (snapshot)->
           if !$scope.interactive
@@ -183,30 +190,47 @@ do ->
       $scope.showUploader = true
       $scope.showUploaderScreen()
 
+
+    $scope.enableFormControls = ->
+      angular.element(".btn-controls button").removeClass("disabled")
+      true
+
+    $scope.disableFormControls = ->
+      angular.element(".btn-controls button").addClass("disabled")
+      true
+
     $scope.publishJob = ->
       $scope.newJob.status = 1
+      $scope.disableFormControls()
       $scope.newJob.$save (data, xhr)->
         $scope.jobs.unshift data
         pos = $scope.jobs.indexOf(data)
         $scope.selectedJob = $scope.jobs[pos]
         $scope.job = new Job(data)
         $scope.cancelCompose()
+        $scope.enableFormControls()
+
 
     $scope.draftJob = ->
+      $scope.disableFormControls()
       $scope.newJob.$save (data, xhr)->
         $scope.jobs.unshift data
         $scope.selectedJob = data
         $scope.cancelCompose()
+        $scope.enableFormControls()
 
     $scope.publish = (job)->
+      $scope.disableFormControls()
       pos = $scope.jobs.indexOf(job)
       job = new Job(job)
       $scope.jobs[pos].status = 1
       $scope.jobs[pos].created_at = new Date()
       job.$publish (data, xhr)->
         console.log data
+        $scope.enableFormControls()
 
     $scope.unpublish = (job)->
+      $scope.disableFormControls()
       pos = $scope.jobs.indexOf(job)
       job = new Job(job)
       $scope.jobs[pos].status = 0

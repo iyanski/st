@@ -30,13 +30,6 @@
               %label{:for => "option7"} 7
               %input#option8{ng: {model: "estimate.hours"}, :name => "estimate", :type => "radio", :value => 8}/
               %label{:for => "option8"} 8
-          .form-group
-            .row
-              .col-md-4
-                Revenue:
-                %span.bold {{(estimate.hours * rate) - ((percentage / 100) * (estimate.hours * rate)) | currency : "$" : 2}}
-              .col-md-4 {{estimate.hours}} Hour(s)
-              .col-md-4 Fee: {{ ((percentage / 100) * (estimate.hours * rate)) | currency : "$" : 2 }}
           .clearfix
           .form-group
             %label{for: "etc"} Turn-around Time
@@ -50,6 +43,15 @@
               %input.form-control{ng: {model: "estimate.starts_at"}, :type => "text"}/
               %span.input-group-addon
                 %i.fa.fa-calendar
+          -# .form-group
+          -#   %label This is the amount that the client will see.
+          -#   %h5 {{(estimate.hours * job.service.price) | currency : "$" : 2}}
+          -# .form-group
+          -#   %label Transaction Fee
+          -#   %h5 {{(estimate.hours * job.service.price) - ((job.service.experts_rate / 100) * (estimate.hours * job.service.price)) | currency : "$" : 2}}
+          .form-group
+            %label This is how much you will earn
+            %h5 {{ ((job.service.experts_rate / 100) * (estimate.hours * job.service.price)) | currency : "$" : 2 }}
 
       .modal-footer
         %button.btn.btn-primary{ng: {class: "{'disabled': !estimate.etc}", click: "sendEstimate()"}} Send Estimate

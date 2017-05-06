@@ -3,6 +3,7 @@ do ->
     console.log 'jobs controller'
     $scope.showUploader = false
     $scope.loadUpdates = false
+    # $scope.categories = gon.categories
     $scope.job_id = gon.job_id
 
     $scope.initJobUpdates = ->
@@ -11,14 +12,18 @@ do ->
         if $scope.loadUpdates
           job = new Job(id: snapshot.val().job_id)
           $scope.find_job_by_id job.id, (item)->
+            $scope.selectJob($scope.job)
+            customer = expert = {}
+            angular.copy item.customer, customer
+            angular.copy item.expert, expert
             job.$get (data, xhr)->
-              $scope.jobs[$scope.jobs.indexOf(item)] = data
+              $scope.jobs[$scope.jobs.indexOf(item)] = new Job(data)
               if $scope.job and $scope.job.id is job.id
                 $scope.job = data
                 $scope.refreshCurrentJob(job)
-                console.log "You are looking at the current job"
               else
                 console.log "A job has been updated"
+                toastr.success ["The job", data.title, "has been updated"].join(" ")
               setTimeout ->
                 $scope.initPresence()
                 $scope.$apply()
@@ -33,7 +38,6 @@ do ->
     $scope.initJobUpdates()
 
     $scope.openImagePreview = (index, $event)->
-      console.log index
       pswpElement = $(".pswp")[0]
       $event.preventDefault()
       options = 
@@ -55,39 +59,45 @@ do ->
     $scope.initPresence()
 
     $scope.refreshCurrentJob = (job)->
-      $scope.selectJob(job)
+      $scope.job = job
+      $scope.messages = []
+      $scope.loadImagePreviewer(job)
+      if job and job.expert and job.customer
+        if $scope.job.status > 1
+          $scope.initChat()
+        setTimeout ->
+          $scope.$apply()
+          $scope.scrollToBottom()
+        , 100
 
     $scope.selectJob = (job)->
       if $scope.notificationsRef
         $scope.notificationsRef.off 'child_added'
+      $scope.show_mode = 1
       if $scope.job != job
         $scope.job = job
-        customer = job.customer
-        expert = job.expert
         $scope.showUploader = false
         $scope.messages = []
-        console.log $scope.job
         $scope.form_action = ["/api/experts/jobs", job.id, "pay"].join("/")
+        
         if job and job.expert and job.customer
+          $scope.initChat()
           $scope.loadImagePreviewer(job)
-          $scope.initChat(customer, expert)
           setTimeout ->
             $scope.$apply()
             $scope.scrollToBottom()
           , 100
 
-    $scope.initChat = (customer, expert)->
-      console.log "init job"
+    $scope.initChat = ->
       $scope.interactive = false
       if $scope.on and $scope.job
         $scope.msg = ""
-        console.log $scope.job
-        $scope.notificationsRef = ChatService.ref("messages/" + gon.company.id + "/" + $scope.job.id + "/" + [expert.id, customer.id].join("/"))
+        $scope.notificationsRef = ChatService.ref("messages/" + gon.company.id + "/" + $scope.job.id + "/" + [$scope.job.expert.id, $scope.job.customer.id].join("/"))
         $scope.notificationsRef.on 'child_added', (snapshot)->
-          console.log snapshot.val().system
-          if !$scope.interactive || $scope.interactive && snapshot.val().sender_type is "User"
+          if !$scope.interactive
             $scope.pushMessage snapshot.val()
-          console.log snapshot.val()
+          else if $scope.interactive && snapshot.val().sender_type is "Expert"
+            $scope.pushMessage snapshot.val()
           setTimeout ->
             $scope.scrollToBottom()
             $scope.$apply()
@@ -95,7 +105,6 @@ do ->
 
     if gon.job_id
       $scope.find_job_by_id $scope.job_id, (job)->
-        console.log job
         $scope.selectJob(job)
 
     if $routeParams.id
@@ -156,34 +165,47 @@ do ->
       $scope.showUploaderScreen()
 
     $scope.claim = (job)->
+      customer = expert = {}
       pos = $scope.jobs.indexOf(job)
       job = new Job(job)
-      customer = job.customer
-      expert = job.expert
+      angular.copy job.customer, customer
+      angular.copy job.expert, expert
       $scope.jobs[pos].status = 2
       $scope.jobs[pos].claimed_at = moment()
       job.$claim (data, xhr)->
-        console.log data
         $scope.jobs[pos] = job
         $scope.job = $scope.jobs[pos]
         setTimeout ->
-          $scope.initChat(customer, expert)
+          $scope.initChat()
         , 100
 
     $scope.unClaim = (job)->
-      customer = job.customer
-      expert = job.expert
+      customer = expert = {}
       pos = $scope.jobs.indexOf(job)
       job = new Job(job)
+      angular.copy job.customer, customer
+      angular.copy job.expert, expert
       $scope.jobs[pos].status = 1
       $scope.jobs[pos].claimed_at = moment()
       job.$unclaim (data, xhr)->
-        console.log data
         $scope.jobs[pos] = job
         $scope.job = $scope.jobs[pos]
-        console.log $scope.job
         setTimeout ->
-          $scope.initChat(customer, expert)
+          $scope.$apply()
+        , 100
+
+    $scope.cancelEstimate = (job)->
+      customer = expert = {}
+      angular.copy job.customer, customer
+      angular.copy job.expert, expert
+      pos = $scope.jobs.indexOf(job)
+      $scope.jobs[pos].status = 1
+      job = new Job(job)
+      console.log "Setting status to published and unclaimed"
+      job.$cancel (data, xhr)->
+        $scope.jobs[pos] = job
+        $scope.job = job
+        setTimeout ->
           $scope.$apply()
         , 100
 
@@ -229,12 +251,13 @@ do ->
         scrollTop: target[0].scrollHeight
       , 100
 
-    $scope.makeEstimate = ->
+    $scope.makeEstimate = (job)->
       $scope.showModalEstimate = true
       $scope.estimate = 
         hours: 1
         etc: 1
         starts_at: moment().format("L")
+      $scope.job = job
       $("#estimate-modal").modal("show")
       true
 
@@ -247,7 +270,6 @@ do ->
       setTimeout ->
         $scope.$apply()
       , 100
-      console.log $scope.estimate
       $("#estimate-modal").modal("show")
       true
 
@@ -259,7 +281,6 @@ do ->
       job.status = 3
       job.estimated_at = moment()
       job.$estimate (data, xhr)->
-        console.log data
         setTimeout ->
           $("#estimate-modal").modal("hide")
         , 100

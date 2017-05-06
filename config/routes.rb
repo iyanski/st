@@ -65,6 +65,7 @@ Rails.application.routes.draw do
           put :claim
           put :unclaim
           put :estimate
+          put :cancel
           put :submit
           put :upload
           post :chat

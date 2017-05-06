@@ -4,6 +4,7 @@ do ->
       hours: 1
       etc: 1
       starts_at: moment().format("L")
+    console.log $scope.job
   viewControllers = angular.module('app.estimate.controller', [])
   viewControllers.controller 'estimateCtrl', estimateCtrl
   estimateCtrl.$inject = [ '$scope', '$location', 'Job']

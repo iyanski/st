@@ -13,7 +13,7 @@
         %li.no-padding{ng: {show: "job.status == 1"}}
           %a.cursor{ng: {click: "claim(job)"}} Claim
         %li.no-padding{ng: {show: "job.status == 2"}}
-          %a{ng: {click: "makeEstimate()"}} Make an Estimate
+          %a{ng: {click: "makeEstimate(job)"}} Make an Estimate
         %li.no-padding{ng: {show: "job.status == 2"}}
           %a.text-danger{ng: {click: "unClaim(job)"}} Unclaim
         %li.no-padding{ng: {show: "job.status == 3"}}
@@ -30,7 +30,7 @@
           %a{:href => "#", ng: {click: "showDetails($event)"}} Details
         %li.no-padding{ng: {show: "job.status > 1"}}
           %a{:href => "#", ng: {click: "showConversations($event)"}} Conversation
-        %li.no-padding{ng: {show: "job.status > 0"}}
+        %li.no-padding{ng: {show: "job.status > 1"}}
           %a{:href => "#", ng: {click: "showFiles($event)"}} Files
         -# %li.no-padding
         -#   %a{:href => "#"} Report an Issue
@@ -92,11 +92,11 @@
                 %span{ng: {show: "message.sender_type == 'Expert'"}}
                   %strong you
                   %small.pull-right {{ message.created_at }}
-                %span{ng: {show: "message.sender_type == 'User'"}}
+                %span{ng: {show: "message.sender_type == 'Customer'"}}
                   %strong {{message.sender}}
                   %small.pull-right {{ message.created_at }}
                 %div{"ng-bind-html" => "message.content | nl2br | str2link"}
-      #attachments{ng: {show: "show_mode == 3"}}
+      #attachments{ng: {show: "show_mode == 3 && job.status > 1"}}
         .panel.panel-default{ng: {show: "showUploader"}}
           .panel-heading
             .panel-title.pull-left

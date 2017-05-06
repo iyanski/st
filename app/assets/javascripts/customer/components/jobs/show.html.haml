@@ -18,7 +18,7 @@
           -# %form{:action => "{{form_action}}", :method => "POST"}
           -#   %script.stripe-button{"data-amount" => "{{ price }}", "data-description" => "Accept & Payment Form", "data-image" => "https://stripe.com/img/documentation/checkout/marketplace.png", "data-key" => "pk_test_lA6WPdWdOmwzy5wGMTLaOL25", "data-locale" => "auto", "data-name" => "SmallTaskers", "data-label" => "Approve & Pay {{rate * job.estimate | currency : '$' : 2}}", :src => "https://checkout.stripe.com/checkout.js"}
           -#     :cdata
-          %a{ng: {click: "approveAndPay(job)", hide: "processing"}} Approve & Pay {{rate * job.estimate | currency : "$" : 2}}
+          %a{ng: {click: "approveAndPay(job)", hide: "processing"}} Approve & Pay {{job.service.price * job.estimate | currency : "$" : 2}}
           %a{ng: {show: "processing"}} Processing...
 
         %li.no-padding{ng: {show: "job.status == 4"}}
@@ -46,9 +46,9 @@
     .email-content
       #details.email-content-header{ng: {show: "show_mode == 1"}}
         %span{ng: {show: "job.expert"}}
-          .thumbnail-wrapper.d48.circular.bordered{ng: {show: ""}}
+          .thumbnail-wrapper.d48.circular.bordered.m-r-10{ng: {show: ""}}
             %img{:alt => "", "data-src" => "{{job.expert.avatar}}", "data-src-retina" => "{{job.expert.avatar}}", :height => "40", :src => "{{job.expert.avatar}}", :width => "40"}/
-          .sender.inline.m-l-10
+          .sender.inline
             %p.name.no-margin.bold {{job.expert.name}}
           .clearfix
         .subject.m-t-20.m-b-20.semi-bold
@@ -93,7 +93,7 @@
                   %span {{message.sender}}
                   %span{ng: {bind: {html: "message.content | nl2br | str2link"}}}
               .p-b-10.clearfix{ng: {show: "message.sender_type"}}
-                %span{ng: {show: "message.sender_type == 'User'"}}
+                %span{ng: {show: "message.sender_type == 'Customer'"}}
                   %strong you
                   %small.pull-right {{ message.created_at }}
                 %span{ng: {show: "message.sender_type == 'Expert'"}}

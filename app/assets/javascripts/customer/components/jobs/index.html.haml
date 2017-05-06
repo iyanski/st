@@ -10,7 +10,7 @@
           %ul.no-padding
             %li.item.padding-15{"data-email-id" => "{{item.id}}", ng: {repeat: "item in jobs | orderBy:'-updated_at'", click: "selectJob(item)", class: "{'active' : item.id == job.id}"}}
               .thumbnail-wrapper.d32.circular.bordered.expert-avatar.b-grey{data: {expert: {id: "{{item.expert.id}}"}}}
-                %img{:alt => "", :height => "40", ng: {src: "{{item.expert.avatar}}", show: "item.expert"}, :width => "40"}/
+                %img{:alt => "", :height => "40", ng: {src: "{{item.expert.avatar}}", show: "item.expert.avatar"}, :width => "40"}/
                 %img{:alt => "", :height => "40", ng: {src: "/images/missing/thumb/missing.png", hide: "item.expert"}, :width => "40"}/
               .inline.m-l-15
                 %p.recipients.no-margin.hint-text.small{ng: {show: "item.expert"}} {{item.expert.name}}
@@ -54,7 +54,7 @@
             %label Describe this Task
             .wysiwyg5-wrapper.b-a.b-grey.m-b-10
               %textarea#wysiwyg5.wysiwyg{rows: 20, ng: {model: "newJob.description"}}
-          .form-group
+          .form-group.btn-controls
             %button.btn.btn-primary.btn-cons{ng: {click: "publishJob()", class: "{'disabled': !newJob.title.length}"}} Publish
             %button.btn.btn-white.btn-cons{ng: {click: "draftJob()", class: "{'disabled': !newJob.title.length}"}} Draft
             %button.btn.btn-white.btn-cons{ng: {click: "cancelCompose()"}} Cancel

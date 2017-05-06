@@ -34,6 +34,13 @@ class Api::Experts::JobsController < Api::ExpertsController
     end
   end
 
+  def cancel
+    @job = Job.find(params[:id])
+    unless @job.cancel_estimate
+      render json: {error: "Job not found"}, status: 401
+    end
+  end
+
   def submit
     @job = Job.find(params[:id])
     unless @job.submit
@@ -43,7 +50,7 @@ class Api::Experts::JobsController < Api::ExpertsController
 
   def chat
     @job = current_expert.jobs.where(id: params[:id]).first
-    @job.chat_to @job.user, params[:content]
+    @job.chat_to @job.customer, params[:content]
     render json: {content: params[:content]}
   end
 

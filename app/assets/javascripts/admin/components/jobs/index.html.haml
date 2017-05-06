@@ -9,11 +9,11 @@
         .list-view-group-container
           %ul.no-padding
             %li.item.padding-15{"data-email-id" => "{{item.id}}", ng: {repeat: "item in jobs | orderBy:'-updated_at'", click: "selectJob(item)", class: "{'active' : item.id == job.id}"}}
-              .thumbnail-wrapper.d32.circular.bordered.user-avatar.b-grey{data: {user: {id: "{{item.user.id}}"}}}
-                %img{:alt => "", :height => "40", ng: {src: "{{item.user.avatar}}", show: "item.user.avatar"}, :width => "40"}/
-                %img{:alt => "", :height => "40", ng: {src: "/images/missing/thumb/missing.png", hide: "!item.user.avatar"}, :width => "40"}/
+              .thumbnail-wrapper.d32.circular.bordered.user-avatar.b-grey{data: {user: {id: "{{item.customer.id}}"}}}
+                %img{:alt => "", :height => "40", ng: {src: "{{item.customer.avatar}}", show: "item.customer.avatar"}, :width => "40"}/
+                %img{:alt => "", :height => "40", ng: {src: "/images/missing/thumb/missing.png", hide: "!item.customer.avatar"}, :width => "40"}/
               .inline.m-l-15
-                %p.recipients.no-margin.hint-text.small{ng: {show: "item.user"}} {{item.user.name}}
+                %p.recipients.no-margin.hint-text.small{ng: {show: "item.customer"}} {{item.customer.name}}
                 %p.recipients.no-margin.hint-text.small{ng: {show: "!item.expert && item.status == 0"}} Draft
                 %p.recipients.no-margin.hint-text.small{ng: {show: "!item.expert && item.status == 1"}} Unclaimed
                 %p.subject.no-margin Task# {{item.code}}: {{item.title}}

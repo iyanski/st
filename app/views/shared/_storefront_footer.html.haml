@@ -1,0 +1,32 @@
+%section.p-b-55.p-t-75.xs-p-b-20.bg-master-darker
+  .container
+    .row
+      .col-sm-6.col-xs-12.xs-m-b-40
+        %img.alt{:alt => "", "data-src-retina" => asset_path("smalltaskers_white@2x.png"), :height => "21", :src => asset_path("smalltaskers_white.png")}/
+      .col-sm-2.col-xs-12.xs-m-b-20
+        %h6.font-montserrat.text-uppercase.fs-14.text-white.p-b-10 Company
+        %ul.no-style
+          %li.m-b-5.no-padding
+            %a.link.text-white{:href => "/"} Home
+          %li.m-b-5.no-padding
+            %a.link.text-white{:href => "/services"} Services
+          %li.m-b-5.no-padding
+            %a.link.text-white{:href => "/faq"} FAQ
+          %li.m-b-5.no-padding
+            %a.link.text-white{:href => "/terms"} Terms
+          %li.m-b-5.no-padding
+            %a.link.text-white{:href => "/privacy"} Privacy
+      .col-sm-2.col-xs-12.xs-m-b-20
+        %h6.font-montserrat.text-uppercase.fs-14.text-white.p-b-10 Get in Touch
+        %ul.no-style
+          %li.m-b-5.no-padding
+            %a.link.text-white{:href => "https://www.facebook.com/SmallTaskers-633924553472708/", target: "_blank"} Facebook
+          %li.m-b-5.no-padding
+            %a.link.text-white{:href => "https://twitter.com/smalltaskers", target: "_blank"} Twitter
+          %li.m-b-5.no-padding
+            %a.link.text-white{:href => "https://medium.com/@smalltaskers", target: "_blank"} Blog
+          %li.m-b-5.no-padding
+            %a.link.text-white{:href => "/contact"} Contact
+    %p.fs-12.hint-text.p-t-10.text-white
+      Copyright &copy; #{Time.now.year}
+      = link_to current_company.name, root_url, class: "text-white"

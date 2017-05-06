@@ -95,30 +95,23 @@
       / END JUMBOTRON
 
       / BEGIN CONTENT SECTION
-      %section.p-b-85.p-t-75.p-b-65.p-t-55#services
-        .container
-          .md-p-l-20.xs-no-padding.clearfix
-            %h4.m-b-30 Featured Services
-            .col-sm-4.no-padding
-              .p-r-30.md-pr-30
-                = image_tag "freelancers.jpg", class: "m-b-20", alt: "Freelancers"
-                %h6.block-title.p-b-30
-                  Freelancers
-              .visible-xs.b-b.b-grey-light.m-t-30.m-b-30
-            .col-sm-4.no-padding
-              .p-r-30.md-pr-30
-                = image_tag "service-agencies.jpg", class: "m-b-20", alt: "Service Agencies"
-                %h6.block-title.p-b-30
-                  Service Agencies
-              .visible-xs.b-b.b-grey-light.m-t-30.m-b-30
-            .col-sm-4.no-padding
-              .p-r-30.md-pr-30
-                = image_tag "digital-nomads.jpg", class: "m-b-20", alt: "Digital Nomads"
-                %h6.block-title.p-b-30
-                  Digital Nomads
-              .visible-xs.b-b.b-grey-light.m-t-30.m-b-30
-            .col-sm-12.text-center
-              %a.btn.btn-lg.btn-round.btn-primary View All Services
+      - if !Service.all.limit(3).blank?
+        %section.p-b-85.p-t-75.p-b-65.p-t-55#services
+          .container
+            .md-p-l-20.xs-no-padding.clearfix
+              %h4.m-b-30 Featured Services
+              - Service.all.limit(3).each do |service|
+                .col-sm-4.no-padding
+                  .p-r-30.md-pr-30
+                    - if service.photo.url
+                      = link_to image_tag(service.photo.url, class: "m-b-20", alt: service.title, style: "width:100%"), service_url(service)
+                    - else
+                      = link_to image_tag("services.jpeg", class: "m-b-20", alt: service.title, style: "width:100%"), service_url(service)
+                    %h6.block-title.p-b-30
+                      = link_to service.title, service_url(service), style: "color: #2c2c2c"
+                  .visible-xs.b-b.b-grey-light.m-t-30.m-b-30
+              .col-sm-12.text-center
+                %a.btn.btn-lg.btn-round.btn-primary{href: "/services"} View All Services
     
       / END FOOTER
     / START OVERLAY SEARCH

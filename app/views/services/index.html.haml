@@ -1,0 +1,23 @@
+%section.p-b-45.p-t-75.p-b-65.p-t-35
+  .container
+    .row
+      .md-p-l-20.xs-no-padding.clearfix
+        .col-md-12
+          %h2.m-t-30 Services
+        - @services.each do |service|
+          .col-md-4
+            .panel.panel-default.panel-services.p-b-20
+              .panel-heading
+                - unless service.photo.url.nil?
+                  = link_to image_tag(service.photo.url, class: "m-b-10", alt: service.title, style: "width:100%"), service_url(service)
+                - else
+                  = link_to image_tag("services.jpeg", class: "m-b-10", alt: service.title, style: "width:100%"), service_url(service)
+                .panel-title.p-t-30
+                  = link_to service.title, service_url(service.id, service.slug)
+                - if service.service_type == 0
+                  .small #{number_to_currency service.price, symbol: "$"}/hr
+                - elsif service.service_type == 1
+                  .small #{number_to_currency service.price, symbol: "$"}/mo
+              .panel-body
+                %p
+                  #{truncate service.description, length: 100}

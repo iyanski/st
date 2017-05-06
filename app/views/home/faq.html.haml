@@ -1,0 +1,20 @@
+%section.p-b-85.p-t-75.p-b-65.p-t-55
+  .container
+    .row
+      .md-p-l-20.xs-no-padding.clearfix
+        .col-md-12
+          %h2.m-t-30 Frequently Asked Questions (FAQ)
+    .row
+      .md-p-l-20.xs-no-padding.clearfix
+        .col-md-6
+          %p.p-b-25
+            - @services.each do |service|
+              %h5
+                = service.title
+              %ul
+                - service.faqs.each do |item|
+                  %li
+                    %p
+                      = item.question.html_safe
+                    %p
+                      = item.answer.html_safe

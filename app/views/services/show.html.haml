@@ -1,0 +1,40 @@
+%section.p-b-85.p-t-75.p-b-65.p-t-55
+  .container
+    .row
+      .md-p-l-20.xs-no-padding.clearfix
+        .col-md-12
+          %h1.m-t-30.m-b-20 #{@service.title}
+    .row
+      .md-p-l-20.xs-no-padding.clearfix
+        .col-md-8
+          - unless @service.photo.url.nil?
+            = link_to image_tag(@service.photo.url, class: "m-b-10", alt: @service.title, style: "width:100%"), service_url(@service)
+          - else
+            = link_to image_tag("services.jpeg", class: "m-b-10", alt: @service.title, style: "width:100%"), service_url(@service)
+          %p.p-t-45 #{@service.description.html_safe}
+          %p.p-b-25
+            %h5 What is included in this service
+            %ul
+              - @service.benefits.each do |item|
+                %li
+                  %p
+                    = item.description.html_safe
+          %p.p-b-25
+            %h5 What we need from you to Get Started
+            %ul
+              - @service.requirements.each do |item|
+                %li
+                  %p
+                    = item.description.html_safe
+          %p.p-b-25
+            %h5 What you need to know
+            %ul
+              - @service.faqs.each do |item|
+                %li
+                  %p
+                    = item.question.html_safe
+                  %p
+                    = item.answer.html_safe
+
+        .col-md-4
+          %button.btn.btn-block.btn-lg.btn-primary Get Started

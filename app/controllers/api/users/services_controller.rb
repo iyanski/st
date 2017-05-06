@@ -12,7 +12,7 @@ class Api::Users::ServicesController < Api::UsersController
   end
 
   def update
-    @service = Servie.where(id: params[:id]).first
+    @service = Service.where(id: params[:id]).first
     unless @service.update_attributes service_params
       render json: {error: @service.errors.full_messages.first}, status: 401
     end

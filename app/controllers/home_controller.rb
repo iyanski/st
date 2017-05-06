@@ -4,38 +4,28 @@ class HomeController < ApplicationController
   before_action :authenticate_expert!, only: [:dashboard]
   
   def index
+    @services = Service.all
   end
 
   def contact
     render layout: 'storepage'
   end
 
-  def pricing
-    render layout: 'application'
-  end
-
-  def howitworks
-    render layout: 'application'
-  end
-
-  def guidelines
-    render layout: 'application'
-  end
-
   def terms
-    render layout: 'application'
+    render layout: 'storepage'
   end
 
   def about
-    render layout: 'application'
+    render layout: 'storepage'
   end
 
   def privacy
-    render layout: 'application'
+    render layout: 'storepage'
   end
 
-  def features
-    render layout: 'application'
+  def faq
+    @services = Service.all
+    render layout: 'storepage'
   end
 
   def login

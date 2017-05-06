@@ -4,7 +4,7 @@
       %span.title
         %i.pg-inbox
         Dashboard
-  %li{ng: {class: "{'active': activemenu == 'page-home'}", show: "jobs.length"}}
+  %li{ng: {class: "{'active': activemenu == 'page-home'}"}}
     %a{:href => "#/jobs"}
       %span.title
         %i.pg-inbox
@@ -20,6 +20,11 @@
       %span.title
         %i.pg-inbox
         People
+  %li{ng: {class: "{'active': activemenu == 'page-store'}"}}
+    %a{:href => "#/storefront"}
+      %span.title
+        %i.pg-inbox
+        Storefront
   %li{ng: {class: "{'active': activemenu == 'page-transactions'}"}}
     %a{:href => "#/"}
       %span.title

@@ -63,7 +63,7 @@
       / BEGIN JUMBOTRON
       .m-t-60
         = yield
-    
+      = render partial: "shared/storefront_footer"
       / END FOOTER
     / START OVERLAY SEARCH
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'

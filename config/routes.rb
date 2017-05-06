@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   match "/dashboard" => "home#dashboard", via: [:get], as: :dashboard    # experts
   match "/admin" => "home#admin", via: [:get], as: :admin                # administrator
   match "/notify" => "orders#notify", via: [:post, :get], as: :notify
+  match "/faq" => "home#faq", via: [:get], as: :faq
 
   resources :companies do
     collection do
@@ -102,6 +103,7 @@ Rails.application.routes.draw do
     end
   end
   resources :job
+  resources :services
   resources :orders do
     collection do
       get :return

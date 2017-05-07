@@ -1,0 +1,100 @@
+.row.m-t-20
+  .col-md-6.col-md-offset-3
+    %h4.bold SmallTaskers Store Front
+    %h5 Now, let's configure your Store front
+    -# .panel.panel-default
+    -#   .panel-heading
+    -#     .panel-title
+    -#       Store Front
+    -#   .panel-body{:style => "display: block;"}
+    -#     %p
+    -#       Configure your tagline, store front colors, background, logos and other contents to reflect your store front with your brand.
+    -#     .btn.btn-default Customize Store Front
+    .panel.panel-default
+      .panel-heading
+        .panel-title
+          Give your site a meaningful and captivating cover photo
+      .panel-body.no-scroll.no-padding{style: "position: relative; overflow: hidden;"}
+        %label.upload-trigger{:for => "uploadField"}
+          %img.featured_image{ng: {src: "{{service.photo.url}}"}, style: "max-width: 100%; position: absolute; top: 50%; transform: translateY(-50%);"}
+          %form.dropzone.no-margin
+            %span.dropzone-text
+              Drop files to
+              %strong upload
+              %small or click here
+            .fallback.hide
+              %input#uploadField{:name => "file", :type => "file"}/
+    .panel.panel-default
+      .panel-heading
+        .panel-title
+          Title
+      .panel-body{:style => "display: block;"}
+        %p
+          How do you want your store to be remembered?
+        %form{:role => "form"}
+          .form-group.required
+            %input.form-control{:placeholder => "", :type => "text", autofocus: true, ng: {model: "store.title"}}/
+          .form-group.btn-controls
+            %button.btn.btn-primary.btn-cons{ng: {click: "saveTitle()"}} Save
+
+    .panel.panel-default
+      .panel-heading
+        .panel-title
+          Description
+      .panel-body{:style => "display: block;"}
+        %p
+          Provide a concise explanation of what your store is about.
+        %form{:role => "form"}
+          .form-group.required
+            %textarea.form-control{:placeholder => "", ng: {model: "store.description"}}
+          .form-group.btn-controls
+            %button.btn.btn-primary.btn-cons{ng: {click: "saveDescription()"}} Save
+
+    .panel.panel-default
+      .panel-heading
+        .panel-title
+          Tagline
+      .panel-body{:style => "display: block;"}
+        %p
+          What is your store's tagline?
+        %form{:role => "form"}
+          .form-group.required
+            %textarea.form-control{:placeholder => "", ng: {model: "store.tagline"}}
+          .form-group.btn-controls
+            %button.btn.btn-primary.btn-cons{ng: {click: "saveTagline()"}} Save
+
+    .panel.panel-default
+      .panel-heading
+        .panel-title
+          Social
+      .panel-body{:style => "display: block;"}
+        %p
+          Fill-up these social media account urls where your clients or customers can follow and interact with you
+        %form{:role => "form"}
+          .form-group
+            .input-group
+              %span.input-group-addon
+                http://facebook.com/
+              %input.form-control{:placeholder => "", :type => "text", ng: {model: "store.facebook"}}/
+          .form-group
+            .input-group
+              %span.input-group-addon
+                http://twitter.com/
+              %input.form-control{:placeholder => "", :type => "text", ng: {model: "store.twitter"}}/
+          .form-group
+            .input-group
+              %span.input-group-addon
+                http://pinterest.com/
+              %input.form-control{:placeholder => "", :type => "text", ng: {model: "store.pinterest"}}/
+          .form-group
+            .input-group
+              %span.input-group-addon
+                https://plus.google.com/
+              %input.form-control{:placeholder => "", :type => "text", ng: {model: "store.google"}}/
+          .form-group
+            .input-group
+              %span.input-group-addon
+                http://instagram.com/
+              %input.form-control{:placeholder => "", :type => "text", ng: {model: "store.instagram"}}/
+          .form-group
+            %button.btn.btn-primary.btn-cons{ng: {click: "saveDescription()"}} Save

@@ -9,6 +9,7 @@ do ->
         'page-form-services': 'admin/views/services/form.html'
         'page-people': 'admin/views/people/index.html'
         'page-form-experts': 'admin/views/people/expert.html'
+        'page-store': 'admin/views/store/index.html'
     }
 
   pagepath = angular.module('app.pageview.factory', [])

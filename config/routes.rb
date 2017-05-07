@@ -35,6 +35,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :users do
+      resource :store
       resources :jobs
       resources :experts
       resources :customers

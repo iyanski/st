@@ -25,6 +25,9 @@
   'app.people.controller'
   'app.people.directive'
 
+  'app.store.controller'
+  'app.store.directive'
+
   'app.services.controller'
   'app.services.directive'
 

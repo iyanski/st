@@ -50,5 +50,11 @@
         activepage: "page-form-experts"
         activemenu: "page-experts"
 
+      .when "/storefront",
+        templateUrl: "common.html"
+        controller: "rootPageCtrl"
+        activepage: "page-store"
+        activemenu: "page-store"
+
       .otherwise redirectTo: '/'
 ]

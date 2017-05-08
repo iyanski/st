@@ -55,6 +55,7 @@ do ->
           $scope.showOnline(key)
       presenceRef.on 'child_removed', (snap)->
         $scope.showOffline(snap.key)
+        angular.element(".user-avatar[data-user-id=" + snap.key + "]").removeClass("b-success").addClass('b-grey')
   
     $scope.initPresence()
 
@@ -63,7 +64,6 @@ do ->
       $scope.messages = []
       $scope.loadImagePreviewer(job)
       if job and job.expert and job.customer
-        console.log $scope.job.status
         if job.status > 1
           $scope.initChat()
         setTimeout ->
@@ -93,9 +93,9 @@ do ->
       $scope.interactive = false
       if $scope.on and $scope.job
         $scope.msg = ""
-        console.log "show chat", $scope.job.expert.id, $scope.job.customer.id
-        $scope.notificationsRef = ChatService.ref("messages/" + gon.company.id + "/" + $scope.job.id + "/" + [$scope.job.expert.id, $scope.job.customer.id].join("/"))
+        $scope.notificationsRef = ChatService.ref("messages/" + gon.company.id + "/" + $scope.job.id + "/" + $scope.job.conversation.code)
         $scope.notificationsRef.on 'child_added', (snapshot)->
+          console.log snapshot.val()
           if !$scope.interactive
             $scope.pushMessage snapshot.val()
           else if $scope.interactive && snapshot.val().sender_type is "Expert"
@@ -179,6 +179,7 @@ do ->
         else
           console.log "A job has been updated"
         $scope.showUploader = false
+        $scope.show_mode = 3
         setTimeout ->
           $scope.$apply()
           $scope.initPresence()

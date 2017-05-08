@@ -92,11 +92,12 @@ do ->
       $scope.interactive = false
       if $scope.on and $scope.job
         $scope.msg = ""
-        $scope.notificationsRef = ChatService.ref("messages/" + gon.company.id + "/" + $scope.job.id + "/" + [$scope.job.expert.id, $scope.job.customer.id].join("/"))
+        $scope.notificationsRef = ChatService.ref("messages/" + gon.company.id + "/" + $scope.job.id + "/" + $scope.job.conversation.code)
         $scope.notificationsRef.on 'child_added', (snapshot)->
+          console.log snapshot.val()
           if !$scope.interactive
             $scope.pushMessage snapshot.val()
-          else if $scope.interactive && snapshot.val().sender_type is "Expert"
+          else if $scope.interactive && snapshot.val().sender_type is "Customer"
             $scope.pushMessage snapshot.val()
           setTimeout ->
             $scope.scrollToBottom()
@@ -177,6 +178,7 @@ do ->
         $scope.job = $scope.jobs[pos]
         setTimeout ->
           $scope.initChat()
+          $scope.$apply()
         , 100
 
     $scope.unClaim = (job)->
@@ -225,7 +227,7 @@ do ->
         content: msg
         sender : [$scope.expert.first_name, $scope.expert.last_name].join(" ")
         recipient_id: $scope.job.expert.id
-        sender_id: $scope.job.expert.id
+        sender_id: $scope.job.customer.id
         created_at: moment()
       $scope.pushMessage(payload)
       $scope.interactive = true

@@ -1,0 +1,64 @@
+.panel
+  %ul.nav.nav-tabs.nav-tabs-simple
+    %li.active
+      %a{"data-toggle" => "tab", ng: {click: "openTab('tab1')"}} Payments
+    %li
+      %a{"data-toggle" => "tab", ng: {click: "openTab('tab2')"}} Withdrawals
+    %li
+      %a{"data-toggle" => "tab", ng: {click: "openTab('tab2')"}} Refunds
+      
+  .tab-content
+    #tab1.tab-pane.active
+      .panel.panel-transparent
+        .panel-heading
+          .panel-title
+            Payment Transactions
+          .pull-right
+            .col-xs-12
+              %input#search-table.form-control.pull-right{:placeholder => "Search", :type => "text"}/
+          .clearfix
+        .panel-body
+          #tableWithSearch_wrapper.dataTables_wrapper.form-inline.no-footer
+            %div
+              %table#tableWithSearch.table.table-hover.demo-table-search.table-responsive-block.dataTable.no-footer{"aria-describedby" => "tableWithSearch_info", :role => "grid"}
+                %thead
+                  %tr{:role => "row"}
+                    %th.sorting{"aria-controls" => "tableWithSearch", "aria-label" => "Title: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Task
+                    %th.sorting{"aria-controls" => "tableWithSearch", "aria-label" => "Places: activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 294px;", :tabindex => "0"} Customer
+                    %th.sorting{"aria-controls" => "tableWithSearch", "aria-label" => "Activities: activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 294px;", :tabindex => "0"} Expert
+                    %th.sorting_desc{"aria-controls" => "tableWithSearch", "aria-label" => "Status: activate to sort column ascending", "aria-sort" => "descending", :colspan => "1", :rowspan => "1", :style => "width: 188px;", :tabindex => "0"} Status
+                    %th.sorting{"aria-controls" => "tableWithSearch", "aria-label" => "Last Update: activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 248px;", :tabindex => "0"} Date
+                %tbody
+                  %tr.odd{:role => "row", ng: {repeat: "item in transactions"}}
+                    %td.v-align-middle.semi-bold
+                      %a.bold{ng: {href: "#/job/{{item.job.id}}"}} {{item.job.title}}
+                    %td.v-align-middle
+                      %a.bold{ng: {href: "#/customer/{{item.customer.id}}"}}
+                        %p {{item.customer.name}}
+                    %td.v-align-middle
+                      %a.bold{ng: {href: "#/expert/{{item.expert.id}}"}}
+                        %p {{item.expert.name}}
+                    %td.v-align-middle
+                      %label.label.label-tag {{item.job.status | job_status}}
+                    %td.v-align-middle
+                      %p {{item.updated_at | amDateFormat:'MMM DD, YYYY hh:mm a'}}
+            .row
+              %div
+                #tableWithSearch_paginate.dataTables_paginate.paging_simple_numbers
+                  %ul
+                    %li#tableWithSearch_previous.paginate_button.previous.disabled
+                      %a{"aria-controls" => "tableWithSearch", "data-dt-idx" => "0", :href => "#", :tabindex => "0"}
+                        %i.pg-arrow_left
+                    %li.paginate_button.active
+                      %a{"aria-controls" => "tableWithSearch", "data-dt-idx" => "1", :href => "#", :tabindex => "0"} 1
+                    %li.paginate_button
+                      %a{"aria-controls" => "tableWithSearch", "data-dt-idx" => "2", :href => "#", :tabindex => "0"} 2
+                    %li.paginate_button
+                      %a{"aria-controls" => "tableWithSearch", "data-dt-idx" => "3", :href => "#", :tabindex => "0"} 3
+                    %li#tableWithSearch_next.paginate_button.next
+                      %a{"aria-controls" => "tableWithSearch", "data-dt-idx" => "4", :href => "#", :tabindex => "0"}
+                        %i.pg-arrow_right
+                #tableWithSearch_info.dataTables_info{"aria-live" => "polite", :role => "status"}
+                  Showing
+                  %b 1 to 5
+                  of 12 entries

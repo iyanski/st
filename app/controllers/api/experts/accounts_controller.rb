@@ -18,7 +18,7 @@ class Api::Experts::AccountsController < Api::ExpertsController
     end
   end
 
-   def upload
+  def upload
     @expert = current_expert
     unless params[:file].nil?
       puts params[:file].inspect

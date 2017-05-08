@@ -2,6 +2,11 @@ class Service < ApplicationRecord
   extend FriendlyId
   friendly_id :title, :use => :slugged
   mount_uploader :photo, MediaUploader
+  validates :title, presence: true
+  validates :description, presence: true
+  validates :price, numericality: {greater_than_or_equal_to: 20.00}
+  validates :platform_fee, numericality: {greater_than_or_equal_to: 13.00}
+  validates :experts_rate, numericality: {greater_than_or_equal_to: 50.00}
   
   # belongs_to :company
   has_many :jobs

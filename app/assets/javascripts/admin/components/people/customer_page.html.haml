@@ -1,0 +1,99 @@
+-# t.string   "title"
+-# t.text     "description",  limit: 65535
+-# t.float    "price",        limit: 24
+-# t.integer  "service_type",               default: 0
+.row.m-t-20.m-b-50.m-r-20.m-l-20#main
+  .col-md-12
+    %h4.bold Customer Page
+  .col-md-8
+    .panel.panel-default
+      .panel-body
+        .row
+          .col-md-2
+            .thumbnail-wrapper
+              %img{src: "{{customer.avatar.url}}"}
+          .col-md-10
+            .form-group.required
+              %label Name
+              %h5.no-margin {{customer.first_name}} {{customer.last_name}}
+            .form-group.required
+              %label Email
+              %h5.no-margin {{customer.email}}
+            .form-group.required
+              %label Tasks Posted
+              %h5.no-margin {{sales.total_tasks_posted_count}}
+          .col-md-12.hide
+            .form-group.required.pull-right
+              .btn.btn-default{ng: {click: "suspendAccount()"}} Suspend
+              .btn.btn-default{ng: {click: "banAccount()"}} Ban
+    .widget-1-wrapper
+      .widget-11.panel.no-border.no-margin.widget-loader-bar
+        .panel-heading
+          .panel-title
+            Customer's Posted Tasks
+        .widget-11-table.auto-overflow
+          %table.table.table-condensed.table-hover
+            %tbody
+              %tr{ng: {repeat: "item in customer_jobs"}}
+                %td.font-montserrat.all-caps.fs-12
+                  %a{ng: {href: "#/job/{{item.id}}"}} Task ID {{"#" + item.code}}
+                  %p
+                    %span.hint-text.small {{item.service.title}}
+                %td.text-right
+                  %span.hint-text.small {{item.status | job_status}}
+                %td.text-right
+                  %span.hint-text.small {{item.estimate}} hr(s)
+                %td.text-right.b-r.b-dashed.b-grey
+                  %span.hint-text.small {{item.service.service_type | service_type}}
+                %td
+                  %span.font-montserrat.fs-18 {{(item.service.price * item.estimate) | currency : "$" : 2}}
+        .padding-25
+          -# %p.small.no-margin
+          -#   %a{:href => "#"}
+          -#     %i.fa.fs-16.fa-arrow-circle-o-down.text-success.m-r-10
+          -#   %span.hint-text Show more details of APPLE . INC
+
+  .col-md-4.m-t-20
+    .panel.no-border.no-margin.widget-loader-bar
+      .container-xs-height.full-height
+        .row-xs-height
+          .col-xs-height.col-top
+            .panel-heading.top-left.top-right
+              .panel-title.text-black
+                %span.font-montserrat.fs-11.all-caps
+                  Weekly Sales
+                  %i.fa.fa-chevron-right
+        .row-xs-height
+          .col-xs-height.col-top
+            .p-l-20.p-t-60.p-b-40.p-r-20
+              %h1.no-margin.p-b-5 {{sales.all.total | currency : "$" : 2}}
+              %span.small.hint-text.pull-left Monthly Sales
+              %span.pull-right.small.text-primary {{sales.monthly.total | currency : "$" : 2}}
+        .row-xs-height
+          .col-xs-height.col-bottom
+            .progress.progress-small.m-b-0
+              .progress-bar.progress-bar-success{:style => "width:45%"}
+  .col-md-4.m-t-20
+    .widget-2-wrapper
+      .widget-11.panel.no-border.no-margin.widget-loader-bar
+        .panel-heading
+          .panel-title
+            Sales Transactions
+          .p-r-25.p-b-20
+            .pull-left
+              %h2.text-success.no-margin Total Sales
+            %h3.pull-right.semi-bold
+              %sup
+                %small.semi-bold $
+              {{sales.all.total | currency : "$" : 2}}
+            .clearfix
+        .widget-11-table.auto-overflow
+          %table.table.table-condensed.table-hover
+            %tbody
+              %tr{ng: {repeat: "item in transactions"}}
+                %td.font-montserrat.all-caps.fs-12
+                  %a{ng: {href: "#/job/{{item.id}}"}} Task ID {{"#" + item.job.code}}
+                %td.text-right.b-r.b-dashed.b-grey
+                  %span.hint-text.small {{item.created_at | amDateFormat:'MMM DD, YYYY'}}
+                %td
+                  %span.font-montserrat.fs-18 {{item.cost | currency : "$" : 2}}

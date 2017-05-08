@@ -1,0 +1,26 @@
+%a{href: root_url, title: "SmallTaskers"}
+  %img{:alt => "smalltaskers", "data-src" => image_url("smalltaskers.png"), "data-src-retina" => image_url("smalltaskers@2x.png"), :height => "22", :src => image_url("smalltaskers.png")}/
+%p.p-t-35 Sign into your account
+
+= form_for(resource, as: resource_name, url: session_path(resource_name), class: "p-t-15", role: "form") do |f|
+  
+  = devise_error_messages!
+  .form-group.form-group-default
+    %label
+    = f.label :email
+    .controls
+      = f.email_field :email, placeholder: "Email", required: "", class: "form-control", autofocus: true
+
+  .form-group.form-group-default
+    = f.label :password
+    .controls
+      = f.password_field :password, placeholder: "Credentials", required: "", class: "form-control"
+  
+  - if devise_mapping.rememberable?
+    .row
+      .col-md-6
+        .checkbox
+          = f.check_box :remember_me
+          = f.label :remember_me, "Keep Me Signed in"
+      
+  %button.btn.btn-primary.btn-cons.m-t-10{:type => "submit"} Sign in

@@ -3,13 +3,14 @@ do ->
     console.log 'settings controller'
     $scope.settings = new Settings(gon.settings)
     $scope.avatar = gon.avatar
+    console.log $scope.avatar
     $scope.save = ->
       $scope.expert = new Account($scope.expert)
       if $scope.expert.current_password and $scope.expert.password isnt $scope.expert.password_confirmation
         toastr.warning "Your passwords does not match"
       else
         $scope.expert.$update (data, xhr)->
-          location.reload()
+          # location.reload()
           toastr.success "Updated successfully"
         , (res)->
           toastr.warning res.data.error
@@ -29,7 +30,7 @@ do ->
       dropzone.on "complete", (file)->
         dropzone.removeFile(file)
         response = JSON.parse(file.xhr.response)
-        $scope.avatar = response.avatar
+        $scope.avatar = response.avatar.url
         $scope.save (data, xhr)->
           console.log data
 

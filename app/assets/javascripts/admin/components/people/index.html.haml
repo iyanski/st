@@ -1,9 +1,7 @@
 .panel
   %ul.nav.nav-tabs.nav-tabs-simple
     %li.active
-      %a{"data-toggle" => "tab", ng: {click: "openTab('tab1')"}} Experts {{}}
-    -# %li
-    -#   %a{"data-toggle" => "tab", ng: {click: "openTab('tab2Profile')"}} Profile Settings
+      %a{"data-toggle" => "tab", ng: {click: "openTab('tab1')"}} Experts
     %li
       %a{"data-toggle" => "tab", ng: {click: "openTab('tab2')"}} Customers
       
@@ -26,7 +24,8 @@
                     %th{"aria-controls" => "condensedTable", "aria-label" => "Date Updated", :colspan => "1", :rowspan => "1", :style => "width: 20%;", :tabindex => "0"} Updated On
                 %tbody
                   %tr.link{:role => "row", ng: {repeat: "expert in experts", click: "gotoItem(expert)"}}
-                    %td.v-align-top.semi-bold {{expert.first_name}} {{expert.last_name}}
+                    %td.v-align-top.semi-bold
+                      %a{ng: {href: "#/expert/{{expert.id}}"}} {{expert.first_name}} {{expert.last_name}}
                     %td.v-align-top.semi-bold {{expert.email}}
                     %td.v-align-top.semi-bold {{expert.updated_at | amDateFormat:'MMM DD, YYYY hh:mm a'}}
 
@@ -47,6 +46,7 @@
                     %th{"aria-controls" => "condensedTable", "aria-label" => "Date Updated", :colspan => "1", :rowspan => "1", :style => "width: 20%;", :tabindex => "0"} Updated On
                 %tbody
                   %tr.link{:role => "row", ng: {repeat: "customer in customers", click: "gotoItem(customer)"}}
-                    %td.v-align-top.semi-bold {{customer.first_name}} {{customer.last_name}}
+                    %td.v-align-top.semi-bold
+                      %a{ng: {href: "#/customer/{{customer.id}}"}} {{customer.first_name}} {{customer.last_name}}
                     %td.v-align-top.semi-bold {{customer.email}}
                     %td.v-align-top.semi-bold {{customer.updated_at | amDateFormat:'MMM DD, YYYY hh:mm a'}}

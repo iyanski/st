@@ -16,9 +16,18 @@ class PaymentTransaction < ApplicationRecord
     transaction.fee = job.service.price * (100 - job.service.experts_rate) / 100
     transaction.cost = (job.estimate * job.service.price)
     transaction.commission = transaction.cost - transaction.fee
-    if transaction.save
-      transaction.job.order.update_attributes(status: 1)
+    transaction.service_type = job.service.service_type
+
+    if transaction.service_type == 0
+      transaction.qty = job.estimate
+    elsif transaction.service_type == 1
+      transaction.qty = 1
     end
+
+    if transaction.save
+      transaction.job.orders.last.update_attributes(status: 1)
+    end
+
     transaction
   end
 

@@ -21,6 +21,7 @@ do ->
     $scope.find_job_by_id = (job_id, callback)->
       job = null
       angular.forEach $scope.jobs, (result, key)->
+        console.log job_id, result.id
         if parseInt(job_id) == parseInt(result.id)
           job = result
       callback(job)

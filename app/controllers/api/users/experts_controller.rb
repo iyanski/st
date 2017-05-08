@@ -15,14 +15,24 @@ class Api::Users::ExpertsController < Api::UsersController
   end
 
   def update
-    @expert = current_company.experts.where(id: params[:id]).first.benefits.where(id: params[:id]).first
+    @expert = Expert.find(params[:id])
     unless @expert.update_attributes update_expert_params
       render json: {error: @expert.errors.full_messages.first}, status: 401
     end
   end
 
   def show
-    @expert = current_company.experts.where(id: params[:id]).first
+    @expert = Expert.find(params[:id])
+  end
+
+  def sales
+    expert = Expert.find(params[:id])
+    render json: {sales: expert.sales}
+  end
+
+  def transactions
+    expert = Expert.find(params[:id])
+    @transactions = expert.payment_transactions
   end
 
   private

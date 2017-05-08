@@ -4,7 +4,7 @@ class Job < ApplicationRecord
   belongs_to :expert
   belongs_to :company
   # belongs_to :category
-  has_one :order
+  has_many :orders
   belongs_to :company
   belongs_to :service
   has_many :job_attachments
@@ -63,6 +63,14 @@ class Job < ApplicationRecord
     self.update_attributes(status: 0)
   end
 
+  def conversation
+    if conversations.length == 1
+      conversations.first
+    else
+      conversations.last
+    end
+  end
+
   def save_and_publish
     self.status = 1
     if self.published_at.nil?
@@ -81,7 +89,7 @@ class Job < ApplicationRecord
     self.update_attributes(status: 2, claimed_at: Time.new, expert_id: expert.id)
     message = "claimed this job"
     firebase = Firebase::Client.new(ENV["firebase_base_uri"], ENV["firebase_secret_key"])
-    channel = "messages/#{self.company_id}/#{id}/#{expert.id}/#{customer.id}"
+    channel = "messages/#{self.company_id}/#{id}/#{conversation.code}"
     response = firebase.push(channel, {sender: self.expert.name, content: message, created_at: Time.now, system: true})
 
     channel = "updates/#{self.company_id}"
@@ -93,7 +101,7 @@ class Job < ApplicationRecord
   def unclaim_by(expert)
     message = "unclaimed this job"
     firebase = Firebase::Client.new(ENV["firebase_base_uri"], ENV["firebase_secret_key"])
-    channel = "messages/#{self.company_id}/#{id}/#{expert.id}/#{customer.id}"
+    channel = "messages/#{self.company_id}/#{id}/#{conversation.code}"
     response = firebase.push(channel, {sender: self.expert.name, content: message, created_at: Time.now, system: true})
 
     channel = "updates/#{self.company_id}"
@@ -108,7 +116,7 @@ class Job < ApplicationRecord
     self.update_attributes(status: 3, estimated_at: Time.new, starts_at: starts_at, etc: etc, estimate: estimate)
     message = "sent an estimate"
     firebase = Firebase::Client.new(ENV["firebase_base_uri"], ENV["firebase_secret_key"])
-    channel = "messages/#{self.company_id}/#{id}/#{expert.id}/#{customer.id}"
+    channel = "messages/#{self.company_id}/#{id}/#{conversation.code}"
     response = firebase.push(channel, {sender: self.expert.name, content: message, created_at: Time.now, system: true})
 
     channel = "updates/#{self.company_id}"
@@ -121,7 +129,7 @@ class Job < ApplicationRecord
     expert = self.expert
     message = "cancelled estimate"
     firebase = Firebase::Client.new(ENV["firebase_base_uri"], ENV["firebase_secret_key"])
-    channel = "messages/#{self.company_id}/#{id}/#{expert.id}/#{customer.id}"
+    channel = "messages/#{self.company_id}/#{id}/#{conversation.code}"
     response = firebase.push(channel, {sender: self.expert.name, content: message, created_at: Time.now, system: true})
 
     channel = "updates/#{self.company_id}"
@@ -135,7 +143,7 @@ class Job < ApplicationRecord
     self.update_attributes(status: 5, estimated_at: Time.new, starts_at: starts_at, etc: etc, estimate: estimate)
     message = "submitted for review"
     firebase = Firebase::Client.new(ENV["firebase_base_uri"], ENV["firebase_secret_key"])
-    channel = "messages/#{self.company_id}/#{id}/#{expert.id}/#{customer.id}"
+    channel = "messages/#{self.company_id}/#{id}/#{conversation.code}"
     response = firebase.push(channel, {sender: self.expert.name, content: message, created_at: Time.now, system: true})
 
     channel = "updates/#{self.company_id}"
@@ -146,7 +154,7 @@ class Job < ApplicationRecord
 
   def decline
     firebase = Firebase::Client.new(ENV["firebase_base_uri"], ENV["firebase_secret_key"])
-    channel = "messages/#{self.company_id}/#{id}/#{expert.id}/#{customer.id}"
+    channel = "messages/#{self.company_id}/#{id}/#{conversation.code}"
     message = "declined your estimate"
     response = firebase.push(channel, {sender: self.customer.name, content: message, created_at: Time.now, system: true})
 
@@ -180,7 +188,7 @@ class Job < ApplicationRecord
   def approved
     self.update_attributes(status: 4, accepted_at: Time.now)
     firebase = Firebase::Client.new(ENV["firebase_base_uri"], ENV["firebase_secret_key"])
-    channel = "messages/#{self.company_id}/#{id}/#{expert.id}/#{customer.id}"
+    channel = "messages/#{self.company_id}/#{id}/#{conversation.code}"
     message = "approved the estimate"
     response = firebase.push(channel, {sender: self.customer.name, content: message, created_at: Time.now, system: true})
 
@@ -191,10 +199,11 @@ class Job < ApplicationRecord
   end
 
   def complete
-    self.update_attributes(status: 6, accepted_at: Time.now)
     self.payment_transaction.release_in_ 7.days
+    self.update_attributes(status: 6, accepted_at: Time.now)
+
     firebase = Firebase::Client.new(ENV["firebase_base_uri"], ENV["firebase_secret_key"])
-    channel = "messages/#{self.company_id}/#{id}/#{expert.id}/#{customer.id}"
+    channel = "messages/#{self.company_id}/#{id}/#{conversation.code}"
     message = "marked the job complete"
     response = firebase.push(channel, {sender: self.customer.name, content: message, created_at: Time.now, system: true})
 
@@ -217,7 +226,7 @@ class Job < ApplicationRecord
     end
 
     firebase = Firebase::Client.new(ENV["firebase_base_uri"], ENV["firebase_secret_key"])
-    channel = "messages/#{self.company_id}/#{id}/#{expert.id}/#{customer.id}"
+    channel = "messages/#{self.company_id}/#{id}/#{conversation.code}"
     response = firebase.push(channel, {sender: sender.name, content: message, sender_id: sender.id, recipient_id: recipient.id, created_at: Time.now, sender_type: sender_type})
 
     UserMailer.chat(self, message, sender, recipient).deliver_later

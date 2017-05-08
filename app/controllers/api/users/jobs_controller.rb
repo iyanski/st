@@ -1,9 +1,13 @@
 class Api::Users::JobsController < Api::UsersController
   def index
-    @jobs = Job.all
+    unless params[:expert_id].nil?
+      @jobs = Job.where(expert_id: params[:expert_id])
+    else
+      @jobs = Job.all
+    end
   end
 
   def show
-    @job = Job.where(id: params[:id]).first()
+    @job = Job.find params[:id]
   end
 end

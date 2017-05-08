@@ -10,6 +10,12 @@
         %i.pg-inbox
         Tasks
       %span.badge.pull-right {{jobs.length}}
+  %li{ng: {class: "{'active': activemenu == 'page-tickets'}"}}
+    %a{:href => "#/tickets"}
+      %span.title
+        %i.pg-inbox
+        Support Tickets
+      %span.badge.pull-right {{tickets.length}}
   %li{ng: {class: "{'active': activemenu == 'page-services'}"}}
     %a{:href => "#/services"}
       %span.title
@@ -26,7 +32,7 @@
         %i.pg-inbox
         Storefront
   %li{ng: {class: "{'active': activemenu == 'page-transactions'}"}}
-    %a{:href => "#/"}
+    %a{:href => "#/transactions"}
       %span.title
         %i.pg-inbox
         Transactions

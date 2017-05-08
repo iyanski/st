@@ -2,8 +2,16 @@ do ->
   dashboardCtrl = ($scope, $location, Job, Service, Company) ->
     console.log "dashboard controller"
     $scope.company = gon.company
+    $scope.store = gon.store
+
     Service.query (data, xhr)->
       $scope.services = data
+
+    $scope.hasStoreFront = ->
+      hasTitle = $scope.store.title
+      hasDescription = $scope.store.description
+      hasCover = $scope.store.cover.url
+      hasTitle && hasDescription && hasCover
 
     $scope.saveDomain = ->
       $scope.company = new Company($scope.company)

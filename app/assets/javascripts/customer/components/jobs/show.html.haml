@@ -5,7 +5,19 @@
     %h1{ng: {show: "!jobs.length"}} Start posting a task
   .email-content-wrapper{ng: {show: "job"}}
     .actions-wrapper.menuclipper.bg-master-lightest
-      %ul.actions.menuclipper-menu.no-margin.p-l-20
+      %ul.actions.menuclipper-menu.no-margin.p-r-20
+        %li.no-padding{ng: {if: "job.status == 1"}}
+          %a{ng: {click: "attachFile()"}} Attach File
+        %li.no-padding{ng: {show: "job.status > 0"}}
+          %a{:href => "#", ng: {click: "showDetails($event)"}} Details
+        %li.no-padding{ng: {show: "job.status > 0"}}
+          %a{:href => "#", ng: {click: "showConversations($event)"}} Conversation
+        %li.no-padding{ng: {show: "job.status > 0"}}
+          %a{:href => "#", ng: {click: "showFiles($event)"}} Files
+        -# %li.no-padding{ng: {show: "job.status > 1"}}
+        -#   %a{:href => "#"} Report an Issue
+
+      %ul.actions.menuclipper-menu.no-margin.p-l-20.pull-right
         %li.visible-sm-inline-block.visible-xs-inline-block
           %a.split-list-toggle{:href => "#"}
             %i.fa.fa-angle-left
@@ -15,9 +27,6 @@
         %li.no-padding{ng: {show: "job.status == 1"}}
           %a.cursor{ng: {click: "unpublish(job)"}} Unpublish
         %li.no-padding{ng: {show: "job.status == 3"}}
-          -# %form{:action => "{{form_action}}", :method => "POST"}
-          -#   %script.stripe-button{"data-amount" => "{{ price }}", "data-description" => "Accept & Payment Form", "data-image" => "https://stripe.com/img/documentation/checkout/marketplace.png", "data-key" => "pk_test_lA6WPdWdOmwzy5wGMTLaOL25", "data-locale" => "auto", "data-name" => "SmallTaskers", "data-label" => "Approve & Pay {{rate * job.estimate | currency : '$' : 2}}", :src => "https://checkout.stripe.com/checkout.js"}
-          -#     :cdata
           %a{ng: {click: "approveAndPay(job)", hide: "processing"}} Approve & Pay {{job.service.price * job.estimate | currency : "$" : 2}}
           %a{ng: {show: "processing"}} Processing...
 
@@ -29,18 +38,6 @@
           %a.text-danger{ng: {click: "cancelJob(job)"}} Cancel Job
         %li.no-padding{ng: {show: "job.status == 3"}}
           %a.text-danger{ng: {click: "declineEstimateFor(job)", hide: "processing"}} Decline
-
-      %ul.actions.menuclipper-menu.no-margin.p-r-20.pull-right
-        %li.no-padding{ng: {if: "job.status == 1"}}
-          %a{ng: {click: "attachFile()"}} Attach File
-        %li.no-padding{ng: {show: "job.status > 0"}}
-          %a{:href => "#", ng: {click: "showDetails($event)"}} Details
-        %li.no-padding{ng: {show: "job.status > 0"}}
-          %a{:href => "#", ng: {click: "showConversations($event)"}} Conversation
-        %li.no-padding{ng: {show: "job.status > 0"}}
-          %a{:href => "#", ng: {click: "showFiles($event)"}} Files
-        -# %li.no-padding{ng: {show: "job.status > 1"}}
-        -#   %a{:href => "#"} Report an Issue
 
       .clearfix
     .email-content
@@ -81,25 +78,24 @@
       #conversation.conversation.m-t-20{ng: {show: "show_mode == 2"}}
         %p.text-center.m-y-1{ng: {show: "job.status == 1"}}
           %i Waiting for experts. We'll notify you when an expert picks this up.
-        .chat{ng: {show: "job.status > 1"}}
+        %ul.chat{ng: {show: "job.status > 1"}}
           .text-center{ng: {show: "!messages.length"}} Loading...
-          %div{ng: {repeat: "message in messages"}}
-            %div
-              .p-b-10.clearfix{ng: {show: "!message.sender_type"}}
-                %span
-                  %strong TaskBot
-                  %small.pull-right {{ message.created_at }}
-                .clearfix
-                  %span {{message.sender}}
-                  %span{ng: {bind: {html: "message.content | nl2br | str2link"}}}
-              .p-b-10.clearfix{ng: {show: "message.sender_type"}}
-                %span{ng: {show: "message.sender_type == 'Customer'"}}
-                  %strong you
-                  %small.pull-right {{ message.created_at }}
-                %span{ng: {show: "message.sender_type == 'Expert'"}}
-                  %strong {{message.sender}}
-                  %small.pull-right {{ message.created_at }}
-                %div{ng: {bind: {html: "message.content | nl2br | str2link"}}}
+          %li{ng: {repeat: "message in messages"}}
+            .p-b-10.clearfix{ng: {show: "!message.sender_type"}}
+              %span
+                %strong TaskBot
+                %small.pull-right {{ message.created_at }}
+              .clearfix
+                %span {{message.sender}}
+                %span{ng: {bind: {html: "message.content | nl2br | str2link"}}}
+            .p-b-10.clearfix{ng: {show: "message.sender_type"}}
+              %span{ng: {show: "message.sender_type == 'Customer'"}}
+                %strong you
+                %small.pull-right {{ message.created_at }}
+              %span{ng: {show: "message.sender_type == 'Expert'"}}
+                %strong {{message.sender}}
+                %small.pull-right {{ message.created_at }}
+              %div{ng: {bind: {html: "message.content | nl2br | str2link"}}}
       #attachments{ng: {show: "show_mode == 3"}}
         .panel.panel-default{ng: {show: "showUploader"}}
           .panel-heading
@@ -139,6 +135,7 @@
                   %img.thumbnail.img-responsive{ng: {src: "{{item.file.thumb.url}}"}}
 
       %div{ng: {show: "show_mode == 2"}}
-        .wysiwyg5-wrapper.b-a.b-grey.m-t-30{ng: {show: "job.status > 1 && messages.length"}}
-          %textarea.form-control{rows: 2, ng: {model: "msg", keyUp: "sendMessage($event)"}}
-        %button.send.btn.btn-secondary.pull-right{ng: {click: "shiftSendMessage()", class: "{'disabled': !msg}", show: "job.status > 1 && messages.length"}} Send
+        .input-group
+          %input.form-control.input-lg{rows: 2, ng: {model: "msg", keyUp: "sendMessage($event)", show: "job.status > 1 && messages.length"}}
+          .input-group-btn
+            %button.send.btn.btn-primary.btn-lg{ng: {click: "shiftSendMessage()", class: "{'disabled': !msg}", show: "job.status > 1 && messages.length"}} Send

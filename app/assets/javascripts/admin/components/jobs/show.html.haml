@@ -11,7 +11,7 @@
             %i.fa.fa-angle-left
             All Inboxes
 
-      %ul.actions.menuclipper-menu.no-margin.p-r-20.pull-right
+      %ul.actions.menuclipper-menu.no-margin.p-r-20
         %li.no-padding{ng: {show: "job.status > 0"}}
           %a{:href => "#", ng: {click: "showDetails($event)"}} Details
         %li.no-padding{ng: {show: "job.status > 0"}}
@@ -35,6 +35,12 @@
             %h4 Job# {{job.code}}: {{job.title}}
           %p.m-t-10
             %span.label.label-default {{job.category.name}}
+          %p.m-b-10
+            %span.bold Posted by:
+            %a{ng: {href:"#/customer/{{job.customer.id}}"}} {{job.customer.name}}
+          %p.m-b-10{ng: {show: "job.expert"}}
+            %span.bold Handled by:
+            %a{ng: {href:"#/expert/{{job.expert.id}}"}} {{job.expert.name}}
           %p.m-b-10
             %span.bold Posted On:
             {{job.created_at | amDateFormat:'MMM DD, YYYY hh:mm a'}}
@@ -78,25 +84,20 @@
         %p.text-center.m-y-1{ng: {show: "job.status == 1"}}
           %i 
             No conversations so far
-        .chat{ng: {show: "job.status > 1"}}
+        %ul.chat{ng: {show: "job.status > 1"}}
           .text-center{ng: {show: "!messages.length"}} Loading...
-          %div{ng: {repeat: "message in messages"}}
-            %div
-              .p-b-10.clearfix{ng: {show: "!message.sender_type"}}
-                %span
-                  %strong TaskBot
-                  %small.pull-right {{ message.created_at }}
-                .clearfix
-                  %span {{message.sender}}
-                  %span{"ng-bind-html" => "message.content | nl2br | str2link"}
-              .p-b-10.clearfix{ng: {show: "message.sender_type"}}
-                %span{ng: {show: "message.sender_type == 'Expert'"}}
-                  %strong {{message.sender}}
-                  %small.pull-right {{ message.created_at }}
-                %span{ng: {show: "message.sender_type == 'User'"}}
-                  %strong {{message.sender}}
-                  %small.pull-right {{ message.created_at }}
-                %div{"ng-bind-html" => "message.content | nl2br | str2link"}
+          %li{ng: {repeat: "message in messages"}}
+            .p-b-10.clearfix{ng: {show: "!message.sender_type"}}
+              %span
+                %strong TaskBot
+                %small.pull-right {{ message.created_at }}
+              .clearfix
+                %span {{message.sender}}
+                %span{"ng-bind-html" => "message.content | nl2br | str2link"}
+            .p-b-10.clearfix{ng: {show: "message.sender_type"}}
+              %strong {{message.sender}}
+              %small.pull-right {{ message.created_at }}
+              %div{"ng-bind-html" => "message.content | nl2br | str2link"}
       #details.email-content-header{ng: {show: "show_mode == 3"}}
         %span{ng: {show: "job.user"}}
           .thumbnail-wrapper.d48.circular.bordered

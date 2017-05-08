@@ -42,7 +42,7 @@ class HomeController < ApplicationController
     gon.company = company
     gon.customer = current_customer
     gon.services = Service.where(service_type: 0)
-    gon.avatar = current_customer.avatar
+    gon.avatar = current_customer.avatar.try(:url)
     gon.settings = current_customer.customer_setting
     @jobs = current_customer.jobs.order("updated_at DESC")
     gon.rabl
@@ -54,7 +54,7 @@ class HomeController < ApplicationController
     Apartment::Tenant.switch!(company.subdomain)
     gon.company = company
     gon.expert = current_expert
-    gon.avatar = current_expert.avatar
+    gon.avatar = current_expert.avatar.try(:url)
     gon.settings = current_expert.expert_setting
     @jobs = Job.pending + current_expert.jobs.order("updated_at DESC")
     gon.rabl
@@ -66,7 +66,8 @@ class HomeController < ApplicationController
     Apartment::Tenant.switch!(company.subdomain)
     gon.company = company
     gon.user = current_user
-    gon.avatar = current_user.avatar
+    gon.store = Store.first
+    gon.avatar = current_user.avatar.try(:url)
     @jobs = Job.all.order("updated_at DESC")
     gon.rabl
     render 'app', layout: "admin"

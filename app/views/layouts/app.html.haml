@@ -69,7 +69,7 @@
               .dropdown.pull-right
                 %button.profile-dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
                   %span.thumbnail-wrapper.d32.circular.inline.m-t-5
-                    %img{:alt => "", "data-src" => asset_path(current_customer.avatar), "data-src-retina" => asset_path(current_customer.avatar), :height => "32", :src => asset_path(current_customer.avatar), :width => "32"}/
+                    %img{:alt => "", "data-src" => asset_path(current_customer.avatar.url), "data-src-retina" => asset_path(current_customer.avatar.url), :height => "32", :src => asset_path(current_customer.avatar.url), :width => "32"}/
                 %ul.dropdown-menu.profile-dropdown{:role => "menu"}
                   %li
                     %a{:href => "#/settings"}

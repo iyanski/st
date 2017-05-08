@@ -30,7 +30,7 @@ do ->
       dropzone.on "complete", (file)->
         dropzone.removeFile(file)
         response = JSON.parse(file.xhr.response)
-        $scope.avatar = response.avatar
+        $scope.avatar = response.avatar.url
         $scope.save (data, xhr)->
           console.log data
 

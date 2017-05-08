@@ -4,9 +4,15 @@ class OrdersController < ApplicationController
   end
 
   def notify
-    items = JSON.parse(params[:custom])
-    items.each do |item|
-      job = Job.find(item["job"].to_i)
+    unless params[:custom].nil?
+      items = JSON.parse(params[:custom])
+      items.each do |item|
+        job = Job.find(item["job"].to_i)
+        transaction = PaymentTransaction.create_for_ job
+        job.complete
+      end
+    else
+      job = Job.find(params[:id])
       transaction = PaymentTransaction.create_for_ job
       job.complete
     end

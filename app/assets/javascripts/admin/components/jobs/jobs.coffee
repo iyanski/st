@@ -2,6 +2,7 @@ do ->
   jobsCtrl = ($scope, $location, Job, $routeParams, ChatService) ->
     console.log 'jobs controller'
     $scope.job_id = gon.job_id
+    $scope.activities = []
 
     $scope.initJobUpdates = ->
       jobsRef = ChatService.ref("updates/" + gon.company.id).limitToLast(1)
@@ -32,18 +33,15 @@ do ->
         $scope.job = job
         $scope.showUploader = false
         $scope.messages = []
-        console.log $scope.job
+        $scope.initChat()
         $scope.form_action = ["/api/experts/jobs", job.id, "pay"].join("/")
-        if job and job.expert and job.user
-          $scope.initChat()
-          $scope.loadImagePreviewer(job)
-          setTimeout ->
-            $scope.$apply()
-            $scope.scrollToBottom()
-          , 100
+        $scope.loadImagePreviewer(job)
+        setTimeout ->
+          $scope.$apply()
+          $scope.scrollToBottom()
+        , 100
 
     $scope.openImagePreview = (index, $event)->
-      console.log index
       pswpElement = $(".pswp")[0]
       $event.preventDefault()
       options = 
@@ -58,15 +56,19 @@ do ->
       $scope.interactive = false
       if $scope.on and $scope.job
         $scope.msg = ""
-        console.log $scope.job
-        $scope.notificationsRef = ChatService.ref("messages/" + gon.company.id + "/" + $scope.job.id + "/" + [$scope.job.expert.id, $scope.job.user.id].join("/"))
-        $scope.notificationsRef.on 'child_added', (snapshot)->
-          console.log snapshot.val().system
-          if !$scope.interactive
-            $scope.pushMessage snapshot.val()
-          else if $scope.interactive && snapshot.val().sender_type is "Customer"
-            $scope.pushMessage snapshot.val()
-          console.log snapshot.val()
+        $scope.notificationsRef = ChatService.ref("messages/" + gon.company.id + "/" + $scope.job.id + "/" + $scope.job.conversation.code)
+        $scope.notificationsRef.on 'value', (snapshot)->
+          convos = snapshot.val()
+          Object.keys(convos).forEach (item)->
+            if convos.hasOwnProperty(item)
+              console.log $scope.activities.indexOf(item)
+              if $scope.activities.indexOf(item) < 0
+                $scope.pushMessage convos[item]
+                $scope.activities.push item
+          # for item in convos
+          #   console.log item
+          #   if convos.hasOwnProperty(item)
+          #     $scope.pushMessage convos[item]
           setTimeout ->
             $scope.scrollToBottom()
             $scope.$apply()
@@ -74,12 +76,18 @@ do ->
 
     if gon.job_id
       $scope.find_job_by_id $scope.job_id, (job)->
-        console.log job
         $scope.selectJob(job)
 
     if $routeParams.id
-      $scope.find_job_by_id $routeParams.id, (job)->
-        $scope.selectJob(job)
+      Job.get id: $routeParams.id, (job, xhr)->
+        if job
+          $scope.selectJob(job)
+        else
+          toastr.warning "Job not found"
+          $location.path "/jobs"
+      , (res)->
+        toastr.warning "Job not found"
+        $location.path("/jobs")
     
   viewControllers = angular.module('app.jobs.controller', [])
   viewControllers.controller 'jobsCtrl', jobsCtrl

@@ -9,7 +9,7 @@
       .col-md-4{ng: {repeat: "service in services"}}
         .panel.panel-default.panel-services.cursor{ng: {click: "goto(service.id)"}}
           .panel-heading
-            %img{ng: {src: "{{service.photo.url}}"}, style: "width: 100%"}
+            %img{ng: {src: "{{service.photo.url}}"}, style: "width: 100%; height: 250px"}
             .panel-title.p-t-30
               {{service.title}}
             .small{ng: {if: "service.service_type == 0"}} {{service.price | currency : "$" : 2}}/hr

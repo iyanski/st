@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170507105025) do
+ActiveRecord::Schema.define(version: 20170508122557) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 20170507105025) do
     t.string   "topic"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "code"
     t.index ["job_id"], name: "index_conversations_on_job_id", using: :btree
   end
 
@@ -198,8 +199,10 @@ ActiveRecord::Schema.define(version: 20170507105025) do
     t.float    "commission"
     t.float    "fee"
     t.datetime "release_at"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.float    "qty"
+    t.integer  "service_type"
     t.index ["company_id"], name: "index_payment_transactions_on_company_id", using: :btree
     t.index ["customer_id"], name: "index_payment_transactions_on_customer_id", using: :btree
     t.index ["expert_id"], name: "index_payment_transactions_on_expert_id", using: :btree

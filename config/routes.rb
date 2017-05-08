@@ -1,8 +1,13 @@
 Rails.application.routes.draw do
   mount ActionCable.server => '/suck8ts'
   
-  devise_for :customers
-  devise_for :experts
+  devise_for :customers, controllers: {
+    sessions: 'customers/sessions',
+  }
+  devise_for :experts, controllers: {
+    sessions: 'experts/sessions',
+  }
+  
   devise_for :users, controllers: {
     sessions: 'users/sessions',
   }
@@ -35,10 +40,23 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :users do
-      resource :store
+      resource :store do
+        post :upload_cover
+        post :upload_logo
+      end
       resources :jobs
-      resources :experts
-      resources :customers
+      resources :experts do
+        member do
+          get :sales
+          get :transactions
+        end
+      end
+      resources :customers do
+        member do
+          get :sales
+          get :transactions
+        end
+      end
       resources :services do
         resources :benefits
         resources :requirements
@@ -52,6 +70,7 @@ Rails.application.routes.draw do
           post :domain
         end
       end
+      resources :transactions
     end
 
 

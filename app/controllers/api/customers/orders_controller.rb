@@ -15,7 +15,7 @@ class Api::Customers::OrdersController < Api::CustomersController
       response = EXPRESS_GATEWAY.setup_purchase(total_amount_in_cents,
         ip: request.remote_ip,
         return_url: new_order_url,
-        notify_url: "http://d470c86f.ngrok.io/notify",
+        notify_url: "http://0b165243.ngrok.io/notify",
         # notify_url: notify_url,
         cancel_return_url: cancel_orders_url,
         currency: "USD",

@@ -40,21 +40,39 @@
 
       .when "/people",
         templateUrl: "common.html"
-        controller: "rootPageCtrl"
+        controller: "homePageCtrl"
         activepage: "page-people"
+        activemenu: "page-people"
+
+      .when "/customer/:id",
+        templateUrl: "common.html"
+        controller: "homePageCtrl"
+        activepage: "page-customer"
+        activemenu: "page-people"
+
+      .when "/expert/:id",
+        templateUrl: "common.html"
+        controller: "homePageCtrl"
+        activepage: "page-expert"
         activemenu: "page-people"
 
       .when "/experts/new",
         templateUrl: "common.html"
         controller: "rootPageCtrl"
         activepage: "page-form-experts"
-        activemenu: "page-experts"
+        activemenu: "page-people"
 
       .when "/storefront",
         templateUrl: "common.html"
         controller: "rootPageCtrl"
         activepage: "page-store"
         activemenu: "page-store"
+
+      .when "/transactions",
+        templateUrl: "common.html"
+        controller: "rootPageCtrl"
+        activepage: "page-transactions"
+        activemenu: "page-transactions"
 
       .otherwise redirectTo: '/'
 ]

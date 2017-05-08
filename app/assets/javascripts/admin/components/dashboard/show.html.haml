@@ -2,14 +2,15 @@
   .col-md-6.col-md-offset-3
     %h4.bold Welcome to SmallTaskers
     %h5 Now, let's get you started
-    -# .panel.panel-default
-    -#   .panel-heading
-    -#     .panel-title
-    -#       Store Front
-    -#   .panel-body{:style => "display: block;"}
-    -#     %p
-    -#       Configure your tagline, store front colors, background, logos and other contents to reflect your store front with your brand.
-    -#     .btn.btn-default Customize Store Front
+
+    .panel.panel-default{ng: {hide: "hasStoreFront()"}}
+      .panel-heading
+        .panel-title
+          Store Front
+      .panel-body{:style => "display: block;"}
+        %p
+          Configure your store's cover photo, title, description, tagline, social accounts and other contents to reflect your store front with your brand.
+        %a.btn.btn-default{ng: {href: "#/storefront"}} Start Customizing
 
     .panel.panel-default{ng: {hide: "services.length"}}
       .panel-heading

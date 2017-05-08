@@ -39,14 +39,14 @@
                   .form-group.required
                     %label Price per {{service.service_type ? 'month' : 'hour'}}
                     .input-group
-                      %input.form-control.text-right{:required => "", :type => "number", ng: {model: "service.price"}}/
+                      %input.form-control.text-right{:required => "", :type => "number", ng: {model: "service.price"}, minLimit: 20}/
                       .input-group-addon
                         USD
                 .col-md-6
                   .form-group.required
                     %label Expert's Commission
                     .input-group
-                      %input.form-control.text-right{:required => "", :type => "number", ng: {model: "service.experts_rate"}}/
+                      %input.form-control.text-right{:required => "", :type => "number", ng: {model: "service.experts_rate"}, minLimit: 10}/
                       .input-group-addon
                         {{"%"}}
             .col-md-8

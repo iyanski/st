@@ -36,6 +36,13 @@
 
   'app.expert.controller'
   'app.expert.directive'
+  'app.expert.form.directive'
+
+  'app.customer.controller'
+  'app.customer.directive'
+
+  'app.transactions.controller'
+  'app.transactions.directive'
 
   'app.sidebar.directive'
 
@@ -69,4 +76,8 @@
     else if text == 5 then "Submitted for Approval"
     else if text == 6 then "Completed"
     else if text == 7 then "Closed"
-  
+
+.filter 'service_type', ->
+  (text) ->
+    if text == 0 then "Hourly"
+    else if text == 1 then "Monthly"

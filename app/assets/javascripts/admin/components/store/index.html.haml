@@ -16,7 +16,7 @@
           Give your site a meaningful and captivating cover photo
       .panel-body.no-scroll.no-padding{style: "position: relative; overflow: hidden;"}
         %label.upload-trigger{:for => "uploadField"}
-          %img.featured_image{ng: {src: "{{service.photo.url}}"}, style: "max-width: 100%; position: absolute; top: 50%; transform: translateY(-50%);"}
+          %img.featured_image{ng: {src: "{{store.cover.url}}"}, style: "max-width: 100%; position: absolute; top: 50%; transform: translateY(-50%);"}
           %form.dropzone.no-margin
             %span.dropzone-text
               Drop files to
@@ -97,4 +97,4 @@
                 http://instagram.com/
               %input.form-control{:placeholder => "", :type => "text", ng: {model: "store.instagram"}}/
           .form-group
-            %button.btn.btn-primary.btn-cons{ng: {click: "saveDescription()"}} Save
+            %button.btn.btn-primary.btn-cons{ng: {click: "saveSocial()"}} Save

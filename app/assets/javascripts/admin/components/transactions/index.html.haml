@@ -18,7 +18,9 @@
               %input#search-table.form-control.pull-right{:placeholder => "Search", :type => "text"}/
           .clearfix
         .panel-body
-          #tableWithSearch_wrapper.dataTables_wrapper.form-inline.no-footer
+          %div{ng: {show: "!transactions.length"}}
+            No Transactions yet
+          #tableWithSearch_wrapper.dataTables_wrapper.form-inline.no-footer{ng: {show: "transactions.length"}}
             %div
               %table#tableWithSearch.table.table-hover.demo-table-search.table-responsive-block.dataTable.no-footer{"aria-describedby" => "tableWithSearch_info", :role => "grid"}
                 %thead
@@ -62,3 +64,29 @@
                   Showing
                   %b 1 to 5
                   of 12 entries
+
+    #tab2.tab-pane
+      .panel.panel-transparent
+        .panel-heading
+          .panel-title
+            Withdrawals
+          .pull-right
+            .col-xs-12
+              %input#search-table.form-control.pull-right{:placeholder => "Search", :type => "text"}/
+          .clearfix
+        .panel-body
+          %div{ng: {show: "transactions.length"}}
+            No Withdrawals yet
+
+    #tab3.tab-pane
+      .panel.panel-transparent
+        .panel-heading
+          .panel-title
+            Refunds
+          .pull-right
+            .col-xs-12
+              %input#search-table.form-control.pull-right{:placeholder => "Search", :type => "text"}/
+          .clearfix
+        .panel-body
+          %div{ng: {show: "transactions.length"}}
+            No Refunds yet

@@ -3,6 +3,7 @@ do ->
     $scope.page_title = "Dashboard"
     $scope.content = pageview.page[$route.current.activepage]
     $scope.activepage = $route.current.activepage
+    $scope.activemenu = $route.current.activemenu
     $scope.selectJob = {}
     $scope.rate = gon.rate
     $scope.percentage = 25

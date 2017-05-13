@@ -40,6 +40,11 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :users do
+      resources :support_tickets do
+        member do
+          post :chat
+        end
+      end
       resource :store do
         post :upload_cover
         post :upload_logo
@@ -81,6 +86,7 @@ Rails.application.routes.draw do
         end
       end
       resource :settings
+      resources :transactions
       resources :jobs do
         member do
           put :claim
@@ -103,6 +109,7 @@ Rails.application.routes.draw do
         end
       end
       resource :settings
+      resources :support_tickets
       resource :orders do
         collection do
           get 'express/:job_id' => "orders#express", via: [:post], as: :express

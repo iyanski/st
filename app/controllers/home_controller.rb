@@ -4,7 +4,6 @@ class HomeController < ApplicationController
   before_action :authenticate_expert!, only: [:dashboard]
   
   def index
-    @services = Service.all
   end
 
   def contact

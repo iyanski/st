@@ -22,6 +22,12 @@
   'app.job.controller'
   'app.job.directive'
 
+  'app.tickets.controller'
+  'app.tickets.directive'
+
+  'app.ticket.controller'
+  'app.ticket.directive'
+
   'app.people.controller'
   'app.people.directive'
 
@@ -81,3 +87,8 @@
   (text) ->
     if text == 0 then "Hourly"
     else if text == 1 then "Monthly"
+.filter 'ticket_status', ->
+  (text) ->
+    if text == 0 then "New"
+    else if text == 1 then "Ongoing"
+    else if text == 2 then "Resolved"

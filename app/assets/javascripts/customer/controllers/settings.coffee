@@ -5,6 +5,7 @@ do ->
     $scope.customer = gon.customer
     $scope.content = pageview.page[$route.current.activepage]
     $scope.activepage = $route.current.activepage
+    $scope.activemenu = $route.current.activemenu
     
   viewControllers = angular.module('app.settings.page.controller', [])
   viewControllers.controller 'settingsPageCtrl', settingsPageCtrl

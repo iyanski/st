@@ -29,17 +29,20 @@ do ->
     $scope.selectJob = (job)->
       if $scope.notificationsRef
         $scope.notificationsRef.off 'child_added'
-      if $scope.job != job
-        $scope.job = job
-        $scope.showUploader = false
-        $scope.messages = []
-        $scope.initChat()
-        $scope.form_action = ["/api/experts/jobs", job.id, "pay"].join("/")
-        $scope.loadImagePreviewer(job)
-        setTimeout ->
-          $scope.$apply()
-          $scope.scrollToBottom()
-        , 100
+      if !job
+        $location.path("/jobs")
+      else
+        if $scope.job != job
+          $scope.job = job
+          $scope.showUploader = false
+          $scope.messages = []
+          $scope.initChat()
+          $scope.form_action = ["/api/experts/jobs", job.id, "pay"].join("/")
+          $scope.loadImagePreviewer(job)
+          setTimeout ->
+            $scope.$apply()
+            $scope.scrollToBottom()
+          , 100
 
     $scope.openImagePreview = (index, $event)->
       pswpElement = $(".pswp")[0]

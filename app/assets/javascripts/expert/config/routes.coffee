@@ -6,16 +6,25 @@
         templateUrl: "common.html"
         controller: "homePageCtrl"
         activepage: "page-home"
+        activemenu: "page-home"
 
       .when "/job/:id",
         templateUrl: "common.html"
         controller: "homePageCtrl"
         activepage: "page-home"
+        activemenu: "page-home"
 
       .when "/settings",
         templateUrl: "common.html"
         controller: "settingsPageCtrl"
         activepage: "page-settings"
+        activemenu: "page-settings"
+
+      .when "/transactions",
+        templateUrl: "common.html"
+        controller: "rootPageCtrl"
+        activepage: "page-transactions"
+        activemenu: "page-transactions"
 
       .otherwise redirectTo: '/'
 ]

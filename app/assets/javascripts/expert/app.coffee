@@ -7,6 +7,7 @@
   'ng-rails-csrf'
   'ngSanitize'
   
+  'app.root.controller'
   'app.home.page.controller'
   'app.settings.page.controller'
 
@@ -21,6 +22,9 @@
 
   'app.settings.controller'
   'app.settings.directive'
+
+  'app.transactions.controller'
+  'app.transactions.directive'
 
   'app.sidebar.directive'
   'app.pageview.factory'

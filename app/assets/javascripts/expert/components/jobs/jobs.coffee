@@ -74,19 +74,22 @@ do ->
       if $scope.notificationsRef
         $scope.notificationsRef.off 'child_added'
       $scope.show_mode = 1
-      if $scope.job != job
-        $scope.job = job
-        $scope.showUploader = false
-        $scope.messages = []
-        $scope.form_action = ["/api/experts/jobs", job.id, "pay"].join("/")
-        
-        if job and job.expert and job.customer
-          $scope.initChat()
-          $scope.loadImagePreviewer(job)
-          setTimeout ->
-            $scope.$apply()
-            $scope.scrollToBottom()
-          , 100
+      if !job
+        $location.path("/jobs")
+      else
+        if $scope.job != job
+          $scope.job = job
+          $scope.showUploader = false
+          $scope.messages = []
+          $scope.form_action = ["/api/experts/jobs", job.id, "pay"].join("/")
+          
+          if job and job.expert and job.customer
+            $scope.initChat()
+            $scope.loadImagePreviewer(job)
+            setTimeout ->
+              $scope.$apply()
+              $scope.scrollToBottom()
+            , 100
 
     $scope.initChat = ->
       $scope.interactive = false

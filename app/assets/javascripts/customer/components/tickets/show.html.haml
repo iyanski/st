@@ -1,0 +1,65 @@
+/ START SPLIT DETAILS
+.split-details{"data-email" => "opened"}
+  .no-result{ng: {hide: "ticket"}}
+    %h1{ng: {show: "tickets.length"}} No task has been selected
+    %h1{ng: {show: "!tickets.length"}} Start posting a task
+  .email-content-wrapper{ng: {show: "ticket"}}
+    .actions-wrapper.menuclipper.bg-master-lightest
+      %ul.actions.menuclipper-menu.no-margin.p-r-20
+        %li.no-padding{ng: {if: "ticket.status == 1"}}
+          %a{ng: {click: "attachFile()"}} Attach File
+        %li.no-padding{ng: {show: "ticket.status > 0"}}
+          %a{:href => "#", ng: {click: "showDetails($event)"}} Details
+        %li.no-padding{ng: {show: "ticket.status > 0"}}
+          %a{:href => "#", ng: {click: "showConversations($event)"}} Conversation
+        %li.no-padding{ng: {show: "ticket.status > 0"}}
+          %a{:href => "#", ng: {click: "showFiles($event)"}} Files
+
+      .clearfix
+    .email-content
+      #details.email-content-header
+        %span{ng: {show: "ticket.expert"}}
+          .thumbnail-wrapper.d48.circular.bordered.m-r-10
+            %img{:alt => "", "data-src" => "{{ticket.expert.avatar}}", "data-src-retina" => "{{ticket.expert.avatar}}", :height => "40", :src => "{{ticket.expert.avatar}}", :width => "40"}/
+          .sender.inline
+            %p.name.no-margin.bold {{ticket.expert.name}}
+          .clearfix
+        .subject.m-t-20.m-b-20.semi-bold
+          .subject.m-t-20.m-b-20.semi-bold
+            %h4 Ticket# {{ticket.code}}: {{ticket.title}}
+          %p.m-b-20
+            %span.bold Job# {{ticket.job.code}}:
+            {{ticket.job.title}}
+          %p.m-b-20
+            %span.bold Reported On:
+            {{ticket.created_at | amDateFormat:'MMM DD, YYYY hh:mm a'}}
+        .subject.m-t-20.m-b-20.semi-bold
+          .bold.m-b-20 Details:
+          %p{ng: {bind: {html: "ticket.description | nl2br | str2link"}}}
+
+      #conversation.conversation.m-t-20
+        %p.text-center.m-y-1{ng: {show: "ticket.status == 0"}}
+          %i We will be right here with you the soonest.
+        %ul.chat{ng: {show: "ticket.status > 0"}}
+          .text-center{ng: {show: "!messages.length"}} Loading...
+          %li{ng: {repeat: "message in messages"}}
+            .p-b-10.clearfix{ng: {show: "!message.sender_type"}}
+              %span
+                %strong TaskBot
+                %small.pull-right {{ message.created_at }}
+              .clearfix
+                %span {{message.sender}}
+                %span{ng: {bind: {html: "message.content | nl2br | str2link"}}}
+            .p-b-10.clearfix{ng: {show: "message.sender_type"}}
+              %span{ng: {show: "message.sender_type == 'Customer'"}}
+                %strong you
+                %small.pull-right {{ message.created_at }}
+              %span{ng: {show: "message.sender_type == 'Expert'"}}
+                %strong {{message.sender}}
+                %small.pull-right {{ message.created_at }}
+              %div{ng: {bind: {html: "message.content | nl2br | str2link"}}}
+      %div{ng: {show: "job.status > 0"}}
+        .input-group
+          %input.form-control.input-lg{rows: 2, ng: {model: "msg", keyUp: "sendMessage($event)", show: "job.status > 1 && messages.length"}}
+          .input-group-btn
+            %button.send.btn.btn-primary.btn-lg{ng: {click: "shiftSendMessage()", class: "{'disabled': !msg}", show: "job.status > 1 && messages.length"}} Send

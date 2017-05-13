@@ -1,12 +1,17 @@
 %a.btn.btn-complete.btn-block.btn-compose.m-b-30{ng: {click: "compose()"}} New Task
 %ul.main-menu
-  %li{ng: {class: "{'active': activepage == 'page-home'}"}}
+  %li{ng: {class: "{'active': activemenu == 'page-home'}"}}
     %a{:href => "#/"}
       %span.title
         %i.pg-inbox
         Tasks
       %span.badge.pull-right {{jobs.length}}
-  %li{ng: {class: "{'active': activepage == 'page-settings'}"}}
+  %li{ng: {class: "{'active': activemenu == 'page-tickets'}"}}
+    %a{:href => "#/tickets"}
+      %span.title
+        %i.pg-settings
+        Tickets
+  %li{ng: {class: "{'active': activemenu == 'page-settings'}"}}
     %a{:href => "#/settings"}
       %span.title
         %i.pg-settings

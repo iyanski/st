@@ -9,6 +9,7 @@ do ->
     $scope.jobs = gon.rabl
     $scope.content = pageview.page[$route.current.activepage]
     $scope.activepage = $route.current.activepage
+    $scope.activemenu = $route.current.activemenu
     $scope.interactive = false
     $scope.show_mode = 1
 

@@ -3,6 +3,7 @@ do ->
     $scope.page_title = "Root"
     $scope.content = pageview.page[$route.current.activepage]
     $scope.activemenu = $route.current.activemenu
+    $scope.jobs = gon.rabl
 
   viewControllers = angular.module('app.root.controller', [])
   viewControllers.controller 'rootPageCtrl', rootPageCtrl

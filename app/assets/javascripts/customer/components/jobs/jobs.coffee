@@ -75,19 +75,22 @@ do ->
       if $scope.notificationsRef
         $scope.notificationsRef.off 'child_added'
       $scope.show_mode = 1
-      if $scope.job != job
-        $scope.job = job
-        $scope.showUploader = false
-        $scope.messages = []
-        console.log $scope.job
-        $scope.form_action = ["/api/customers/jobs", job.id, "pay"].join("/")
-        if job and job.expert and job.customer
-          $scope.initChat()
-          $scope.loadImagePreviewer(job)
-          setTimeout ->
-            $scope.$apply()
-            $scope.scrollToBottom()
-          , 100
+      if !job
+        $location.path("/jobs")
+      else
+        if $scope.job != job
+          $scope.job = job
+          $scope.showUploader = false
+          $scope.messages = []
+          console.log $scope.job
+          $scope.form_action = ["/api/customers/jobs", job.id, "pay"].join("/")
+          if job and job.expert and job.customer
+            $scope.initChat()
+            $scope.loadImagePreviewer(job)
+            setTimeout ->
+              $scope.$apply()
+              $scope.scrollToBottom()
+            , 100
 
     $scope.initChat = ->
       $scope.interactive = false
@@ -154,7 +157,7 @@ do ->
 
 
 do ->
-  jobCtrl = ($scope, $location, Job, ChatService, Message) ->
+  jobCtrl = ($scope, $location, Job, ChatService, Message, Ticket) ->
     console.log 'job controller'
     $scope.on = true
     $scope.messages = []
@@ -322,10 +325,24 @@ do ->
       e.preventDefault()
       $scope.show_mode = 3
 
+    $scope.cancelReport = ->
+      $scope.show_mode = 1
+
+    $scope.fileReport = (job)->
+      $scope.show_mode = 4
+      $scope.ticket = new Ticket(job_id: job.id)
+
+    $scope.sendReport = ->
+      $scope.ticket.$save (data, xhr)->
+        console.log data
+        toastr.success "Report sent"
+      , (res)->
+        toastr.warning res.data.error
+
 
   viewControllers = angular.module('app.job.controller', [])
   viewControllers.controller 'jobCtrl', jobCtrl
-  jobCtrl.$inject = [ '$scope', '$location', 'Job', 'ChatService', 'Message']
+  jobCtrl.$inject = [ '$scope', '$location', 'Job', 'ChatService', 'Message', 'Ticket']
 
 do ->
   job = ->

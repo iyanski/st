@@ -31,6 +31,27 @@ class PaymentTransaction < ApplicationRecord
     transaction
   end
 
+  # For experts
+  def floating_balance
+    if release_at > Time.now
+      self.cost * (job.service.experts_rate / 100)
+    else
+      0.00
+    end
+  end
+
+  def available_balance
+    if release_at <= Time.now
+      self.cost * (job.service.experts_rate / 100)
+    else
+      0.00
+    end
+  end
+
+  def earnings
+    self.cost * (job.service.experts_rate / 100)
+  end
+
   def release_in_ days
     self.release_at = Time.now + days
     self.save

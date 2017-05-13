@@ -80,11 +80,9 @@
                       .col-xs-height.col-middle.text-left
                         .container
                           .col-md-6.no-padding.col-xs-10.col-xs-offset-1
-                            %h1.light.sm-text-center{"data-swiper-parallax" => "-15%"} Online services platform crafted for you
-                            %h4.sm-text-center.m-b-35 Whether your are doing social media, web development, copywriting and other online services.
-                            -# %h5.block-title.text-white.sm-text-center Watch how it works
-                            -# %p.fs-12.font-arial.hint-text.sm-text-center We vet creative experts from all over the globe.
-                            %a.btn.btn-lg.btn-round.btn-primary{href: ""} Get Started
+                            %h1.light.sm-text-center{"data-swiper-parallax" => "-15%"} #{Store.last.tagline}
+                            %h4.sm-text-center.m-b-35 #{Store.last.description.html_safe}
+                            %a.btn.btn-lg.btn-round.btn-primary{href: "/services"} Get Started
             .mouse-wrapper
               .mouse
                 .mouse-scroll
@@ -115,4 +113,5 @@
     
       / END FOOTER
     / START OVERLAY SEARCH
+    = render partial: "shared/footer"
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'

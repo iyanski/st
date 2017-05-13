@@ -8,6 +8,7 @@
   'ngSanitize'
   'ngPhotoswipe'
   
+  'app.root.controller'
   'app.home.page.controller'
   'app.settings.page.controller'
 
@@ -16,6 +17,11 @@
 
   'app.job.controller'
   'app.job.directive'
+
+  'app.tickets.controller'
+  'app.tickets.directive'
+  'app.ticket.controller'
+  'app.ticket.directive'
 
   'app.settings.controller'
   'app.settings.directive'
@@ -53,3 +59,8 @@
     else if text == 6 then "Completed"
     else if text == 7 then "Closed"
   
+.filter 'ticket_status', ->
+  (text) ->
+    if text == 0 then "New"
+    else if text == 1 then "Ongoing"
+    else if text == 2 then "Resolved"

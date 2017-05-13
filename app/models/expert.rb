@@ -7,6 +7,7 @@ class Expert < ApplicationRecord
   has_many :jobs
   has_many :payment_transactions
   has_one :expert_setting
+  has_many :support_tickets
   after_create :generate_default_settings
   mount_uploader :avatar, MediaUploader
 

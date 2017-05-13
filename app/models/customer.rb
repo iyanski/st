@@ -7,6 +7,7 @@ class Customer < ApplicationRecord
   has_many :jobs
   has_many :payment_transactions
   has_one :customer_setting
+  has_many :support_tickets
   mount_uploader :avatar, MediaUploader
   after_create :generate_default_settings
 

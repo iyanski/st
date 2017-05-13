@@ -57,7 +57,7 @@
               .form-group
                 %label You will earn:
                 .input-group.bold
-                  {{service.price * (88 - service.experts_rate) / 100 | currency : "$" : 2}}
+                  {{service.price * ((100 - service.platform_fee) - service.experts_rate) / 100 | currency : "$" : 2}}
               
           %hr
           .form-group

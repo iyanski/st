@@ -1,16 +1,16 @@
 %ul.main-menu
-  %li{ng: {class: "{'active': activepage == 'page-home'}"}}
+  %li{ng: {class: "{'active': activemenu == 'page-home'}"}}
     %a{:href => "#/"}
       %span.title
         %i.pg-inbox
         Tasks
       %span.badge.pull-right {{jobs.length}}
-  %li{ng: {class: "{'active': activepage == 'page-transactions'}"}}
-    %a{:href => "#/"}
+  %li{ng: {class: "{'active': activemenu == 'page-transactions'}"}}
+    %a{:href => "#/transactions"}
       %span.title
         %i.pg-inbox
         Transactions
-  %li{ng: {class: "{'active': activepage == 'page-settings'}"}}
+  %li{ng: {class: "{'active': activemenu == 'page-settings'}"}}
     %a{:href => "#/settings"}
       %span.title
         %i.pg-settings

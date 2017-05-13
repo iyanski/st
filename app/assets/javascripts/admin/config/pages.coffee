@@ -13,6 +13,7 @@ do ->
         'page-form-experts': 'admin/views/people/expert_form.html'
         'page-store': 'admin/views/store/index.html'
         'page-transactions': 'admin/views/transactions/index.html'
+        'page-tickets': 'admin/views/tickets.html'
     }
 
   pagepath = angular.module('app.pageview.factory', [])

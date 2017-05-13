@@ -232,6 +232,10 @@ class Job < ApplicationRecord
     UserMailer.chat(self, message, sender, recipient).deliver_later
   end
 
+  def create_conversation
+    Conversation.create(topic: title, job_id: id)
+  end
+
   private
     def generate_conversation
       Conversation.create(topic: title, job_id: id)

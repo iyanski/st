@@ -55,4 +55,4 @@ production:
   <<: *default
   database: smalltasker_production
   username: smalltasker
-  password: <%= ENV['SMALLTASKER_DATABASE_PASSWORD'] %>
+  password: <%= ENV['smalltaskers_database_password'] %>

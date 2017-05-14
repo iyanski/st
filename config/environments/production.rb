@@ -83,4 +83,15 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+  config.active_job.queue_adapter = :sidekiq
+  config.action_mailer.smtp_settings = {
+    address:              ENV["smtp_address"],
+    authentication:       :plain,
+    domain:               ENV["smtp_domain"],
+    enable_starttls_auto: true,
+    password:             ENV["smtp_password"],
+    port:                 "587",
+    user_name:            ENV["smtp_username"]
+  }
+  config.action_mailer.default_url_options = { host: ENV["smtp_domain"] }
 end

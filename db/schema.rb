@@ -169,9 +169,10 @@ ActiveRecord::Schema.define(version: 20170513145531) do
   create_table "messages", force: :cascade do |t|
     t.integer  "conversation_id"
     t.integer  "user_id"
+    t.integer  "from_system",     default: 0
     t.text     "content"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.index ["conversation_id"], name: "index_messages_on_conversation_id", using: :btree
     t.index ["user_id"], name: "index_messages_on_user_id", using: :btree
   end

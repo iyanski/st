@@ -34,8 +34,6 @@
         %form{:role => "form"}
           .form-group.required
             %input.form-control{:placeholder => "", :type => "text", autofocus: true, ng: {model: "store.title"}}/
-          .form-group.btn-controls
-            %button.btn.btn-primary.btn-cons{ng: {click: "saveTitle()"}} Save
 
     .panel.panel-default
       .panel-heading
@@ -47,8 +45,6 @@
         %form{:role => "form"}
           .form-group.required
             %textarea.form-control{:placeholder => "", ng: {model: "store.description"}}
-          .form-group.btn-controls
-            %button.btn.btn-primary.btn-cons{ng: {click: "saveDescription()"}} Save
 
     .panel.panel-default
       .panel-heading
@@ -60,8 +56,6 @@
         %form{:role => "form"}
           .form-group.required
             %textarea.form-control{:placeholder => "", ng: {model: "store.tagline"}}
-          .form-group.btn-controls
-            %button.btn.btn-primary.btn-cons{ng: {click: "saveTagline()"}} Save
 
     .panel.panel-default
       .panel-heading
@@ -96,5 +90,6 @@
               %span.input-group-addon
                 http://instagram.com/
               %input.form-control{:placeholder => "", :type => "text", ng: {model: "store.instagram"}}/
-          .form-group
-            %button.btn.btn-primary.btn-cons{ng: {click: "saveSocial()"}} Save
+    .panel-panel-transparent.m-b-45
+      .panel-body.text-center
+        %button.btn.btn-primary.btn-cons.btn-lg{ng: {click: "save()"}} Save

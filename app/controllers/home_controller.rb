@@ -4,6 +4,14 @@ class HomeController < ApplicationController
   before_action :authenticate_expert!, only: [:dashboard]
   
   def index
+    if Store.last.nil?
+      Store.create
+      render layout: 'launch'
+    else
+      unless Store.last.published?
+        render layout: 'launch'
+      end
+    end
   end
 
   def contact

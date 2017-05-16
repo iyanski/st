@@ -28,8 +28,11 @@
           .header-inner
             / BEGIN LOGO
             %a{href: root_url}
-              %img.logo{:alt => "", "data-src-retina" => asset_path("smalltaskers@2x.png"), :height => "21", :src => asset_path("smalltaskers.png")}/
-              %img.alt{:alt => "", "data-src-retina" => asset_path("smalltaskers_white@2x.png"), :height => "21", :src => asset_path("smalltaskers_white.png")}/
+              - if Store.last.logo.nil?
+                %h1.bold #{current_company.subdomain}
+              - else
+                %img.logo{:alt => "", "data-src-retina" => asset_path(Store.last.logo.url), :height => "21", :src => asset_path(Store.last.logo.url)}/
+                %img.alt{:alt => "", "data-src-retina" => asset_path(Store.last.logo.url), :height => "21", :src => asset_path(Store.last.logo.url)}/
         / BEGIN HEADER TOGGLE FOR MOBILE & TABLET
         .pull-right
           .header-inner
@@ -113,5 +116,5 @@
     
       / END FOOTER
     / START OVERLAY SEARCH
-    = render partial: "shared/footer"
+    = render partial: "shared/storefront_footer"
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'

@@ -11,7 +11,6 @@
             = link_to image_tag(@service.photo.url, class: "m-b-10", alt: @service.title, style: "width:100%"), service_url(@service)
           - else
             = link_to image_tag("services.jpeg", class: "m-b-10", alt: @service.title, style: "width:100%"), service_url(@service)
-          %p.p-t-45 #{@service.description.html_safe}
           %p.p-b-25
             %h5 What is included in this service
             %ul
@@ -38,3 +37,5 @@
 
         .col-md-4
           %button.btn.btn-block.btn-lg.btn-primary Post a Task
+          %h5.p-t-45 Description
+          %p #{@service.description.html_safe}

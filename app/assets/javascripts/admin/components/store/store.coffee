@@ -20,31 +20,10 @@ do ->
 
     $scope.initDropZone()
 
-    $scope.saveTitle = ->
+    $scope.save = ->
       $scope.store.$update (data, xhr)->
         $scope.store = data
-        toastr.success "Saved Title"
-      , (res)->
-        toastr.warning res.data.error
-
-    $scope.saveDescription = ->
-      $scope.store.$update (data, xhr)->
-        $scope.store = data
-        toastr.success "Saved Description"
-      , (res)->
-        toastr.warning res.data.error
-
-    $scope.saveTagline = ->
-      $scope.store.$update (data, xhr)->
-        $scope.store = data
-        toastr.success "Saved Tagline"
-      , (res)->
-        toastr.warning res.data.error
-
-    $scope.saveSocial = ->
-      $scope.store.$update (data, xhr)->
-        $scope.store = data
-        toastr.success "Saved social account(s)"
+        toastr.success "Store Updated"
       , (res)->
         toastr.warning res.data.error
 

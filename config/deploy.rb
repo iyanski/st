@@ -62,7 +62,7 @@ namespace :deploy do
   task :restart do
     on roles(:app) do
       within release_path do
-        execute :sudo, "sudo kill $(cat /opt/nginx/logs/nginx.pid)"
+        execute :sudo, "kill $(cat /opt/nginx/logs/nginx.pid)"
         execute :sudo, "/opt/nginx/sbin/nginx"
       end
     end

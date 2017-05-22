@@ -27,6 +27,7 @@ class HomeController < ApplicationController
   end
 
   def privacy
+    Apartment::Tenant.switch!(current_company.subdomain)
     render layout: 'storepage'
   end
 
@@ -71,6 +72,9 @@ class HomeController < ApplicationController
   def admin
     company = current_company
     Apartment::Tenant.switch!(company.subdomain)
+    if company.store.nil?
+      Store.create(company: company)
+    end
     gon.company = company
     gon.user = current_user
     gon.store = Store.first

@@ -127,7 +127,7 @@
     .panel.panel-default{ng: {show: "service.id"}}
       .panel-heading
         .panel-title
-          Cover Photo
+          Cover Photo for this Service
       .panel-body.no-scroll.no-padding{style: "position: relative; overflow: hidden;"}
         %label.upload-trigger{:for => "uploadField"}
           %img.featured_image{ng: {src: "{{service.photo.url}}"}, style: "max-width: 100%; position: absolute; top: 50%; transform: translateY(-50%);"}
@@ -139,5 +139,5 @@
             .fallback.hide
               %input#uploadField{:name => "file", :type => "file"}/
   .col-md-12.text-center.m-t-20
-    %a.btn.btn-lg.btn-default.btn-rounded{ng: {href: "#/dashboard"}} Go to Dashboard
     %a.btn.btn-lg.btn-primary.btn-rounded{ng: {href: "#/services/new"}} Add another Service
+    %a.btn.btn-lg.btn-default.btn-rounded{ng: {href: "#/dashboard"}} Back to Dashboard

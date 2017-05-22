@@ -243,8 +243,10 @@ ActiveRecord::Schema.define(version: 20170513145531) do
     t.string   "twitter"
     t.string   "pinterest"
     t.string   "google"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.string   "contact_email"
+    t.string   "support_email"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.index ["company_id"], name: "index_stores_on_company_id", using: :btree
   end
 

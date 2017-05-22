@@ -5,6 +5,7 @@
 # require 'apartment/elevators/generic'
 # require 'apartment/elevators/domain'
 require 'apartment/elevators/subdomain'
+require 'rescued_apartment_middleware'
 # require 'apartment/elevators/first_subdomain'
 
 #
@@ -92,5 +93,7 @@ end
 # Rails.application.config.middleware.use 'Apartment::Elevators::Subdomain'
 # Rails.application.config.middleware.use 'Apartment::Elevators::FirstSubdomain'
 # Rails.application.config.middleware.insert_before 'Warden::Manager', 'Apartment::Elevators::Subdomain'
-Rails.application.config.middleware.insert_before 'Warden::Manager', 'Apartment::Elevators::Subdomain'
+# Rails.application.config.middleware.use(TenantMiddleware)
+# Rails.application.config.middleware.insert_before 'Warden::Manager', 'Apartment::Elevators::Subdomain'
+Rails.application.config.middleware.insert_before 'Warden::Manager', 'TenantMiddleware'
 Apartment::Elevators::Subdomain.excluded_subdomains = ['www', 'blog', 'developer']

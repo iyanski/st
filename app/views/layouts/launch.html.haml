@@ -24,7 +24,7 @@
         %div.text-center
           .header-inner
             %a{href: root_url}
-              - if Store.last.logo.nil?
+              - if current_store.nil? || current_store.logo.nil?
                 %h1.bold #{current_company.subdomain}
               - else
                 %img.logo{:alt => "", "data-src-retina" => asset_path(Store.last.logo.url), :height => "21", :src => asset_path(Store.last.logo.url)}/

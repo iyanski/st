@@ -1,11 +1,11 @@
 %section.p-b-85.p-t-75.p-b-65.p-t-55
   .container
-    %h1.p-b-20 Privacy Policy
+    %h1.p-b-20 General Privacy Policy
     %ol
       %li
         %h5 PRIVACY
         %p
-          This Privacy Policy governs the manner in which PlusSixThree Technologies Corporation (“we” or “us”) operating under the SmallTaskers brand and website forth mentioned as “SmallTaskers” collects, uses, maintains and discloses information collected from Users (each, a “User”) of the http://smalltaskers.com website (“Site”). This privacy policy applies to the Site and all products and services offered by PlusSixThree.
+          This Privacy Policy governs the manner in which #{current_company.name} (“we” or “us”) operating under the SmallTaskers brand and website forth mentioned as “SmallTaskers” collects, uses, maintains and discloses information collected from Users (each, a “User”) of the http://#{current_company.domain} website (“Site”). This privacy policy applies to the Site and all products and services offered by PlusSixThree.
       %li
         %h5 PERSONAL IDENTIFICATION INFORMATION
 
@@ -73,8 +73,9 @@
         %p By using this Site, you signify your acceptance of this policy and terms of service. If you do not agree to this policy, please do not use our Site. Your continued use of the Site following the posting of changes to this policy will be deemed as your acceptance of those changes.
 
       %li
-        %h5 CONTACTING US
+        - unless current_store.contact_email.nil?
+          %h5 CONTACTING US
 
-        %p If you have any questions about this Privacy Policy, the practices of this site, or your dealings with this site, please contact us at hello@smalltaskers.com
+          %p If you have any questions about this Privacy Policy, the practices of this site, or your dealings with this site, please contact us at #{current_store.contact_email}
 
         %p This document was last updated on March, 2017.

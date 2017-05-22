@@ -11,6 +11,8 @@ class CreateStores < ActiveRecord::Migration[5.0]
       t.string  :twitter
       t.string  :pinterest
       t.string  :google
+      t.string  :contact_email
+      t.string  :support_email
       t.timestamps
     end
   end

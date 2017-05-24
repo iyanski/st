@@ -5,7 +5,6 @@
 # require 'apartment/elevators/generic'
 # require 'apartment/elevators/domain'
 require 'apartment/elevators/subdomain'
-require 'rescued_apartment_middleware'
 # require 'apartment/elevators/first_subdomain'
 
 #
@@ -56,7 +55,7 @@ Apartment.configure do |config|
   # Specifies whether to use PostgreSQL schemas or create a new database per Tenant.
   # The default behaviour is true.
   #
-  # config.use_schemas = false
+  config.use_schemas = true
 
   # Apartment can be forced to use raw SQL dumps instead of schema.rb for creating new schemas.
   # Use this when you are using some extra features in PostgreSQL that can't be respresented in
@@ -79,8 +78,9 @@ Apartment.configure do |config|
   # This is mainly for the benefit of your development and test environments.
   # Uncomment the line below if you want to disable this behaviour in production.
   #
-  # config.prepend_environment = !Rails.env.production?
   config.use_postgres_schemas = true
+
+  # config.persistent_schemas = ['shared_extensions']
 end
 
 # Setup a custom Tenant switching middleware. The Proc should return the name of the Tenant that
@@ -95,5 +95,5 @@ end
 # Rails.application.config.middleware.insert_before 'Warden::Manager', 'Apartment::Elevators::Subdomain'
 # Rails.application.config.middleware.use(TenantMiddleware)
 # Rails.application.config.middleware.insert_before 'Warden::Manager', 'Apartment::Elevators::Subdomain'
-Rails.application.config.middleware.insert_before 'Warden::Manager', 'TenantMiddleware'
-Apartment::Elevators::Subdomain.excluded_subdomains = ['www', 'blog', 'developer']
+Rails.application.config.middleware.insert_before 'Warden::Manager', 'Apartment::Elevators::Subdomain'
+Apartment::Elevators::Subdomain.excluded_subdomains = ['www', 'blog', 'developers', 'pay', 'press', 'api', 'store', 'shop']

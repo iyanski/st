@@ -27,7 +27,7 @@ class HomeController < ApplicationController
   end
 
   def privacy
-    Apartment::Tenant.switch!(current_company.subdomain)
+    # Apartment::Tenant.switch!(current_company.subdomain)
     render layout: 'storepage'
   end
 
@@ -45,9 +45,7 @@ class HomeController < ApplicationController
   end
 
   def app
-    company = current_company
-    Apartment::Tenant.switch!(company.subdomain)
-    gon.company = company
+    gon.company = current_company
     gon.customer = current_customer
     gon.services = Service.where(service_type: 0)
     gon.avatar = current_customer.avatar.try(:url)
@@ -58,9 +56,7 @@ class HomeController < ApplicationController
   end
 
   def dashboard
-    company = current_company
-    Apartment::Tenant.switch!(company.subdomain)
-    gon.company = company
+    gon.company = current_company
     gon.expert = current_expert
     gon.avatar = current_expert.avatar.try(:url)
     gon.settings = current_expert.expert_setting
@@ -70,14 +66,20 @@ class HomeController < ApplicationController
   end
 
   def admin
-    company = current_company
-    Apartment::Tenant.switch!(company.subdomain)
-    if company.store.nil?
-      Store.create(company: company)
+    # begin
+    #   Store.last
+    # rescue
+    #   system("DB_NAME=#{current_company.subdomain} bundle exec rake db:migrate")
+    #   puts "DB_NAME=#{current_company.subdomain} bundle exec rake db:migrate"
+    # end
+    if Store.last.nil?
+      store = Store.create(company: current_company)
+      gon.store = store
+    else
+      gon.store = Store.last
     end
-    gon.company = company
+    gon.company = current_company
     gon.user = current_user
-    gon.store = Store.first
     gon.avatar = current_user.avatar.try(:url)
     @jobs = Job.all.order("updated_at DESC")
     gon.rabl

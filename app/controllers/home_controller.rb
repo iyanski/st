@@ -72,7 +72,7 @@ class HomeController < ApplicationController
     #   system("DB_NAME=#{current_company.subdomain} bundle exec rake db:migrate")
     #   puts "DB_NAME=#{current_company.subdomain} bundle exec rake db:migrate"
     # end
-    if Store.last.nil?
+    if Store.all.blank?
       store = Store.create(company: current_company)
       gon.store = store
     else

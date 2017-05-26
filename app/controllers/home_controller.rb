@@ -17,25 +17,25 @@ class HomeController < ApplicationController
   end
 
   def contact
-    render layout: 'storepage'
+    if current_company
+      render layout: 'storepage'
+    end
   end
 
   def terms
-    render layout: 'storepage'
   end
 
   def about
-    render layout: 'storepage'
   end
 
   def privacy
-    # Apartment::Tenant.switch!(current_company.subdomain)
-    render layout: 'storepage'
   end
 
   def faq
     @services = Service.all
-    render layout: 'storepage'
+    if current_company
+      render layout: 'storepage'
+    end
   end
 
   def login
@@ -50,10 +50,6 @@ class HomeController < ApplicationController
       redirect_to "/#{params[:subdomain]}"
     end
   end
-
-  # def redirector
-  #   redirect_to root_url(subdomain: params[:subdomain])
-  # end
 
   def app
     gon.company = current_company
@@ -77,12 +73,6 @@ class HomeController < ApplicationController
   end
 
   def admin
-    # begin
-    #   Store.last
-    # rescue
-    #   system("DB_NAME=#{current_company.subdomain} bundle exec rake db:migrate")
-    #   puts "DB_NAME=#{current_company.subdomain} bundle exec rake db:migrate"
-    # end
     if Store.all.blank?
       store = Store.create(company: current_company)
       gon.store = store

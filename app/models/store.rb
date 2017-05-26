@@ -1,9 +1,6 @@
 class Store < ApplicationRecord
   belongs_to :company
   mount_uploader :cover, StoreCoverUploader
-  mount_uploader :cover, LogoUploader
+  mount_uploader :logo, LogoUploader
 
-  def published?
-    !title.nil?
-  end
 end

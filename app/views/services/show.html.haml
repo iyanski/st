@@ -11,29 +11,32 @@
             = link_to image_tag(@service.photo.url, class: "m-b-10", alt: @service.title, style: "width:100%"), service_url(@service)
           - else
             = link_to image_tag("services.jpeg", class: "m-b-10", alt: @service.title, style: "width:100%"), service_url(@service)
-          %p.p-b-25
-            %h5 What is included in this service
-            %ul
-              - @service.benefits.each do |item|
-                %li
-                  %p
-                    = item.description.html_safe
-          %p.p-b-25
-            %h5 What we need from you to Get Started
-            %ul
-              - @service.requirements.each do |item|
-                %li
-                  %p
-                    = item.description.html_safe
-          %p.p-b-25
-            %h5 What you need to know
-            %ul
-              - @service.faqs.each do |item|
-                %li
-                  %p
-                    = item.question.html_safe
-                  %p
-                    = item.answer.html_safe
+          - unless @service.benefits.blank?
+            %p.p-b-25
+              %h5 What is included in this service?
+              %ul
+                - @service.benefits.each do |item|
+                  %li
+                    %p
+                      = item.description.html_safe
+          - unless @service.requirements.blank?
+            %p.p-b-25
+              %h5 What we need from you to Get Started?
+              %ul
+                - @service.requirements.each do |item|
+                  %li
+                    %p
+                      = item.description.html_safe
+          - unless @service.faqs.blank?
+            %p.p-b-25
+              %h5 What you need to know?
+              %ul
+                - @service.faqs.each do |item|
+                  %li
+                    %p
+                      = item.question.html_safe
+                    %p
+                      = item.answer.html_safe
 
         .col-md-4
           %button.btn.btn-block.btn-lg.btn-primary Post a Task

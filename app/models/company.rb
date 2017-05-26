@@ -5,7 +5,7 @@ class Company < ApplicationRecord
   # has_many :categories
   # has_many :signups
   # has_many :payment_transactions
-  has_many :users
+  has_one :user
   # has_many :customers
   # has_many :experts
   # has_many :services

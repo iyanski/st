@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-    %title SmallTaskers - A platform for your online services
+    %title #{current_store.title} - #{current_store.tagline}
     %meta{:content => "text/html;charset=UTF-8", "http-equiv" => "content-type"}/
     %meta{:charset => "utf-8"}/
     %meta{:content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no", :name => "viewport"}/
@@ -28,8 +28,8 @@
           .header-inner
             / BEGIN LOGO
             %a{href: root_url}
-              %img.logo{:alt => "", "data-src-retina" => asset_path("smalltaskers@2x.png"), :height => "21", :src => asset_path("smalltaskers.png")}/
-              %img.alt{:alt => "", "data-src-retina" => asset_path("smalltaskers_white@2x.png"), :height => "21", :src => asset_path("smalltaskers_white.png")}/
+              %img.logo{:alt => current_store.title, "data-src-retina" => asset_path(current_store.logo.url), :src => asset_path(current_store.logo.url)}/
+              %img.alt{:alt => "", "data-src-retina" => asset_path(current_store.logo.url), :src => asset_path(current_store.logo.url)}/
         / BEGIN HEADER TOGGLE FOR MOBILE & TABLET
         .pull-right
           .header-inner
@@ -55,7 +55,7 @@
             / BEGIN COPYRIGHT FOR MOBILE
             .font-arial.m-l-35.m-r-35.m-b-20.visible-sm.visible-xs.m-t-20
               %p.fs-11.no-margin.small-text.p-b-20
-              %p.fs-11.small-text.muted Copyright &copy; #{Time.now.year} SmallTaskers
+              %p.fs-11.small-text.muted Copyright &copy; #{Time.now.year} #{current_company.name}
             / END COPYRIGHT FOR MOBILE
           / END MENU ITEMS
     / END HEADER
@@ -77,14 +77,15 @@
                 .content-layer
                   .inner.full-height
                     .container-xs-height.full-height
-                      .col-xs-height.col-middle.text-left
+                      .col-xs-height.col-middle
                         .container
-                          .col-md-6.no-padding.col-xs-10.col-xs-offset-1
-                            %h1.light.sm-text-center{"data-swiper-parallax" => "-15%"} Online services platform crafted for you
-                            %h4.sm-text-center.m-b-35 Whether your are doing social media, web development, copywriting and other online services.
-                            -# %h5.block-title.text-white.sm-text-center Watch how it works
-                            -# %p.fs-12.font-arial.hint-text.sm-text-center We vet creative experts from all over the globe.
-                            %a.btn.btn-lg.btn-round.btn-primary{href: ""} Get Started
+                          .row
+                            .col-md-10.col-md-offset-1
+                              %h1.light{"data-swiper-parallax" => "-15%", :style => "transform: translate3d(0%, 0px, 0px);"}
+                                #{current_store.tagline}
+                              %h4.sm-text-center.m-b-35 #{current_store.description}
+                              %a.btn.btn-lg.btn-round.btn-primary.btn-rounded{href: services_url, title: "Services"} View Services
+
             .mouse-wrapper
               .mouse
                 .mouse-scroll
@@ -98,28 +99,28 @@
       %section.p-b-85.p-t-75.p-b-65.p-t-55#services
         .container
           .md-p-l-20.xs-no-padding.clearfix
-            %h4.m-b-30 Featured Services
-            .col-sm-4.no-padding
-              .p-r-30.md-pr-30
-                = image_tag "freelancers.jpg", class: "m-b-20", alt: "Freelancers"
-                %h6.block-title.p-b-30
-                  Freelancers
-              .visible-xs.b-b.b-grey-light.m-t-30.m-b-30
-            .col-sm-4.no-padding
-              .p-r-30.md-pr-30
-                = image_tag "service-agencies.jpg", class: "m-b-20", alt: "Service Agencies"
-                %h6.block-title.p-b-30
-                  Service Agencies
-              .visible-xs.b-b.b-grey-light.m-t-30.m-b-30
-            .col-sm-4.no-padding
-              .p-r-30.md-pr-30
-                = image_tag "digital-nomads.jpg", class: "m-b-20", alt: "Digital Nomads"
-                %h6.block-title.p-b-30
-                  Digital Nomads
-              .visible-xs.b-b.b-grey-light.m-t-30.m-b-30
+            %h4.m-b-30.text-center Featured Services
+            - Service.all.sample(3).each do |service|
+              .col-md-4
+                .panel.panel-default.panel-services.p-b-20
+                  .panel-heading
+                    - unless service.photo.url.nil?
+                      = link_to image_tag(service.photo.url, class: "m-b-10", alt: service.title, style: "width:100%"), service_url(service)
+                    - else
+                      = link_to image_tag("services.jpeg", class: "m-b-10", alt: service.title, style: "width:100%"), service_url(service)
+                    .panel-title.p-t-30
+                      = link_to service.title, service_url(service.id, service.slug)
+                    - if service.service_type == 0
+                      .small #{number_to_currency service.price, symbol: "$"}/hr
+                    - elsif service.service_type == 1
+                      .small #{number_to_currency service.price, symbol: "$"}/mo
+                  .panel-body
+                    %p
+                      #{truncate service.description, length: 100}
             .col-sm-12.text-center
-              %a.btn.btn-lg.btn-round.btn-primary View All Services
+              = link_to "View all Services", services_url, class: "btn btn-lg btn-round btn-primary"
     
       / END FOOTER
     / START OVERLAY SEARCH
+    = render partial: "shared/store_footer"
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'

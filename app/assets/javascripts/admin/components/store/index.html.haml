@@ -1,15 +1,17 @@
 .row.m-t-20
   .col-md-6.col-md-offset-3
     %h4.bold SmallTaskers Store Front
+    .panel.panel-default
+      .panel-body.no-scroll
+        %a.btn.btn-tag.btn-tag-light.btn-tag-rounded{ng: {href: "//{{company.domain}}", show: "company.domain.length"}, target: "_blank"} Open
+        %span.small.hint-text http://{{company.domain}}
+        .pull-right
+          %span.text-success{ng: {if: "store.is_published"}} Store is Live
+          %em.small.hint-text{ng: {if: "!store.is_published"}} Store is not live
+          %input.js-switch{:checked => "checked", "ng-model" => "store.is_published", :type => "checkbox", "ui-switch" => "{color: '#10cfbd'}", ng: {change: "togglePublish()"}}/
+
     %h5 Now, let's configure your Store front
-    -# .panel.panel-default
-    -#   .panel-heading
-    -#     .panel-title
-    -#       Store Front
-    -#   .panel-body{:style => "display: block;"}
-    -#     %p
-    -#       Configure your tagline, store front colors, background, logos and other contents to reflect your store front with your brand.
-    -#     .btn.btn-default Customize Store Front
+
     .panel.panel-default
       .panel-heading
         .panel-title
@@ -17,20 +19,29 @@
       .panel-body.no-scroll.no-padding{style: "position: relative; overflow: hidden;"}
         %label.upload-trigger{:for => "uploadField"}
           %img.featured_image{ng: {src: "{{store.cover.url}}"}, style: "max-width: 100%; position: absolute; top: 50%; transform: translateY(-50%);"}
-          %form.dropzone.no-margin
+          %form.dropzone.cover.no-margin
             %span.dropzone-text
-              Drop files to
-              %strong upload
-              %small or click here
             .fallback.hide
-              %input#uploadField{:name => "file", :type => "file"}/
+              %input{:name => "file", :type => "file"}/
+
+    .panel.panel-default
+      .panel-heading
+        .panel-title
+          Upload Your Logo
+      .panel-body.no-scroll.no-padding{style: "position: relative; overflow: hidden;"}
+        %label.upload-trigger{:for => "uploadField"}
+          %img{ng: {src: "{{store.logo.url}}"}, style: "max-width: 100%; position: absolute; top: 50%; transform: translateY(-50%);"}
+          %form.dropzone.logo.no-margin
+            %span.dropzone-text
+            .fallback.hide
+              %input{:name => "file", :type => "file"}/
     .panel.panel-default
       .panel-heading
         .panel-title
           Title
       .panel-body{:style => "display: block;"}
         %p
-          How do you want your store to be remembered?
+          What is your store name?
         %form{:role => "form"}
           .form-group.required
             %input.form-control{:placeholder => "", :type => "text", autofocus: true, ng: {model: "store.title"}}/
@@ -49,7 +60,7 @@
     .panel.panel-default
       .panel-heading
         .panel-title
-          Tagline
+          How do you want your store to be remembered?
       .panel-body{:style => "display: block;"}
         %p
           What is your store's tagline?

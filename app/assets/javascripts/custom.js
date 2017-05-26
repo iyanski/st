@@ -116,12 +116,15 @@ $(document).ready(function() {
                 if(response.error && response.error.length){
                     $("em.small.password").removeClass("hidden").html(response.error);
                 }
+                
                 for(var item in response){
+
                     if(response[item].email && response[item].email.length){
                         $("em.small.email").removeClass("hidden").html(response[item].email);
                     }
-                    if(response[item].subdomain && response[item].subdomain.length){
-                        $("em.small.subdomain").removeClass("hidden").html(response[item].subdomain);
+                    if(response[item].url && response[item].url.length){
+                        // console.log(response[item].url);
+                        $("em.small.subdomain").removeClass("hidden").html(response[item].url);
                     }
                 }
             }

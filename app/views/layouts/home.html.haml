@@ -145,7 +145,7 @@
               %form.form.p-t-20#setup
                 .form-group
                   %label{for: "email-address"} Email Address
-                  %input.input-lg.form-control#email-address{type: "text", name: "email"}
+                  %input.input-lg.form-control#email-address{type: "text", name: "email", autocomplete: "off"}
                   %em.auth.small.email.hidden{style: "color: red;"}
                 .form-group
                   %label{for: "password"} Password
@@ -154,7 +154,7 @@
                 .form-group
                   %label{for: "subdomain"} Store URL
                   .input-group
-                    %input.input-lg.form-control#subdomain{type: "text", name: "subdomain"}
+                    %input.input-lg.form-control#subdomain{type: "text", name: "subdomain", autocomplete: "off"}
                     .input-group-addon
                       .disabled .smalltaskers.net
                   %em.small.subdomain.hidden{style: "color: red;"}

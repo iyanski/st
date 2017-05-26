@@ -28,6 +28,7 @@
 //= require jquery-menuclipper/jquery.menuclipper
 //= require tether
 //= require plugins/dropzone/dropzone.min
+//= require switchery/js/switchery.min
 
 //= require moment
 //= require photoswipe.min
@@ -36,6 +37,7 @@
 //= require angular-sanitize
 //= require angular-route.min
 //= require angular-photoswipe.min
+//= require ng-switchery
 //= require angular-moment
 //= require angular-resource.min
 //= require angular-rails-templates

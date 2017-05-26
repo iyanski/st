@@ -37,6 +37,7 @@ Rails.application.routes.draw do
 
   resources :conversations, params: :slug
   resources :messages
+  resources :services
 
   namespace :api do
     namespace :users do

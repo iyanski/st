@@ -7,6 +7,7 @@
   'ng-rails-csrf'
   'ngSanitize'
   'ngPhotoswipe'
+  'NgSwitchery'
 
   'app.root.controller'
   

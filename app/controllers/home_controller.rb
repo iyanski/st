@@ -8,10 +8,10 @@ class HomeController < ApplicationController
       if current_company.store.nil?
         Store.create
       end
-      if !current_company.store.published?
-        render layout: 'launch'
-      else
+      if current_company.store.is_published?
         render layout: 'storefront'
+      else
+        render layout: 'launch'
       end
     end
   end

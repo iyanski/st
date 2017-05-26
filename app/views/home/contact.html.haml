@@ -42,15 +42,11 @@
           .col-sm-6
             %h5.block-title.hint-text.m-b-0 philippines
             %address.m-t-10
-              Bay 12 One Paseo Saturnino
-              %br/
-              Ma. Luisa Rd., Banilad
-              %br/
-              Cebu City, Philippines 6000
+              #{current_company.address}
             %br/
             %p.hint-text.no-margin
               %span.fs-12.font-montserrat.bold.all-caps.p-r-10 Tel
-              %span.fs-14 (6332) 888-6096
+              %a.fs-14{href: "tel://#{current_company.contact_no}"} #{current_company.contact_no}
           -# .col-sm-6
           -#   %h5.block-title.hint-text.m-b-0 canada
           -#   %address.m-t-10
@@ -67,13 +63,10 @@
           -#     %span.fs-12.font-montserrat.bold.all-caps.p-r-10 Fax
           -#     %span.fs-14 (877) 412-7766
         %br/
-        %h5.block-title.hint-text.m-b-0 pages Public Inquiries & Communications
+        %h5.block-title.hint-text.m-b-0 Public Inquiries & Communications
         %br/
         .row
           .col-sm-6
-            %p.fs-12.font-montserrat.bold.all-caps.no-margin.hint-text Hotline
-            %p.hint-text.no-margin.fs-14 (6332) 888-6096
-          .col-sm-6
             %p.fs-12.font-montserrat.bold.all-caps.no-margin.hint-text Email
-            %p.hint-text.no-margin.fs-14 support@smalltaskers.com
+            %a.hint-text.no-margin.fs-14{href: "mailto:#{current_company.user.email}"} #{current_company.user.email}
 / END CONTACT SECION

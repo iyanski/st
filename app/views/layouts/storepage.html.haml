@@ -20,50 +20,30 @@
 
   %body.pace-dark
     / BEGIN HEADER
-    %nav.header.bg-header.transparent-dark{"data-pages" => "header", "data-pages-header" => "autoresize", "data-pages-resize-class" => "dark"}
+    %nav.header.md-header.dark{"data-pages" => "header", "data-pages-header" => "autoresize"}
       .container.relative
-        / BEGIN LEFT CONTENT
         .pull-left
-          / .header-inner Allows to vertically Align elements to the Center
           .header-inner
-            / BEGIN LOGO
             %a{href: root_url}
-              %img.logo{:alt => "", "data-src-retina" => asset_path("smalltaskers@2x.png"), :height => "21", :src => asset_path("smalltaskers.png")}/
-              %img.alt{:alt => "", "data-src-retina" => asset_path("smalltaskers_white@2x.png"), :height => "21", :src => asset_path("smalltaskers_white.png")}/
-        / BEGIN HEADER TOGGLE FOR MOBILE & TABLET
+              %img{:alt => current_store.title, "data-src-retina" => asset_path(current_store.logo.url), :src => asset_path(current_store.logo.url), :width => "152"}/
         .pull-right
           .header-inner
-            -# %a.search-toggle.visible-sm-inline.visible-xs-inline.p-r-10{"data-toggle" => "search", :href => "#"}
-            -#   %i.fs-14.pg-search
             .visible-sm-inline.visible-xs-inline.menu-toggler.pull-right.p-l-10{"data-pages" => "header-toggle", "data-pages-element" => "#header"}
               .one
               .two
               .three
-        / END HEADER TOGGLE FOR MOBILE & TABLET
-        / BEGIN RIGHT CONTENT
-        #header.menu-content.mobile-dark.pull-right.clearfix{"data-pages-direction" => "slideRight"}
-          / BEGIN HEADER CLOSE TOGGLE FOR MOBILE
+        #header.pull-right.menu-content.clearfix{"data-pages" => "menu-content", "data-pages-direction" => "slideRight"}
           .pull-right
-            %a.padding-10.visible-xs-inline.visible-sm-inline.pull-right.m-t-10.m-b-10.m-r-10{"data-pages" => "header-toggle", "data-pages-element" => "#header", :href => "#"}
+            %a.text-black.link.padding-10.visible-xs-inline.visible-sm-inline.pull-right.m-t-10.m-b-10.m-r-10{"data-pages" => "header-toggle", "data-pages-element" => "#header", :href => "#"}
               %i.pg-close_line
-          / END HEADER CLOSE TOGGLE FOR MOBILE
-          / BEGIN MENU ITEMS
           .header-inner
-            = render partial: "shared/storefront_menu"
-            -# %a.search-toggle.hidden-xs.hidden-sm{"data-toggle" => "search", :href => "#"}
-            -#   %i.fs-14.pg-search
-            / BEGIN COPYRIGHT FOR MOBILE
-            .font-arial.m-l-35.m-r-35.m-b-20.visible-sm.visible-xs.m-t-20
-              %p.fs-11.no-margin.small-text.p-b-20
-              %p.fs-11.small-text.muted Copyright &copy; #{Time.now.year} SmallTaskers
-            / END COPYRIGHT FOR MOBILE
-          / END MENU ITEMS
+            = render partial: "shared/storepage_menu"
     / END HEADER
     .page-wrappers
       / BEGIN JUMBOTRON
       .m-t-60
         = yield
-      = render partial: "shared/storefront_footer"
+      = render partial: "shared/store_footer"
       / END FOOTER
     / START OVERLAY SEARCH
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'

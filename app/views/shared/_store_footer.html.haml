@@ -1,0 +1,31 @@
+%section.p-b-50.p-t-50.bg-master-darker
+  .container
+    .row
+      .col-md-7
+        %p.fs-11.hint-text.text-white.font-arial.no-margin.small-text Copyright &copy; #{Time.now.year} #{current_company.name} All Rights Reserved.
+        %ul.no-style.fs-11.no-padding.font-arial.m-t-20
+          %li.inline.no-padding
+            %a.text-white.p-r-10{:href => root_url} Home
+          %li.inline.no-padding
+            %a.text-white.p-l-10.p-r-10.hint-text{:href => services_url} Services
+          %li.inline.no-padding
+            %a.text-white.p-l-10.p-r-10.hint-text{:href => faq_url} FAQ
+          %li.inline.no-padding
+            %a.text-white.p-l-10.p-r-10.hint-text.xs-no-padding.xs-m-t-10{:href => dashboard_url, rel: "nofollow"} Developer Login
+      .col-md-5
+        %ul.no-style.fs-12.no-padding.pull-right.xs-pull-left.xs-m-t-20
+          %li.inline.no-padding
+            %a.text-white.p-l-30.fs-16.xs-no-padding{:href => "#"}
+              %i.fa.fa-facebook
+          %li.inline.no-padding
+            %a.text-white.p-l-30.fs-16{:href => "#"}
+              %i.fa.fa-twitter
+          %li.inline.no-padding
+            %a.text-white.p-l-30.fs-16{:href => "#"}
+              %i.fa.fa-dribbble
+          %li.inline.no-padding
+            %a.text-white.p-l-30.fs-16{:href => "#"}
+              %i.fa.fa-rss
+          %li.inline.no-padding
+            %a.text-white.p-l-30.fs-16{:href => "#"}
+              %i.fa.fa-linkedin

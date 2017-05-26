@@ -34,6 +34,6 @@ class Api::Users::StoresController < Api::UsersController
 
   private
     def store_params
-      params.require(:store).permit(:title, :tagline, :description, :cover, :logo, :facebook, :twitter, :pinterest, :google)
+      params.require(:store).permit(:title, :tagline, :description, :cover, :logo, :facebook, :twitter, :pinterest, :google, :is_published)
     end
 end

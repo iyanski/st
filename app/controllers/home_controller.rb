@@ -4,14 +4,15 @@ class HomeController < ApplicationController
   before_action :authenticate_expert!, only: [:dashboard]
   
   def index
-    if Store.last.nil?
-      Store.create
-      render layout: 'launch'
-    else
-      unless Store.last.published?
-        render layout: 'launch'
-      end
-    end
+    puts current_company.inspect
+    # if Store.last.nil?
+    #   Store.create
+    #   render layout: 'launch'
+    # else
+    #   unless Store.last.published?
+    #     render layout: 'launch'
+    #   end
+    # end
   end
 
   def contact
@@ -41,8 +42,17 @@ class HomeController < ApplicationController
   end
 
   def redirector
-    redirect_to root_url(subdomain: params[:subdomain])
+    puts "#{params[:subdomain]}.#{ENV['app_url']}"
+    if !Company.find_by_subdomain(params[:subdomain]).nil?
+      redirect_to "http://#{params[:subdomain]}.#{ENV['app_url']}/admin"
+    else
+      redirect_to "/#{params[:subdomain]}"
+    end
   end
+
+  # def redirector
+  #   redirect_to root_url(subdomain: params[:subdomain])
+  # end
 
   def app
     gon.company = current_company

@@ -24,11 +24,12 @@
         %div.text-center
           .header-inner
             %a{href: root_url}
-              - if current_store.nil? || current_store.logo.nil?
-                %h1.bold #{current_company.subdomain}
-              - else
-                %img.logo{:alt => "", "data-src-retina" => asset_path(Store.last.logo.url), :height => "21", :src => asset_path(Store.last.logo.url)}/
-                %img.alt{:alt => "", "data-src-retina" => asset_path(Store.last.logo.url), :height => "21", :src => asset_path(Store.last.logo.url)}/
+              - if current_company
+                - if current_store.nil? || current_store.logo.nil?
+                  %h1.bold #{current_company.subdomain}
+                - else
+                  %img.logo{:alt => "", "data-src-retina" => asset_path(Store.last.logo.url), :height => "21", :src => asset_path(Store.last.logo.url)}/
+                  %img.alt{:alt => "", "data-src-retina" => asset_path(Store.last.logo.url), :height => "21", :src => asset_path(Store.last.logo.url)}/
         #header.menu-content.mobile-dark.pull-right.clearfix{"data-pages-direction" => "slideRight"}
           .pull-right
             %a.padding-10.visible-xs-inline.visible-sm-inline.pull-right.m-t-10.m-b-10.m-r-10{"data-pages" => "header-toggle", "data-pages-element" => "#header", :href => "#"}
@@ -36,7 +37,7 @@
           .header-inner
             .font-arial.m-l-35.m-r-35.m-b-20.visible-sm.visible-xs.m-t-20
               %p.fs-11.no-margin.small-text.p-b-20
-              %p.fs-11.small-text.muted Copyright &copy; #{Time.now.year} #{current_company.name}
+              %p.fs-11.small-text.muted Copyright &copy; #{Time.now.year} #{!current_company.nil? ? current_company.name : ""}
     .page-wrappers
       %section.jumbotron.full-vh{"data-pages" => "parallax"}
         .inner.full-height

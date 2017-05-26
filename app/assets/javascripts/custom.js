@@ -66,16 +66,31 @@ $(document).ready(function() {
 
         }
     });
-    $(document).on("click", "[data-start='email']", function(e){
-        $("#getstarted").modal("show");
-        if(validateEmail($('input#email').val())){
-            $('#email-address').val($('input#email').val());
-        }
-    });
     function validateEmail(email) {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email);
     }
+
+    $(document).on("click", "[data-start='email']", function(e){
+      
+      if(validateEmail($('input#email-registration').val())){
+        $("#getstarted").modal("show");
+        $('#email-address').val($('input#email-registration').val());
+      } else {
+        alert("Invalid Email Address");
+      }
+    });
+    
+    $(document).on("keypress", "#email-registration", function(e){
+      if(e.keyCode == 13){
+        if(validateEmail($('input#email-registration').val())){
+          $("#getstarted").modal("show");
+          $('#email-address').val($('input#email-registration').val());
+        } else {
+          alert("Invalid Email Address");
+        }
+      }
+    })
 
     $(document).on("submit", "form#setup", function(e){
         e.preventDefault();
@@ -92,7 +107,7 @@ $(document).ready(function() {
             success: function(data, xhr){
                 $("#getstarted").modal("hide");
                 setTimeout(function(){
-                    location.href = location.protocol + '//' + data.domain + (location.port ? ':'+location.port: '') + "/companies/continue";
+                    location.href = location.protocol + '//' + data.domain + "/companies/continue";
                 }, 100);
             },
             error: function(data, status){

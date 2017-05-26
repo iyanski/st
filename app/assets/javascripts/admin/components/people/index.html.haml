@@ -22,6 +22,7 @@
                     %th{"aria-controls" => "condensedTable", "aria-label" => "Title", :colspan => "1", :rowspan => "1", :style => "width: 20%", :tabindex => "0"} Name
                     %th{"aria-controls" => "condensedTable", "aria-label" => "Title", :colspan => "1", :rowspan => "1", :style => "width: 40%", :tabindex => "0"} Email
                     %th{"aria-controls" => "condensedTable", "aria-label" => "Date Updated", :colspan => "1", :rowspan => "1", :style => "width: 20%;", :tabindex => "0"} Updated On
+                    %th{"aria-controls" => "condensedTable", "aria-label" => "Date Updated", :colspan => "1", :rowspan => "1", :style => "width: 20%;", :tabindex => "0"} Last Sign-in
                     %th{"aria-controls" => "condensedTable", "aria-label" => "Date Updated", :colspan => "1", :rowspan => "1", :style => "width: 20%;", :tabindex => "0"}
                 %tbody
                   %tr.link{:role => "row", ng: {repeat: "expert in experts", click: "gotoItem(expert)"}}
@@ -29,6 +30,7 @@
                       %a{ng: {href: "#/expert/{{expert.id}}"}} {{expert.first_name}} {{expert.last_name}}
                     %td.v-align-top.semi-bold {{expert.email}}
                     %td.v-align-top.semi-bold {{expert.updated_at | amDateFormat:'MMM DD, YYYY hh:mm a'}}
+                    %td.v-align-top.semi-bold {{expert.last_sign_in_at | amDateFormat:'MMM DD, YYYY hh:mm a'}}
                     %td.v-align-top
                       .btn.btn-default{ng: {click: "resendInvitation(expert)", show: "!expert.sign_in_count"}} Resend Invitation
 

@@ -5,7 +5,10 @@ class HomeController < ApplicationController
   
   def index
     if current_company
-      unless current_company.store.published?
+      if current_company.store.nil?
+        Store.create
+      end
+      if !current_company.store.published?
         render layout: 'launch'
       else
         render layout: 'storefront'

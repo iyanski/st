@@ -53,6 +53,8 @@ namespace :deploy do
     on roles(:app) do
       within "#{current_path}" do
         with rails_env: "#{fetch(:stage)}" do
+          execute :rake, "db:drop"
+          execute :rake, "db:create"
           execute :rake, "db:migrate"
         end
       end

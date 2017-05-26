@@ -20,6 +20,7 @@
 default: &default
   adapter: postgresql
   encoding: unicode
+  schema_search_path: "public"
   
 development:
   <<: *default

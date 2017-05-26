@@ -10,7 +10,7 @@ set :repo_url,  "git@bitbucket.org:plussixthree/smalltaskers.git"
 set :branch, "master"
 
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, "/opt/smalltaskers.net"
+set :deploy_to, "/opt/smalltaskers.com"
 
 
 set :deploy_via, :copy

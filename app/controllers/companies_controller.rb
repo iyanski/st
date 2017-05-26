@@ -52,7 +52,7 @@ class CompaniesController < ApplicationController
     @company = Company.find_by_domain(request.host_with_port)
     @company.blog = "http://"
     @company.website = "http://"
-    user = @company.users.first
+    user = @company.user
     sign_in :user, user, bypass: true
     session.delete(:user_id)
     render layout: "clean"

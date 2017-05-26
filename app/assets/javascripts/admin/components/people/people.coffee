@@ -12,6 +12,13 @@ do ->
       Customer.query (data, xhr)->
         $scope.customers = data
 
+    $scope.resendInvitation = (expert)->
+      console.log "resendInvitation"
+      expert.$resendInvitation (data, xhr)->
+        toastr.success "Invitation Sent"
+      , (res)->
+        toastr.warning res.data.error
+
     $scope.init()
     
   viewControllers = angular.module('app.people.controller', [])

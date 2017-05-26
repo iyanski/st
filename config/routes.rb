@@ -54,6 +54,7 @@ Rails.application.routes.draw do
         member do
           get :sales
           get :transactions
+          put :resend_invitation
         end
       end
       resources :customers do

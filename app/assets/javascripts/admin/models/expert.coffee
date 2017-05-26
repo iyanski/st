@@ -6,6 +6,7 @@
       update: {method: "PUT", url: Routes.api_users_expert_path(':id')}
       sales: {method: "GET", url: Routes.sales_api_users_expert_path(':id')}
       transactions: {method: "GET", url: Routes.transactions_api_users_expert_path(':id'), isArray: true}
+      resendInvitation: {method: "PUT", url: Routes.resend_invitation_api_users_expert_path(':id')}
     }
   return Expert
 ]

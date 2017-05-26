@@ -30,7 +30,7 @@
                     %td.v-align-top.semi-bold {{expert.email}}
                     %td.v-align-top.semi-bold {{expert.updated_at | amDateFormat:'MMM DD, YYYY hh:mm a'}}
                     %td.v-align-top
-                      .btn.btn-default{ng: {click: "resendInvitation(expert)"}} Resend Invitation
+                      .btn.btn-default{ng: {click: "resendInvitation(expert)", show: "!expert.sign_in_count"}} Resend Invitation
 
     #tab2.tab-pane
       .row

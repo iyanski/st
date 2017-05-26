@@ -38,7 +38,9 @@ class Api::Users::ExpertsController < Api::UsersController
   def resend_invitation
     password = SecureRandom.hex(8)
     @expert = Expert.find(params[:id])
-    if UserMailer.send_expert_registration_information(@expert, password, "http://#{request.host_with_port}/experts/sign_in").deliver
+    @expert.password = password
+    if @expert.save
+      UserMailer.send_expert_registration_information(@expert, password, "http://#{request.host_with_port}/experts/sign_in").deliver
       render :create
     else
       render json: {error: "Failed to send invitation"}, status: 401

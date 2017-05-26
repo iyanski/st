@@ -35,21 +35,13 @@
           #hero.swiper-container
             .swiper-wrapper
               .swiper-slide.fit
-                .slider-wrapper
-                  .background-wrapper{"data-swiper-parallax" => "30%"}
-                    .background{"data-pages-bg-image" => "http://s3.amazonaws.com/smalltaskers/hero_1.jpeg"}
                 .content-layer
                   .inner.full-height
                     .container-xs-height.full-height
                       .col-xs-height.col-middle.text-left
                         .container
                           .col-md-12.no-padding.col-xs-12.text-center
-                            - if current_store.logo.blank?
-                              %h1.bold #{current_company.subdomain}
-                            - else
-                              %img.logo{:alt => current_store.title, "data-src-retina" => asset_path(current_store.logo.url), :height => "21", :src => asset_path(current_store.logo.url)}/
-                              %img.alt{:alt => current_store.title, "data-src-retina" => asset_path(current_store.logo.url), :height => "21", :src => asset_path(current_store.logo.url)}/
-                            %h1.light.sm-text-center{"data-swiper-parallax" => "-15%"} We're launching very soon!
+                            %h1.light.sm-text-center See you soon!
             .mouse-wrapper
               .mouse
                 .mouse-scroll

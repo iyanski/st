@@ -10,11 +10,14 @@ class Company < ApplicationRecord
   # has_many :experts
   # has_many :services
   # has_many :jobs
-  has_one :store
   validates :subdomain, presence: true
   validates :subdomain, uniqueness: true
   validates :domain, uniqueness: true
   after_create :create_tenant, :create_store
+
+  def store
+    Store.first
+  end
 
   def validated?
     true

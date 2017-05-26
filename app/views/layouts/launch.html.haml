@@ -21,15 +21,6 @@
   %body.pace-dark
     %nav.header.bg-header.transparent-dark{"data-pages" => "header", "data-pages-header" => "autoresize", "data-pages-resize-class" => "dark"}
       .container.relative
-        %div.text-center
-          .header-inner
-            %a{href: root_url}
-              - if current_company
-                - if current_store.nil? || current_store.logo.nil?
-                  %h1.bold #{current_company.subdomain}
-                - else
-                  %img.logo{:alt => "", "data-src-retina" => asset_path(Store.last.logo.url), :height => "21", :src => asset_path(Store.last.logo.url)}/
-                  %img.alt{:alt => "", "data-src-retina" => asset_path(Store.last.logo.url), :height => "21", :src => asset_path(Store.last.logo.url)}/
         #header.menu-content.mobile-dark.pull-right.clearfix{"data-pages-direction" => "slideRight"}
           .pull-right
             %a.padding-10.visible-xs-inline.visible-sm-inline.pull-right.m-t-10.m-b-10.m-r-10{"data-pages" => "header-toggle", "data-pages-element" => "#header", :href => "#"}
@@ -53,6 +44,11 @@
                       .col-xs-height.col-middle.text-left
                         .container
                           .col-md-12.no-padding.col-xs-12.text-center
+                            - if current_store.logo.blank?
+                              %h1.bold #{current_company.subdomain}
+                            - else
+                              %img.logo{:alt => current_store.title, "data-src-retina" => asset_path(current_store.logo.url), :height => "21", :src => asset_path(current_store.logo.url)}/
+                              %img.alt{:alt => current_store.title, "data-src-retina" => asset_path(current_store.logo.url), :height => "21", :src => asset_path(current_store.logo.url)}/
                             %h1.light.sm-text-center{"data-swiper-parallax" => "-15%"} We're launching very soon!
             .mouse-wrapper
               .mouse

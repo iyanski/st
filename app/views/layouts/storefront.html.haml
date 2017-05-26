@@ -27,10 +27,12 @@
           / .header-inner Allows to vertically Align elements to the Center
           .header-inner
             / BEGIN LOGO
-            - unless current_store.logo.nil?
-              %a{href: root_url}
-                %img.logo{:alt => current_store.title, "data-src-retina" => asset_path(current_store.logo.url), :src => asset_path(current_store.logo.url)}/
-                %img.alt{:alt => "", "data-src-retina" => asset_path(current_store.logo.url), :src => asset_path(current_store.logo.url)}/
+            %a{href: root_url}
+              - if current_store.nil? || current_store.logo.nil?
+                %h1.bold #{current_company.subdomain}
+              - else
+                %img.logo{:alt => current_store.title, "data-src-retina" => asset_path(current_store.logo.url), :height => "21", :src => asset_path(current_store.logo.url)}/
+                %img.alt{:alt => current_store.title, "data-src-retina" => asset_path(current_store.logo.url), :height => "21", :src => asset_path(current_store.logo.url)}/
         / BEGIN HEADER TOGGLE FOR MOBILE & TABLET
         .pull-right
           .header-inner

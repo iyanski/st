@@ -14,9 +14,9 @@ class LogoUploader < CarrierWave::Uploader::Base
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
 
-  def default_url
-    "http://s3.amazonaws.com/smalltaskers/hero_1.jpeg"
-  end
+  # def default_url
+  #   "http://s3.amazonaws.com/smalltaskers/hero_1.jpeg"
+  # end
 
   # Process files as they are uploaded:
   # process scale: [200, 300]

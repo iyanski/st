@@ -12,7 +12,6 @@
   'app.root.controller'
   
   'app.home.page.controller'
-  'app.settings.page.controller'
 
   'app.dashboard.controller'
   'app.dashboard.directive'
@@ -50,6 +49,9 @@
 
   'app.transactions.controller'
   'app.transactions.directive'
+
+  'app.settings.controller'
+  'app.settings.directive'
 
   'app.sidebar.directive'
 

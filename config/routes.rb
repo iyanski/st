@@ -41,6 +41,11 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :users do
+      resource :account do
+        member do
+          post :upload
+        end
+      end
       resources :support_tickets do
         member do
           post :chat

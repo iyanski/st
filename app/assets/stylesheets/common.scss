@@ -17,6 +17,12 @@
   margin-bottom: 0;
   position: relative;
   cursor: pointer;
+  overflow: hidden;
+  .featured_image{
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+  }
   &:before{
     content: "\f093";
     font: normal normal normal 14px/1 FontAwesome;

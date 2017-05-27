@@ -80,5 +80,11 @@
         activepage: "page-tickets"
         activemenu: "page-tickets"
 
+      .when "/settings",
+        templateUrl: "common.html"
+        controller: "rootPageCtrl"
+        activepage: "page-settings"
+        activemenu: "page-settings"
+
       .otherwise redirectTo: '/'
 ]

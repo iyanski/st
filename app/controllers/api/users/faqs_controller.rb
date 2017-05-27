@@ -23,8 +23,7 @@ class Api::Users::FaqsController < Api::UsersController
 
   def destroy
     @faq = Service.find(params[:service_id]).faqs.where(id: params[:id]).first
-    @faq.deleted_at = Time.now
-    unless @faq.save
+    unless @faq.destroy
       render json: {error: @faq.errors.full_messages.first}, status: 401
     end
   end

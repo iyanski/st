@@ -99,29 +99,30 @@
       / END JUMBOTRON
 
       / BEGIN CONTENT SECTION
-      %section.p-b-85.p-t-75.p-b-65.p-t-55#services
-        .container
-          .md-p-l-20.xs-no-padding.clearfix
-            %h4.m-b-30.text-center Featured Services
-            - Service.all.sample(3).each do |service|
-              .col-md-4
-                .panel.panel-default.panel-services.p-b-20
-                  .panel-heading
-                    - unless service.photo.url.nil?
-                      = link_to image_tag(service.photo.url, class: "m-b-10", alt: service.title, style: "width:100%"), service_url(service)
-                    - else
-                      = link_to image_tag("services.jpeg", class: "m-b-10", alt: service.title, style: "width:100%"), service_url(service)
-                    .panel-title.p-t-30
-                      = link_to service.title, service_url(service.id, service.slug)
-                    - if service.service_type == 0
-                      .small #{number_to_currency service.price, symbol: "$"}/hr
-                    - elsif service.service_type == 1
-                      .small #{number_to_currency service.price, symbol: "$"}/mo
-                  .panel-body
-                    %p
-                      #{truncate service.description, length: 100}
-            .col-sm-12.text-center
-              = link_to "View all Services", services_url, class: "btn btn-lg btn-round btn-primary"
+      - unless Service.all.blank?
+        %section.p-b-85.p-t-75.p-b-65.p-t-55#services
+          .container
+            .md-p-l-20.xs-no-padding.clearfix
+              %h4.m-b-30.text-center Featured Services
+              - Service.all.sample(3).each do |service|
+                .col-md-4
+                  .panel.panel-default.panel-services.p-b-20
+                    .panel-heading
+                      - unless service.photo.url.nil?
+                        = link_to image_tag(service.photo.url, class: "m-b-10", alt: service.title, style: "width:100%"), service_url(service)
+                      - else
+                        = link_to image_tag("services.jpeg", class: "m-b-10", alt: service.title, style: "width:100%"), service_url(service)
+                      .panel-title.p-t-30
+                        = link_to service.title, service_url(service.id, service.slug)
+                      - if service.service_type == 0
+                        .small #{number_to_currency service.price, symbol: "$"}/hr
+                      - elsif service.service_type == 1
+                        .small #{number_to_currency service.price, symbol: "$"}/mo
+                    .panel-body
+                      %p
+                        #{truncate service.description, length: 100}
+              .col-sm-12.text-center
+                = link_to "View all Services", services_url, class: "btn btn-lg btn-round btn-primary"
     
       / END FOOTER
     / START OVERLAY SEARCH

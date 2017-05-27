@@ -55,23 +55,110 @@ do ->
     else
       $scope.service = new Service(price: 50.00, service_type: 0, experts_rate: 75, platform_fee: 12)
 
-    $scope.addBenefit = ->
-      $scope.benefit.service_id = $scope.service.id
-      $scope.benefit.$save (data, xhr)->
-        $scope.benefits.push new Benefit(data)
-        $scope.benefit = new Benefit()
+    $scope.editBenefit = (item)->
+      $scope.benefit = item
 
-    $scope.addRequirement = ->
+    $scope.cancelEditingBenefit = ->
+      $scope.benefit = new Benefit()
+      setTimeout ->
+        $("input#benefit").focus()
+      , 200
+
+    $scope.editRequirement = (item)->
+      $scope.requirement = item
+
+    $scope.cancelEditingRequirement = ->
+      $scope.requirement = new Requirement()
+      setTimeout ->
+        $("input#requirement").focus()
+      , 200
+
+    $scope.editFaq = (item)->
+      $scope.faq = item
+
+    $scope.cancelEditingFaq = ->
+      $scope.faq = new Requirement()
+      setTimeout ->
+        $("input#faq").focus()
+      , 200
+
+    $scope.saveBenefit = ->
+      $scope.benefit.service_id = $scope.service.id
+      unless $scope.benefit.id
+        $scope.benefit.$save (data, xhr)->
+          $scope.benefits.push new Benefit(data)
+          $scope.benefit = new Benefit()
+          setTimeout ->
+            $("input#benefit").focus()
+          , 200
+        , (res)->
+          toastr.warning res.data.error
+      else
+        $scope.benefit.$update (data, xhr)->
+          $scope.benefit = new Benefit()
+          toastr.success "Benefit Saved"
+        , (res)->
+          toastr.warning res.data.error
+
+    $scope.saveRequirement = ->
       $scope.requirement.service_id = $scope.service.id
-      $scope.requirement.$save (data, xhr)->
-        $scope.requirements.push new Requirement(data)
-        $scope.requirement = new Requirement()
+      unless $scope.requirement.id
+        $scope.requirement.$save (data, xhr)->
+          $scope.requirements.push new Requirement(data)
+          $scope.requirement = new Requirement()
+          setTimeout ->
+            $("input#requirement").focus()
+          , 200
+        , (res)->
+          toastr.warning res.data.error
+      else
+        $scope.requirement.$update (data, xhr)->
+          $scope.requirement = new Requirement()
+          toastr.success "Requirement Saved"
+        , (res)->
+          toastr.warning res.data.error
     
-    $scope.addFaq = ->
+    $scope.saveFaq = ->
       $scope.faq.service_id = $scope.service.id
-      $scope.faq.$save (data, xhr)->
-        $scope.faqs.push new Faq(data)
+      unless $scope.faq.id
+        $scope.faq.$save (data, xhr)->
+          $scope.faqs.push new Faq(data)
+          $scope.faq = new Faq()
+          setTimeout ->
+            $("input#question").focus()
+          , 200
+        , (res)->
+          toastr.warning res.data.error
+      else
+        $scope.faq.$update (data, xhr)->
+          $scope.faq = new Faq()
+          toastr.success "Question and answer saved"
+        , (res)->
+          toastr.warning res.data.error
+
+    $scope.removeBenefit = (item)->
+      pos = $scope.benefits.indexOf(item)
+      item.$destroy (data, xhr)->
+        $scope.benefits.splice(pos, 1)
+        $scope.benefit = new Benefit()
+      , (res)->
+        toastr.warning res.data.error
+
+    $scope.removeRequirement = (item)->
+      pos = $scope.requirements.indexOf(item)
+      item.$destroy (data, xhr)->
+        $scope.requirements.splice(pos, 1)
+        $scope.requirement = new Requirement()
+      , (res)->
+        toastr.warning res.data.error
+
+    $scope.removeFaq = (item)->
+      pos = $scope.faqs.indexOf(item)
+      item.$destroy (data, xhr)->
+        $scope.faqs.splice(pos, 1)
         $scope.faq = new Faq()
+      , (res)->
+        toastr.warning res.data.error
 
     $scope.save = ->
       if $scope.service.id

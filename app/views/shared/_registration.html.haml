@@ -1,0 +1,27 @@
+.modal#getstarted.fade{:role => "dialog", :tabindex => "-1"}
+  .modal-dialog{:role => "document"}
+    .modal-content
+      .modal-header
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} &#215;
+        %h4.modal-title 
+          .text-left Get Started
+      .modal-body
+        %form.form.p-t-20#setup
+          .form-group
+            %label{for: "email-address"} Email Address
+            %input.input-lg.form-control#email-address{type: "text", name: "email", autocomplete: "off"}
+            %em.auth.small.email.hidden{style: "color: red;"}
+          .form-group
+            %label{for: "password"} Password
+            %input.input-lg.form-control#password{type: "password", name: "password"}
+            %em.small.password.hidden{style: "color: red;"}
+          .form-group
+            %label{for: "subdomain"} Store URL
+            .input-group
+              %input.input-lg.form-control#subdomain{type: "text", name: "subdomain", autocomplete: "off"}
+              .input-group-addon
+                .disabled .smalltaskers.net
+            %em.small.subdomain.hidden{style: "color: red;"}
+          .form-group
+            %button.btn.btn-primary Setup Shop

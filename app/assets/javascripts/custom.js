@@ -71,6 +71,13 @@ $(document).ready(function() {
         return re.test(email);
     }
 
+    $(document).on("click", "[data-start='mortal']", function(e){
+      $("#getstarted").modal("show");
+      setTimeout(function(){
+        $("#email-address").focus();
+      }, 500);
+    });
+
     $(document).on("click", "[data-start='email']", function(e){
       
       if(validateEmail($('input#email-registration').val())){

@@ -61,8 +61,8 @@
               
           %hr
           .form-group
-            .btn.btn-lg.btn-primary{ng: {show: "service.id", click: "save()"}} Update
-            .btn.btn-lg.btn-primary{ng: {hide: "service.id", click: "save()"}} Continue
+            .btn.btn-primary{ng: {show: "service.id", click: "save()"}} Update
+            .btn.btn-primary{ng: {hide: "service.id", click: "save()"}} Continue
 
     .panel.panel-default#benefits{ng: {show: "service.id"}}
       .panel-heading
@@ -72,14 +72,19 @@
         %h5
           What can your clients expect?
         %form{:role => "form"}
-          .form-group.form-group-default.required
-            %label{for: "benefit"} One item at a time
-            %input.form-control#benefit{:required => "", :type => "text", ng: {model: "benefit.description"}}/
-          %ul
-            %li{ng: {repeat: "item in benefits"}} {{item.description}}
-          %hr
+          .form-group.required
+            %input.form-control#benefit.input-lg{:required => "", :type => "text", ng: {model: "benefit.description"}}/
+          
+          
           .form-group
-            .btn.btn-lg.btn-primary{ng: {click: "addBenefit()"}} Add
+            .btn.btn-primary{ng: {click: "saveBenefit()", class: "{'disabled': !benefit.description.length}"}} Save
+            .btn.btn-default{ng: {click: "cancelEditingBenefit()", show: "benefit.id"}} Cancel
+            %a.btn.btn-default.pull-right{ng: {show: "benefit.id", click: "removeBenefit(benefit)"}}
+              %i.fa.fa-trash
+          %hr
+          %ul.lg-icon
+            %li.p-t-10.p-b-10.cursor{ng: {repeat: "item in benefits", click: "editBenefit(item)"}}
+              %span {{item.description}}
 
 
     .panel.panel-default{ng: {show: "service.id"}}
@@ -90,16 +95,18 @@
         %h5
           What do you need from your client?
         %form{:role => "form"}
-          .form-group.form-group-default.required
-            %label{for: "requirement"} One item at a time
+          .form-group.required
             %input.form-control#requirement{:required => "", :type => "text", ng: {model: "requirement.description"}}/
-          %ul
-            %li{ng: {repeat: "item in requirements"}} {{item.description}}
-          %hr
           .form-group
-            .btn.btn-lg.btn-primary{ng: {click: "addRequirement()"}} Add
-
-
+            .btn.btn-primary{ng: {click: "saveRequirement()", class: "{'disabled': !requirement.description.length}"}} Save
+            .btn.btn-default{ng: {click: "cancelEditingRequirement()", show: "requirement.id"}} Cancel
+            %a.btn.btn-default.pull-right{ng: {show: "requirement.id", click: "removeRequirement(requirement)"}}
+              %i.fa.fa-trash
+          %hr
+          %ul.lg-icon
+            %li.p-t-10.p-b-10.cursor{ng: {repeat: "item in requirements", click: "editRequirement(item)"}} 
+              %span {{item.description}}
+          
     .panel.panel-default{ng: {show: "service.id"}}
       .panel-heading
         .panel-title
@@ -108,21 +115,24 @@
         %h5
           What questions do your clients usually ask about this service?
         %form{:role => "form"}
-          .form-group.form-group-default.required
+          .form-group.required
             %label{for: "question"} Question
             %input.form-control#question{:required => "", :type => "text", ng: {model: "faq.question"}}/
           .form-group.required
             %label{for: "answer"} Answer
             %textarea.form-control#answer{ng: {model: "faq.answer"}, rows: 4}
-          %ol
-            %li{ng: {repeat: "item in faqs"}}
+          .form-group
+            .btn.btn-primary{ng: {click: "saveFaq()", class: "{'disabled': (!faq.question.length || !faq.answer.length)}"}} Save
+            .btn.btn-default{ng: {click: "cancelEditingFaq()", show: "faq.id"}} Cancel
+            %a.btn.btn-default.pull-right{ng: {show: "faq.id", click: "removeFaq(faq)"}}
+              %i.fa.fa-trash
+          %hr
+          %ol.lg-icon
+            %li.p-t-10.p-b-10.cursor{ng: {repeat: "item in faqs", click: "editFaq(item)"}}
               %p.bold Question: 
               %p {{item.question}}
               %p.bold Answer: 
               %p {{item.answer}}
-          %hr
-          .form-group
-            .btn.btn-lg.btn-primary{ng: {click: "addFaq()"}} Add
 
     .panel.panel-default{ng: {show: "service.id"}}
       .panel-heading
@@ -139,5 +149,6 @@
             .fallback.hide
               %input#uploadField{:name => "file", :type => "file"}/
   .col-md-12.text-center.m-t-20
-    %a.btn.btn-lg.btn-primary.btn-rounded{ng: {href: "#/services/new"}} Add another Service
+    %a.btn.btn-lg.btn-default.btn-rounded{ng: {href: "#/services"}} Back to Services
+    %a.btn.btn-lg.btn-primary.btn-rounded{ng: {href: "#/services/new"}} Add Another Service
     %a.btn.btn-lg.btn-default.btn-rounded{ng: {href: "#/dashboard"}} Back to Dashboard

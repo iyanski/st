@@ -7,6 +7,7 @@
     {
       get: {method: "GET", url: Routes.api_users_service_benefit_path(':service_id', ':id')}
       update: {method: "PUT", url: Routes.api_users_service_benefit_path(':service_id', ':id')}
+      destroy: {method: "DELETE", url: Routes.api_users_service_benefit_path(':service_id', ':id')}
     }
   return Benefit
 ]

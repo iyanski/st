@@ -23,8 +23,7 @@ class Api::Users::BenefitsController < Api::UsersController
 
   def destroy
     @benefit = Service.find(params[:service_id]).benefits.where(id: params[:id]).first
-    @benefit.deleted_at = Time.now
-    unless @benefit.save
+    unless @benefit.destroy
       render json: {error: @benefit.error.full_messages.first}, status: 401
     end
   end

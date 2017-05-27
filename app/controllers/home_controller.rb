@@ -23,12 +23,19 @@ class HomeController < ApplicationController
   end
 
   def terms
+    render layout: 'application'
   end
 
   def about
+    render layout: 'application'
   end
 
   def privacy
+    render layout: 'application'
+  end
+
+  def pricing
+    render layout: 'single'
   end
 
   def faq

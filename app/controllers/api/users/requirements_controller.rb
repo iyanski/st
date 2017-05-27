@@ -23,8 +23,7 @@ class Api::Users::RequirementsController < Api::UsersController
 
   def destroy
     @requirement = Service.find(params[:service_id]).requirements.where(id: params[:id]).first
-    @requirement.deleted_at = Time.now
-    unless @requirement.save
+    unless @requirement.destroy
       render json: {error: @requirement.errors.full_messages.first}, status: 401
     end
   end

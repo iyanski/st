@@ -14,18 +14,19 @@
             %a.text-white.p-l-10.p-r-10.hint-text.xs-no-padding.xs-m-t-10{:href => dashboard_url, rel: "nofollow"} Developer Login
       .col-md-5
         %ul.no-style.fs-12.no-padding.pull-right.xs-pull-left.xs-m-t-20
-          %li.inline.no-padding
-            %a.text-white.p-l-30.fs-16.xs-no-padding{:href => "#"}
-              %i.fa.fa-facebook
-          %li.inline.no-padding
-            %a.text-white.p-l-30.fs-16{:href => "#"}
-              %i.fa.fa-twitter
-          %li.inline.no-padding
-            %a.text-white.p-l-30.fs-16{:href => "#"}
-              %i.fa.fa-dribbble
-          %li.inline.no-padding
-            %a.text-white.p-l-30.fs-16{:href => "#"}
-              %i.fa.fa-rss
-          %li.inline.no-padding
-            %a.text-white.p-l-30.fs-16{:href => "#"}
-              %i.fa.fa-linkedin
+          - if current_store.facebook.present?
+            %li.inline.no-padding
+              %a.text-white.p-l-30.fs-16.xs-no-padding{:href => "http://facebook.com/#{current_store.facebook}", target: "_blank", rel: "nofollow"}
+                %i.fa.fa-facebook
+          - if current_store.twitter.present?
+            %li.inline.no-padding
+              %a.text-white.p-l-30.fs-16{:href => "http://twitter.com/#{current_store.twitter}", target: "_blank", rel: "nofollow"}
+                %i.fa.fa-twitter
+          - if current_store.pinterest.present?
+            %li.inline.no-padding
+              %a.text-white.p-l-30.fs-16{:href => "http://pinterest.com/#{current_store.pinterest}", target: "_blank", rel: "nofollow"}
+                %i.fa.fa-pinterest
+          - if current_store.google.present?
+            %li.inline.no-padding
+              %a.text-white.p-l-30.fs-16{:href => "http://google.com/+#{current_store.google}", target: "_blank", rel: "nofollow"}
+                %i.fa.fa-google

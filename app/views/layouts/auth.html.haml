@@ -21,11 +21,18 @@
       .bg-pic
         / START Background Pic
         %img.lazy{:alt => "", "data-src" => "https://s3.amazonaws.com/smalltaskers/tower.jpeg", "data-src-retina" => "https://s3.amazonaws.com/smalltaskers/tower.jpeg", :src => "https://s3.amazonaws.com/smalltaskers/tower.jpeg"}/
-        .bg-caption.pull-bottom.sm-pull-bottom.text-white.p-l-20.m-b-20
-          %h2.semi-bold.text-white
-            SmallTaskers aim to break the 9-5 cubicle work environment.
-          %p.small
-            Images Displayed are solely for representation purposes only, All work copyright of respective owner, otherwise &copy; #{Time.now.year} <a href="http://smallTaskers.com" title="SmallTaskers" class="text-white">SmallTaskers</a>.
+        - unless current_company
+          .bg-caption.pull-bottom.sm-pull-bottom.text-white.p-l-20.m-b-20
+            %h2.semi-bold.text-white
+              SmallTaskers aim to break the 9-5 cubicle work environment.
+            %p.small
+              Images Displayed are solely for representation purposes only, All work copyright of respective owner, otherwise &copy; #{Time.now.year} <a href="http://smallTaskers.com" title="SmallTaskers" class="text-white">SmallTaskers</a>.
+        - else
+          .bg-caption.pull-bottom.sm-pull-bottom.text-white.p-l-20.m-b-20
+            %h2.semi-bold.text-white
+              #{current_store.description}
+            %p.small
+              Images Displayed are solely for representation purposes only, All work copyright of respective owner, otherwise &copy; #{Time.now.year} <a href="http://#{current_company.domain}" title="#{current_company.name}" class="text-white">#{current_company.name}</a>.
       .login-container.bg-white
         .p-l-50.m-l-20.p-r-50.m-r-20.p-t-50.m-t-30.sm-p-l-15.sm-p-r-15.sm-p-t-40
           = yield
@@ -33,4 +40,4 @@
       / END Login Right Container
     
     / BEGIN VENDOR JS
-    = javascript_include_tag 'user', 'data-turbolinks-track' => true, 'data-turbolinks-eval' => false
+    -# = javascript_include_tag 'user', 'data-turbolinks-track' => true, 'data-turbolinks-eval' => false

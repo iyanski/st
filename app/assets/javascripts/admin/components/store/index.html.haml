@@ -30,7 +30,7 @@
           Upload Your Logo
       .panel-body.no-scroll.no-padding{style: "position: relative; overflow: hidden;"}
         %label.upload-trigger{:for => "uploadField"}
-          %img{ng: {src: "{{store.logo.url}}"}, style: "max-width: 100%; position: absolute; top: 50%; transform: translateY(-50%);"}
+          %img.featured_image{ng: {src: "{{store.logo.url}}"}, style: "max-width: 100%; position: absolute; top: 50%; transform: translateY(-50%);"}
           %form.dropzone.logo.no-margin
             %span.dropzone-text
             .fallback.hide
@@ -96,11 +96,6 @@
               %span.input-group-addon
                 https://plus.google.com/
               %input.form-control{:placeholder => "", :type => "text", ng: {model: "store.google"}}/
-          .form-group
-            .input-group
-              %span.input-group-addon
-                http://instagram.com/
-              %input.form-control{:placeholder => "", :type => "text", ng: {model: "store.instagram"}}/
     .panel-panel-transparent.m-b-45
       .panel-body.text-center
         %button.btn.btn-primary.btn-cons.btn-lg.btn-rounded{ng: {click: "save()"}} Save

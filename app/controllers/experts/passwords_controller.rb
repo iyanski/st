@@ -1,4 +1,5 @@
 class Experts::PasswordsController < Devise::PasswordsController
+  layout 'auth'
   # GET /resource/password/new
   # def new
   #   super

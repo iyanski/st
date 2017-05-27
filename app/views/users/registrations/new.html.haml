@@ -3,10 +3,10 @@
     %img{:alt => "smalltaskers", "data-src" => image_url("smalltaskers.png"), "data-src-retina" => image_url("smalltaskers@2x.png"), :height => "48", :src => image_url("smalltaskers.png")}/
 - else
   %a{href: root_url, title: current_company.name}
-    %img{:alt => current_store.title, "data-src-retina" => asset_path(current_store.logo.url), :height => "48", :src => asset_path(current_store.logo.url)}/
-%p.p-t-35 Sign into your account
+    %img{:alt => current_company.name, "data-src" => image_url(current_store.logo), "data-src-retina" => image_url(current_store.logo), :height => "48", :src => image_url(current_store.logo)}/
+%p.p-t-35 Sign-up for an account
 
-= form_for(resource, as: resource_name, url: session_path(resource_name), class: "p-t-15", role: "form") do |f|
+= form_for(resource, as: resource_name, url: registration_path(resource_name), class: "p-t-15", role: "form") do |f|
   
   = devise_error_messages!
   .form-group.form-group-default
@@ -17,17 +17,19 @@
 
   .form-group.form-group-default
     = f.label :password
+    - if @minimum_password_length
+      %em
+        (#{@minimum_password_length} characters minimum)
     .controls
       = f.password_field :password, placeholder: "Credentials", required: "", class: "form-control"
+
+  .form-group.form-group-default
+    = f.label :password_confirmation
+    .controls
+      = f.password_field :password_confirmation, placeholder: "Credentials", required: "", class: "form-control"
+
   - if devise_mapping.registerable? && controller_name != 'registrations'
     = link_to "Sign up", new_registration_path(resource_name)
     %br/
-
-  - if devise_mapping.rememberable?
-    .row
-      .col-md-6
-        .checkbox
-          = f.check_box :remember_me
-          = f.label :remember_me, "Keep Me Signed in"
       
-  %button.btn.btn-primary.btn-cons.m-t-10{:type => "submit"} Sign in
+  %button.btn.btn-primary.btn-cons.m-t-10{:type => "submit"} Sign-up

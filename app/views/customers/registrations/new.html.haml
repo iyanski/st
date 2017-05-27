@@ -1,0 +1,35 @@
+- unless current_company
+  %a{href: root_url, title: "SmallTaskers"}
+    %img{:alt => "smalltaskers", "data-src" => image_url("smalltaskers.png"), "data-src-retina" => image_url("smalltaskers@2x.png"), :height => "22", :src => image_url("smalltaskers.png")}/
+- else
+  %a{href: root_url, title: current_company.name}
+    %img{:alt => current_company.name, "data-src" => image_url(current_store.logo), "data-src-retina" => image_url(current_store.logo), :height => "48", :src => image_url(current_store.logo)}/
+%p.p-t-35 Sign-up for an account
+
+= form_for(resource, as: resource_name, url: registration_path(resource_name), class: "p-t-15", role: "form") do |f|
+  
+  = devise_error_messages!
+  .form-group.form-group-default
+    %label
+    = f.label :email
+    .controls
+      = f.email_field :email, placeholder: "Email", required: "", class: "form-control", autofocus: true
+
+  .form-group.form-group-default
+    = f.label :password
+    - if @minimum_password_length
+      %em
+        (#{@minimum_password_length} characters minimum)
+    .controls
+      = f.password_field :password, placeholder: "Credentials", required: "", class: "form-control"
+
+  .form-group.form-group-default
+    = f.label :password_confirmation
+    .controls
+      = f.password_field :password_confirmation, placeholder: "Credentials", required: "", class: "form-control"
+
+  - if devise_mapping.registerable? && controller_name != 'registrations'
+    = link_to "Sign up", new_registration_path(resource_name)
+    %br/
+      
+  %button.btn.btn-primary.btn-cons.m-t-10{:type => "submit"} Sign-up

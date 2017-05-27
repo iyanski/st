@@ -57,8 +57,12 @@
               Inbox
               %span.text-info (12)
               %span.caret
-            .brand.inline
-              %img{:alt => "smalltaskers", "data-src" => asset_path("smalltaskers.png"), "data-src-retina" => asset_path("smalltaskers@2x.png"), :height => "22", :src => asset_path("smalltaskers.png")}/
+            .brand.inline.text-left.m-l-20
+              - if current_store.logo.present?
+                %img{:alt => current_company.name, "data-src" => asset_path(current_store.logo), "data-src-retina" => asset_path(current_store.logo), :height => "48", :src => asset_path(current_store.logo)}/
+              - else
+                %h4
+                  = current_company.name
         .pull-right
           / START User Info
           - if current_expert

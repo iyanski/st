@@ -6,15 +6,18 @@ class Api::Experts::JobsController < Api::ExpertsController
   def show
     @job = current_customer.jobs.where(id: params[:id]).first()
     if @job.nil?
-      render json: {error: "Job not found"}, status: 401
+      render json: {error: "Task not found"}, status: 401
     end
   end
 
   def claim
     @job = Job.find(params[:id])
-    unless @job.claim_by current_expert
-      puts @job.inspect
-      render json: {error: "Job not found"}, status: 401
+    if current_expert.jobs.where(status: 2).count == 3
+      render json: {error: "Sorry, you can only claim 3 tasks at a time"}, status: 401
+    else
+      # unless @job.claim_by current_expert
+      #   render json: {error: "Task not found"}, status: 401
+      # end
     end
   end
 
@@ -22,7 +25,7 @@ class Api::Experts::JobsController < Api::ExpertsController
     @job = Job.find(params[:id])
     unless @job.unclaim_by current_expert
       puts @job.inspect
-      render json: {error: "Job not found"}, status: 401
+      render json: {error: "Task not found"}, status: 401
     end
   end
 
@@ -30,21 +33,21 @@ class Api::Experts::JobsController < Api::ExpertsController
     @job = Job.find(params[:id])
     puts params[:job].inspect
     unless @job.estimates params[:job][:estimate], Date.strptime(params[:job][:starts_at], "%m/%d/%Y"), params[:job][:etc]
-      render json: {error: "Job not found"}, status: 401
+      render json: {error: "Task not found"}, status: 401
     end
   end
 
   def cancel
     @job = Job.find(params[:id])
     unless @job.cancel_estimate
-      render json: {error: "Job not found"}, status: 401
+      render json: {error: "Task not found"}, status: 401
     end
   end
 
   def submit
     @job = Job.find(params[:id])
     unless @job.submit
-      render json: {error: "Job not found"}, status: 401
+      render json: {error: "Task not found"}, status: 401
     end
   end
 

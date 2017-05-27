@@ -6,6 +6,8 @@
   .email-content-wrapper{ng: {show: "job"}}
     .actions-wrapper.menuclipper.bg-master-lightest
       %ul.actions.menuclipper-menu.no-margin.p-r-20
+        %li.no-padding{ng: {show: "job.status == 1"}}
+          %a.cursor{ng: {click: "claim(job)"}} Claim
         %li.no-padding{ng: {if: "job.status == 1"}}
           %a{ng: {click: "attachFile()"}} Attach File
         %li.no-padding{ng: {show: "job.status > 0"}}
@@ -22,8 +24,6 @@
           %a.split-list-toggle{:href => "#"}
             %i.fa.fa-angle-left
             All Inboxes
-        %li.no-padding{ng: {show: "job.status == 1"}}
-          %a.cursor{ng: {click: "claim(job)"}} Claim
         %li.no-padding{ng: {show: "job.status == 2"}}
           %a{ng: {click: "makeEstimate(job)"}} Make an Estimate
         %li.no-padding{ng: {show: "job.status == 2"}}

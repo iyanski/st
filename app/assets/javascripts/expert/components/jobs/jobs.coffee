@@ -169,11 +169,13 @@ do ->
       $scope.showUploaderScreen()
 
     $scope.claim = (job)->
+      clone = {}
       customer = expert = {}
       pos = $scope.jobs.indexOf(job)
       job = new Job(job)
       angular.copy job.customer, customer
       angular.copy job.expert, expert
+      angular.copy job, clone
       $scope.jobs[pos].status = 2
       $scope.jobs[pos].claimed_at = moment()
       job.$claim (data, xhr)->
@@ -183,11 +185,17 @@ do ->
           $scope.initChat()
           $scope.$apply()
         , 100
+      , (res)->
+        $scope.job = clone
+        $scope.jobs[pos] = clone
+        toastr.warning res.data.error
 
     $scope.unClaim = (job)->
+      clone = {}
       customer = expert = {}
       pos = $scope.jobs.indexOf(job)
       job = new Job(job)
+      angular.copy job, clone 
       angular.copy job.customer, customer
       angular.copy job.expert, expert
       $scope.jobs[pos].status = 1
@@ -198,9 +206,15 @@ do ->
         setTimeout ->
           $scope.$apply()
         , 100
+      , (res)->
+        $scope.job = clone
+        $scope.jobs[pos] = clone
+        toastr.warning res.data.error
 
     $scope.cancelEstimate = (job)->
+      clone = {}
       customer = expert = {}
+      angular.copy job, clone
       angular.copy job.customer, customer
       angular.copy job.expert, expert
       pos = $scope.jobs.indexOf(job)
@@ -213,6 +227,10 @@ do ->
         setTimeout ->
           $scope.$apply()
         , 100
+      , (res)->
+        $scope.job = clone
+        $scope.jobs[pos] = clone
+        toastr.warning res.data.error
 
     $scope.sendMessage = (e)->
       if $scope.on and $scope.job
@@ -279,7 +297,9 @@ do ->
       true
 
     $scope.sendEstimate = ->
+      clone = {}
       job = new Job($scope.job)
+      angular.copy job, clone
       job.estimate = $scope.estimate.hours
       job.etc = $scope.estimate.etc
       job.starts_at = $scope.estimate.starts_at
@@ -289,14 +309,24 @@ do ->
         setTimeout ->
           $("#estimate-modal").modal("hide")
         , 100
+      , (res)->
+        $scope.job = clone
+        $scope.jobs[pos] = clone
+        toastr.warning res.data.error
 
     $scope.submit = (job)->
+      clone = {}
       pos = $scope.jobs.indexOf(job)
+      angular.copy job, clone
       job = new Job(job)
       $scope.jobs[pos].status = 5
       $scope.jobs[pos].submitted_at = moment()
       job.$submit (data, xhr)->
         console.log data
+      , (res)->
+        $scope.job = clone
+        $scope.jobs[pos] = clone
+        toastr.warning res.data.error
 
     $scope.showUploaderScreen = ->
       $scope.show_mode = 3

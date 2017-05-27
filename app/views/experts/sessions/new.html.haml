@@ -1,5 +1,9 @@
-%a{href: root_url, title: "SmallTaskers"}
-  %img{:alt => "smalltaskers", "data-src" => image_url("smalltaskers.png"), "data-src-retina" => image_url("smalltaskers@2x.png"), :height => "22", :src => image_url("smalltaskers.png")}/
+- unless current_company
+  %a{href: root_url, title: "SmallTaskers"}
+    %img{:alt => "smalltaskers", "data-src" => image_url("smalltaskers.png"), "data-src-retina" => image_url("smalltaskers@2x.png"), :height => "48", :src => image_url("smalltaskers.png")}/
+- else
+  %a{href: root_url, title: current_company.name}
+    %img{:alt => current_company.name, "data-src" => image_url(current_store.logo), "data-src-retina" => image_url(current_store.logo), :height => "48", :src => image_url(current_store.logo)}/
 %p.p-t-35 Sign into your account
 
 = form_for(resource, as: resource_name, url: session_path(resource_name), class: "p-t-15", role: "form") do |f|

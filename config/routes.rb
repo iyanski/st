@@ -3,13 +3,25 @@ Rails.application.routes.draw do
   
   devise_for :customers, controllers: {
     sessions: 'customers/sessions',
+    passwords: 'customers/passwords',
+    registrations: 'customers/registrations',
+    unlocks: 'customers/unlocks',
+    confirmations: 'customers/confirmations',
   }
   devise_for :experts, controllers: {
     sessions: 'experts/sessions',
+    passwords: 'experts/passwords',
+    registrations: 'experts/registrations',
+    unlocks: 'experts/unlocks',
+    confirmations: 'experts/confirmations',
   }
   
   devise_for :users, controllers: {
     sessions: 'users/sessions',
+    passwords: 'users/passwords',
+    registrations: 'users/registrations',
+    unlocks: 'users/unlocks',
+    confirmations: 'users/confirmations',
   }
   root to: "home#index"
   match "/contact" => "home#contact", via: [:get], as: :contact

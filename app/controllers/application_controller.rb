@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   rescue_from Apartment::TenantNotFound, with: :tenant_not_found
 
   def current_company
-    Company.find_by_domain(request.host_with_port)
+    Company.find_by_subdomain(request.subdomain)
   end
 
   def tenant_not_found

@@ -15,9 +15,9 @@ class Api::Experts::JobsController < Api::ExpertsController
     if current_expert.jobs.where(status: 2).count == 3
       render json: {error: "Sorry, you can only claim 3 tasks at a time"}, status: 401
     else
-      # unless @job.claim_by current_expert
-      #   render json: {error: "Task not found"}, status: 401
-      # end
+      unless @job.claim_by current_expert
+        render json: {error: "Task not found"}, status: 401
+      end
     end
   end
 

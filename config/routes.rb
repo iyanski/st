@@ -49,7 +49,12 @@ Rails.application.routes.draw do
 
   resources :conversations, params: :slug
   resources :messages
-  resources :services
+  resources :jobs
+  resources :services do
+    member do
+      get :start
+    end
+  end
 
   namespace :api do
     namespace :users do

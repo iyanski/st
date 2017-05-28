@@ -43,6 +43,6 @@ class Api::Users::ServicesController < Api::UsersController
   private
 
     def service_params
-      params.require(:service).permit(:company_id, :title, :description, :price, :service_type, :experts_rate)
+      params.require(:service).permit(:company_id, :title, :description, :price, :service_type, :experts_rate, :short_description, :tags)
     end
 end

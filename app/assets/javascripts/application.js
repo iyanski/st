@@ -12,7 +12,8 @@
 //
  
 // BEGIN VENDOR JS FOR PAGES (plus add in jquery.turbolinks)
-//= require jquery/jquery-1.11.1.min.js
+//= require jquery
+//= require jquery_ujs
 //= require bootstrap/js/bootstrap.min.js
 //= require pace/pace.min
 //= require js/pages.image.loader.js
@@ -21,5 +22,6 @@
 //= require velocity/velocity.ui.js
 //= require jquery-unveil/jquery.unveil.min.js
 //= require js/pages.frontend.js
+//= require summernote/js/summernote.min
 //= require tether
 //= require custom

@@ -17,11 +17,17 @@
         %form{:role => "form"}
 
           .form-group.required
-            %label Title
-            %input.form-control{:required => "", :type => "text", autofocus: true, ng: {model: "service.title"}}/
+            %label{for: "title"} Title
+            %input.form-control#title{:required => "", :type => "text", autofocus: true, ng: {model: "service.title"}}/
+          .form-group
+            %label{for: "short_description"} Short Description
+            %input.form-control#short_description{:required => "", :type => "text", ng: {model: "service.short_description"}}/
           .form-group
             %label{for: "description"} Description
             %textarea.form-control#description{ng: {model: "service.description"}, rows: 20}
+          .form-group
+            %label{for: "tags"} Tags
+            %input.form-control#tags{:required => "", :type => "text", ng: {model: "service.tags"}, placeholder: "web, development, service"}/
           .row
             .col-sm-8
               .form-group

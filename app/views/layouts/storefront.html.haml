@@ -114,10 +114,6 @@
                         = link_to image_tag("services.jpeg", class: "m-b-10", alt: service.title, style: "width:100%"), service_url(service)
                       .panel-title.p-t-30
                         = link_to service.title, service_url(service.id, service.slug)
-                      - if service.service_type == 0
-                        .small #{number_to_currency service.price, symbol: "$"}/hr
-                      - elsif service.service_type == 1
-                        .small #{number_to_currency service.price, symbol: "$"}/mo
                     .panel-body
                       %p
                         #{truncate service.description, length: 100}

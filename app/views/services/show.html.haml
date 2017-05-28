@@ -11,6 +11,7 @@
             = link_to image_tag(@service.photo.url, class: "m-b-10", alt: @service.title, style: "width:100%"), service_url(@service)
           - else
             = link_to image_tag("services.jpeg", class: "m-b-10", alt: @service.title, style: "width:100%"), service_url(@service)
+          %p.p-t-45 #{simple_format @service.description}
           - unless @service.benefits.blank?
             %p.p-b-25
               %h5 What is included in this service?
@@ -18,7 +19,7 @@
                 - @service.benefits.each do |item|
                   %li
                     %p
-                      = item.description.html_safe
+                      = sanitize item.description
           - unless @service.requirements.blank?
             %p.p-b-25
               %h5 What we need from you to Get Started?
@@ -26,7 +27,7 @@
                 - @service.requirements.each do |item|
                   %li
                     %p
-                      = item.description.html_safe
+                      = sanitize item.description
           - unless @service.faqs.blank?
             %p.p-b-25
               %h5 What you need to know?
@@ -34,11 +35,11 @@
                 - @service.faqs.each do |item|
                   %li
                     %p
-                      = item.question.html_safe
+                      = sanitize item.question
                     %p
-                      = item.answer.html_safe
+                      = sanitize item.answer
 
         .col-md-4
-          %button.btn.btn-block.btn-lg.btn-primary Get Started
-          %h5.p-t-45 Description
-          %p #{@service.description.html_safe}
+          %a.btn.btn-block.btn-lg.btn-primary{href: start_service_url(@service)}
+            Get Started
+          %p.p-t-45 #{sanitize @service.short_description}

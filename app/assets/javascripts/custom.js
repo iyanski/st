@@ -119,7 +119,6 @@ $(document).ready(function() {
             },
             error: function(data, status){
                 var response = JSON.parse(data.responseText);
-                console.log(response);
                 if(response.error && response.error.length){
                     $("em.small.password").removeClass("hidden").html(response.error);
                 }
@@ -136,5 +135,113 @@ $(document).ready(function() {
                 }
             }
         });
+    });
+    $(document).on("submit", "form#new_job", function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        $(".job.alert.alert-warning").removeClass("hide");
+        var request = $.ajax({
+            url: "/jobs",
+            method: "post",
+            data: {
+              job: {
+                title: $('input#job_title').val(),
+                description: $('input#job_title').val(),
+                service_id: $('input#job_service_id').val(),
+              }
+            },
+            beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+            success: function(data, xhr){
+              setTimeout(function(){
+                location.href = "/app";
+              }, 100);
+            },
+            error: function(data, status){
+              var response = JSON.parse(data.responseText);
+              $(".job.alert.alert-warning").removeClass("hide").html(response.error);
+            }
+        });
+    });
+    $("#new_job").on("ajax:success", function(e, data, status, xhr) {
+      location.href = "/app";
+    }).on("ajax:error", function(e, xhr, status, error) {
+      $(".modal#register").modal("show");
+      setTimeout(function(){
+        $("#email-address").focus();
+      }, 500);
+    });
+
+    $(document).on("click", "#login", function(e){
+      $(".customer.alert.alert-warning").addClass("hide");
+      $("#show_signup").toggleClass("hide");
+      $("#show_login").toggleClass("hide");
+    });
+
+    $(document).on("click", "#signup", function(e){
+      $(".customer.alert.alert-warning").addClass("hide");
+      $("#show_signup").toggleClass("hide");
+      $("#show_login").toggleClass("hide");
+    });
+
+    $("#show_signup").on("ajax:success", function(e, data, status, xhr) {
+      var request = $.ajax({
+        url: "/jobs",
+        method: "post",
+        data: {
+          job: {
+            title: $('input#job_title').val(),
+            description: $('input#job_title').val(),
+            service_id: $('input#job_service_id').val(),
+          }
+        },
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+        success: function(data, xhr){
+          $("#register").modal("hide");
+          setTimeout(function(){
+            location.href = "/app";
+          }, 200);
+        },
+        error: function(data, status){
+          $("#register").modal("hide");
+          var response = JSON.parse(data.responseText);
+          $(".job.alert.alert-warning").removeClass("hide").html(response.error);
+        }
+      }); 
+    }).on("ajax:error", function(e, xhr, status, error) {
+      var response = JSON.parse(xhr.responseText);
+      $(".alert.alert-warning.customer").removeClass("hide").html(response.error);
+    });
+
+    $("#show_login").on("ajax:success", function(e, data, status, xhr) {
+      if(data.token.length){
+        var token = data.token;
+      } else {
+        var token = $('meta[name="csrf-token"]').attr('content');
+      }
+      var request = $.ajax({
+        url: "/jobs",
+        method: "post",
+        data: {
+          job: {
+            title: $('input#job_title').val(),
+            description: $('input#job_title').val(),
+            service_id: $('input#job_service_id').val(),
+          }
+        },
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', token)},
+        success: function(data, xhr){
+          $("#register").modal("hide");
+          setTimeout(function(){
+            location.href = "/app";
+          }, 200);
+        },
+        error: function(data, status){
+          $("#register").modal("hide");
+          var response = JSON.parse(data.responseText);
+          $(".job.alert.alert-warning").removeClass("hide").html(response.error);
+        }
+      }); 
+    }).on("ajax:error", function(e, xhr, status, error) {
+      $(".alert.alert-warning.customer").removeClass("hide").html(xhr.responseText);
     });
 });

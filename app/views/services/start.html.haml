@@ -1,0 +1,88 @@
+= content_for :scripts do
+  :javascript
+    $(document).ready(function() {
+      $('#summernote').summernote({
+        height: 400,
+        focus: true,
+        toolbar: [
+          // [groupName, [list of button]]
+          ['style', ['bold', 'italic', 'underline', 'clear']],
+          ['font', ['strikethrough', 'superscript', 'subscript']],
+          ['fontsize', ['fontsize']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['height', ['height']]
+        ]
+      });
+      $(document).on("click", "#area", function(e){
+        $("#summernote").focus();
+      });
+    });
+%section.p-b-85.p-t-75.p-b-65.p-t-55#area
+  .container
+    .row
+      .md-p-l-20.xs-no-padding.clearfix
+        .col-md-8
+          %h1 #{@service.title}
+          = form_for @job, remote: true, :authenticity_token => true, data: { type: :json }, class: "form" do |f|
+            = hidden_field_tag "job[service_id]", @service.id
+            .job.m-t-20.m-b-10.hide.alert.alert-warning.alert-dismissible.fade.in{role: "alert"}
+            .form-group.p-b-20
+              %label Title
+              = f.text_field :title, class: "input-lg form-control", autofocus: true
+            .form-group
+              %label Tell us about what you need to get done
+              .summernote-wrapper.m-b-20
+                #summernote
+            .form-group
+              = f.submit "Send", data: { "disable-with": "Sending..." }, class: "btn-lg btn btn-primary p-l-60 p-r-60"
+        .col-md-4
+          - unless @service.requirements.blank?
+            %p.p-b-25
+              %h5 Please provide the following:
+              %ol
+                - @service.requirements.each do |item|
+                  %li
+                    %p
+                      = sanitize item.description
+.modal#register.fade{:role => "dialog", :tabindex => "-1"}
+  .modal-dialog{:role => "document"}
+    .modal-content
+      .modal-header.text-left
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} &#215;
+        %h4.modal-title
+          Please sign-up/login so we can get back to you
+      .modal-body
+        = form_for resource, url: customer_registration_path(:customer), remote: true, html: {class:"form p-t-20", id: "show_signup"} do
+          %span Do you already have an account with us?
+          %a.cursor#login Login
+          .customer.m-t-20.m-b-10.hide.alert.alert-warning.alert-dismissible.fade.in{role: "alert"}
+          .form-group.p-t-20
+            %label{for: "email-address"} Email Address
+            = email_field_tag 'customer[email]', nil, class: "input-lg form-control"
+            %em.auth.small.email.hidden{style: "color: red;"}
+          .form-group
+            %label{for: "password"} Password
+            = password_field_tag 'customer[password]', nil, class: "input-lg form-control"
+            %em.small.password.hidden{style: "color: red;"}
+          .form-group
+            %label{for: "password_confirmation"} Confirm Password
+            = password_field_tag 'customer[password_confirmation]', nil, class: "input-lg form-control"
+            %em.small.password_confirmation.hidden{style: "color: red;"}
+          .form-group.m-t-20
+            %button.btn.btn-primary Continue
+        = form_for resource, url: customer_session_path(:customer), remote: true, html: {class:"form p-t-20 hide", id: "show_login"} do
+          %span I don't have an account yet.
+          %a.cursor#signup Sign-up
+          .customer.m-t-20.m-b-10.hide.alert.alert-warning.alert-dismissible.fade.in{role: "alert"}
+          .form-group.p-t-20
+            %label{for: "email-address"} Email Address
+            = email_field_tag 'customer[email]', nil, class: "input-lg form-control"
+            %em.auth.small.email.hidden{style: "color: red;"}
+          .form-group
+            %label{for: "password"} Password
+            = password_field_tag 'customer[password]', nil, class: "input-lg form-control"
+            %em.small.password.hidden{style: "color: red;"}
+          .form-group.m-t-20
+            %button.btn.btn-primary Continue

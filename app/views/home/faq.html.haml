@@ -15,6 +15,6 @@
                 - service.faqs.each do |item|
                   %li
                     %p
-                      = item.question.html_safe
+                      = sanitize item.question
                     %p
-                      = item.answer.html_safe
+                      = sanitize item.answer

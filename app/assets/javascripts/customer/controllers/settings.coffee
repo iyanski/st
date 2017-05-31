@@ -6,6 +6,7 @@ do ->
     $scope.content = pageview.page[$route.current.activepage]
     $scope.activepage = $route.current.activepage
     $scope.activemenu = $route.current.activemenu
+    $scope.aid = gon.aid
     
   viewControllers = angular.module('app.settings.page.controller', [])
   viewControllers.controller 'settingsPageCtrl', settingsPageCtrl

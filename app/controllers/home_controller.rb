@@ -59,6 +59,7 @@ class HomeController < ApplicationController
   end
 
   def app
+    gon.aid = current_company.user.id
     gon.company = current_company
     gon.customer = current_customer
     gon.services = Service.where(service_type: 0)
@@ -70,6 +71,7 @@ class HomeController < ApplicationController
   end
 
   def dashboard
+    gon.aid = current_company.user.id
     gon.company = current_company
     gon.expert = current_expert
     gon.avatar = current_expert.avatar.try(:url)
@@ -80,6 +82,7 @@ class HomeController < ApplicationController
   end
 
   def admin
+    gon.aid = current_company.user.id
     if Store.all.blank?
       store = Store.create(company: current_company)
       gon.store = store

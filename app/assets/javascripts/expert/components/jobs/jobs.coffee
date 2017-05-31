@@ -1,5 +1,5 @@
 do ->
-  jobsCtrl = ($scope, $location, Job, ChatService, $routeParams) ->
+  jobsCtrl = ($scope, $location, Job, ChatService, $routeParams, Ticket) ->
     console.log 'jobs controller'
     $scope.showUploader = false
     $scope.loadUpdates = false
@@ -54,7 +54,7 @@ do ->
           $scope.showOnline(key)
       presenceRef.on 'child_removed', (snap)->
         $scope.showOffline(snap.key)
-        angular.element(".user-avatar[data-user-id=" + snap.key + "]").removeClass("b-success").addClass('b-grey')
+        angular.element(".customer-avatar[data-customer-id=" + snap.key + "]").removeClass("b-success").addClass('b-grey')
     
     $scope.initPresence()
 
@@ -107,6 +107,20 @@ do ->
             $scope.$apply()
           , 100
 
+    $scope.cancelReport = ->
+      $scope.show_mode = 1
+
+    $scope.fileReport = (job)->
+      $scope.show_mode = 4
+      $scope.ticket = new Ticket(job_id: job.id)
+
+    $scope.sendReport = ->
+      $scope.ticket.$save (data, xhr)->
+        console.log data
+        toastr.success "Report sent"
+      , (res)->
+        toastr.warning res.data.error
+
     if gon.job_id
       $scope.find_job_by_id $scope.job_id, (job)->
         $scope.selectJob(job)
@@ -117,7 +131,7 @@ do ->
     
   viewControllers = angular.module('app.jobs.controller', [])
   viewControllers.controller 'jobsCtrl', jobsCtrl
-  jobsCtrl.$inject = [ '$scope', '$location', 'Job', 'ChatService', '$routeParams']
+  jobsCtrl.$inject = [ '$scope', '$location', 'Job', 'ChatService', '$routeParams', 'Ticket']
 
 do ->
   jobs = ->

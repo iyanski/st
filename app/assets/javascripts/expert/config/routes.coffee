@@ -26,5 +26,17 @@
         activepage: "page-transactions"
         activemenu: "page-transactions"
 
+      .when "/tickets",
+        templateUrl: "common.html"
+        controller: "rootPageCtrl"
+        activepage: "page-tickets"
+        activemenu: "page-tickets"
+
+      .when "/ticket/:id",
+        templateUrl: "common.html"
+        controller: "rootPageCtrl"
+        activepage: "page-tickets"
+        activemenu: "page-tickets"
+
       .otherwise redirectTo: '/'
 ]

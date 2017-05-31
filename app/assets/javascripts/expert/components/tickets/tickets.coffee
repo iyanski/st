@@ -49,16 +49,16 @@ do ->
 
     $scope.sendChatMessage = (msg)->
       $scope.interactive = true
-      console.log $scope.customer
+      console.log $scope.expert
       $scope.msg = ""
 
       payload = 
-        sender_type: "Customer"
+        sender_type: "Expert"
         recipient_type: "User"
         content: msg
-        sender : [$scope.customer.first_name, $scope.customer.last_name].join(" ")
+        sender : [$scope.expert.first_name, $scope.expert.last_name].join(" ")
         recipient_id: $scope.aid
-        sender_id: $scope.customer.id
+        sender_id: $scope.expert.id
         created_at: moment()
       $scope.pushMessage(payload)
       $scope.interactive = true
@@ -101,7 +101,7 @@ do ->
   tickets = ->
     {
       restrict: 'EA'
-      templateUrl: 'customer/components/tickets/index.html'
+      templateUrl: 'expert/components/tickets/index.html'
       controller: 'ticketsCtrl'
     }
   
@@ -122,7 +122,7 @@ do ->
   ticket = ->
     {
       restrict: 'EA'
-      templateUrl: 'customer/components/tickets/show.html'
+      templateUrl: 'expert/components/tickets/show.html'
       controller: 'ticketCtrl'
     }
   

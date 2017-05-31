@@ -12,14 +12,11 @@ class SupportTicket < ApplicationRecord
     id + 299
   end
 
-  def chat_to(sender, recipient, message)
-    recipient = recipient
-    sender = sender
-    puts sender.inspect
-    puts recipient.inspect
-    # firebase = Firebase::Client.new(ENV["firebase_base_uri"], ENV["firebase_secret_key"])
-    # channel = "tickets/#{self.company_id}/#{id}/#{conversation.code}"
-    # response = firebase.push(channel, {sender: sender.name, content: message, sender_id: sender.id, recipient_id: recipient.id, created_at: Time.now, sender_type: recipient.class.to_s})
+  def chat(sender, recipient, message, company_id)
+    firebase = Firebase::Client.new(ENV["firebase_base_uri"], ENV["firebase_secret_key"])
+    channel = "tickets/#{company_id}/#{id}/#{conversation.code}"
+    response = firebase.push(channel, {sender: sender.name, content: message, sender_id: sender.id, recipient_id: recipient.id, created_at: Time.now, sender_type: sender.class.to_s})
+    puts response.inspect
     # UserMailer.chat(self, message, sender, recipient).deliver_later
   end
 

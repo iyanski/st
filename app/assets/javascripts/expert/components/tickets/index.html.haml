@@ -10,7 +10,7 @@
           %ul.no-padding
             %li.item.padding-15{"data-email-id" => "{{item.id}}", ng: {repeat: "item in tickets | orderBy:'-updated_at'", click: "selectTicket(item)", class: "{'active' : item.id == ticket.id}"}}
               .inline.m-l-15
-                %p.recipients.no-margin.hint-text.small{ng: {show: "item.customer"}} {{item.customer.name}}
+                %p.recipients.no-margin.hint-text.small{ng: {show: "item.expert"}} {{item.expert.name}}
                 %p.recipients.no-margin.hint-text.small{ng: {show: "item.expert"}} {{item.expert.name}}
                 %p.subject.no-margin Ticket#: {{item.code}}
                 %p.body.no-margin{ng: {bind: {html: "item.title"}}}

@@ -1,7 +1,7 @@
 !!!
 %html{ng: {app: "SmallTaskers"}}
   %head
-    %title SmallTaskers
+    %title #{current_company.name}
     
     %meta{:content => "text/html;charset=UTF-8", "http-equiv" => "content-type"}/
     %meta{:charset => "utf-8"}/
@@ -16,7 +16,6 @@
     %meta{:content => "default", :name => "apple-mobile-web-app-status-bar-style"}/
     %meta{:content => "", :name => "description"}/
     %meta{:content => "", :name => "author"}/
-    %meta{:content => "ws://#{current_company.domain}/suck8ts", :name => "action-cable-url"}/
     = Gon::Base.render_data
     = csrf_meta_tags
     = javascript_include_tag 'expert'

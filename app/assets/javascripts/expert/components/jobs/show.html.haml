@@ -34,9 +34,9 @@
           %a.text-danger{ng: {click: "cancelEstimate(job)"}} Cancel Estimate
         %li.no-padding{ng: {show: "job.status == 4"}}
           %a{ng: {click: "submit(job)"}} Submit for Review
+        %li.no-padding{ng: {show: "job.status > 0"}}
+          %a.text-danger{ng: {click: "fileReport(job)"}} Report a Problem
       
-      
-
       .clearfix
     .email-content
       #details.email-content-header{ng: {show: "show_mode == 1"}}
@@ -140,4 +140,20 @@
           %input.form-control.input-lg{rows: 2, ng: {model: "msg", keyUp: "sendMessage($event)", show: "job.status > 1 && messages.length"}}
           .input-group-btn
             %button.send.btn.btn-primary.btn-lg{ng: {click: "shiftSendMessage()", class: "{'disabled': !msg}", show: "job.status > 1 && messages.length"}} Send
+
+      .panel.panel-default{ng: {show: "show_mode == 4"}}
+        .panel-body
+          %h5
+            What went wrong to this task?
+          %form{:role => "form"}
+            .form-group.required
+              %label Subject:
+              %input.form-control{:name => "cc", :placeholder => "", :type => "text", autofocus: true, ng: {model: "ticket.title"}}/
+            .form-group
+              %label Complaint, suggestions, comments and other information that could help us resolve this issue.
+              .wysiwyg5-wrapper.b-a.b-grey.m-b-10
+                %textarea#wysiwyg5.wysiwyg{rows: 15, ng: {model: "ticket.description"}}
+            .form-group.btn-controls
+              %button.btn.btn-primary.btn-cons{ng: {click: "sendReport()", class: "{'disabled': !ticket.title.length || !ticket.description.length}"}} Send
+              %button.btn.btn-white.btn-cons{ng: {click: "cancelReport()"}} Cancel
 %estimatemodal{ng: {show: "showModalEstimate"}}

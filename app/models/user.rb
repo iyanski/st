@@ -5,4 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
   belongs_to :company
   mount_uploader :avatar, MediaUploader
+
+  def name
+    "admin"
+  end
 end

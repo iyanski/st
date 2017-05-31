@@ -4,7 +4,6 @@ do ->
     $scope.activepage = $route.current.activepage
     $scope.activemenu = $route.current.activemenu
     $scope.selectJob = {}
-    $scope.percentage = 25
     $scope.user = gon.user
     $scope.interactive = false
     $scope.jobs = gon.rabl

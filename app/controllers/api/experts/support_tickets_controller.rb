@@ -1,11 +1,11 @@
-class Api::Customers::SupportTicketsController < Api::CustomersController
+class Api::Experts::SupportTicketsController < Api::ExpertsController
   def index
-    @tickets = current_customer.support_tickets
+    @tickets = current_expert.support_tickets
   end
 
   def create
     @ticket = SupportTicket.new ticket_params
-    @ticket.customer = current_customer
+    @ticket.expert = current_expert
     unless @ticket.save
       render json: {error: @ticket.errors.full_messages.first}, status: 401
     end
@@ -13,8 +13,8 @@ class Api::Customers::SupportTicketsController < Api::CustomersController
 
   def chat
     recipient = current_company.user
-    @ticket = current_customer.support_tickets.where(id: params[:id]).first
-    @ticket.chat current_customer, recipient, params[:content], current_company.id
+    @ticket = current_expert.support_tickets.where(id: params[:id]).first
+    @ticket.chat current_expert, recipient, params[:content], current_company.id
     render json: {content: params[:content]}
   end
 

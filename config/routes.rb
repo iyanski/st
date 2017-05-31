@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  mount ActionCable.server => '/suck8ts'
+  # mount ActionCable.server => '/suck8ts'
   
   devise_for :customers, controllers: {
     sessions: 'customers/sessions',
@@ -109,6 +109,11 @@ Rails.application.routes.draw do
           post :upload
         end
       end
+      resources :support_tickets do
+        member do
+          post :chat
+        end
+      end
       resource :settings
       resources :transactions
       resources :jobs do
@@ -133,7 +138,11 @@ Rails.application.routes.draw do
         end
       end
       resource :settings
-      resources :support_tickets
+      resources :support_tickets do
+        member do
+          post :chat
+        end
+      end
       resource :orders do
         collection do
           get 'express/:job_id' => "orders#express", via: [:post], as: :express

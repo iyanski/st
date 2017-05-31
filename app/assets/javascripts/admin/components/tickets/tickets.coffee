@@ -1,5 +1,5 @@
 do ->
-  ticketsCtrl = ($scope, $location, Ticket) ->
+  ticketsCtrl = ($scope, $location, Ticket, Message, ChatService) ->
     console.log "tickets controller"
     $scope.company = gon.company
     
@@ -8,42 +8,46 @@ do ->
         $scope.tickets = data
 
     $scope.selectTicket = (item)->
-      $scope.ticket = item
-      console.log item
-      setTimeout ->
-        $scope.$apply()
-      , 100
+      if $scope.ticket != item
+        $scope.messages = []
+        $scope.ticket = item
+        $scope.interactive = false
+        $scope.on = true
+        $scope.initChat()
+        setTimeout ->
+          $scope.$apply()
+        , 100
 
     $scope.initChat = ->
-      $scope.interactive = false
       if $scope.on and $scope.ticket
         $scope.msg = ""
+        console.log "tickets/" + gon.company.id + "/" + $scope.ticket.id + "/" + $scope.ticket.conversation.code
         $scope.notificationsRef = ChatService.ref("tickets/" + gon.company.id + "/" + $scope.ticket.id + "/" + $scope.ticket.conversation.code)
         $scope.notificationsRef.on 'child_added', (snapshot)->
-          console.log snapshot.val()
+          console.log snapshot.val().sender_type, (snapshot.val().sender_type is "Expert" || snapshot.val().sender_type is "Customer")
           if !$scope.interactive
+            console.log "non-interactive"
             $scope.pushMessage snapshot.val()
-          else if $scope.interactive && snapshot.val().sender_type is ("Expert" || "Customer")
+          else if $scope.interactive && (snapshot.val().sender_type is "Expert" || snapshot.val().sender_type is "Customer")
+            console.log "interactive"
             $scope.pushMessage snapshot.val()
           setTimeout ->
-            $scope.scrollToBottom()
             $scope.$apply()
           , 100
 
     $scope.init()
-    $scope.initChat()
 
     $scope.sendMessage = (e)->
-      if $scope.on and $scope.job
+      if $scope.on and $scope.ticket
         if e and (!e.shiftKey and e.keyCode is 13)
-          $scope.sendChatMessage($(e.currentTarget).val()) 
+          $scope.sendChatMessage($(e.currentTarget).val())
+          $(e.currentTarget).val('')
+          true
 
     $scope.shiftSendMessage = ->
       $scope.sendChatMessage($scope.msg)
 
     $scope.sendChatMessage = (msg)->
-      $scope.interactive = true
-      $scope.msg = ""
       if $scope.ticket.customer
         data = 
           recipient_type: "Customer"
@@ -54,7 +58,7 @@ do ->
           recipient_id: $scope.ticket.expert.id
 
       payload = 
-        sender_type: "Admin"
+        sender_type: "User"
         recipient_type: data.recipient_type
         content: msg
         sender : [$scope.user.first_name, $scope.user.last_name].join(" ")
@@ -63,11 +67,10 @@ do ->
         created_at: moment()
       $scope.pushMessage(payload)
       $scope.interactive = true
-      $scope.scrollToBottom()
       
       message = new Message(id: $scope.ticket.id)
       message.$chat content: msg, recipient_type: data.recipient_type, recipient_id: data.recipient_id, (data, xhr)->
-        console.log "sent"
+        true
 
     $scope.pushMessage = (payload)->
       data = 
@@ -78,10 +81,24 @@ do ->
         sender: payload.sender
         created_at: moment(payload.created_at).fromNow()
       $scope.messages.push data
+      setTimeout ->
+        $scope.scrollToBottom()
+      , 100
+
+    $scope.scrollToBottom = ->
+      offset = angular.element('.conversation').height()
+      splittarget = angular.element('.split-details')
+      target = angular.element('.email-content-wrapper')
+      splittarget.animate
+        scrollTop: offset
+      , 100
+      target.animate
+        scrollTop: offset
+      , 100
 
   viewControllers = angular.module('app.tickets.controller', [])
   viewControllers.controller 'ticketsCtrl', ticketsCtrl
-  ticketsCtrl.$inject = [ '$scope', '$location', 'Ticket']
+  ticketsCtrl.$inject = [ '$scope', '$location', 'Ticket', 'Message', 'ChatService']
 
 do ->
   tickets = ->
@@ -99,7 +116,6 @@ do ->
 do ->
   ticketCtrl = ($scope, $location, Ticket) ->
     console.log "ticket controller"
-    $scope.messages = []
 
   viewControllers = angular.module('app.ticket.controller', [])
   viewControllers.controller 'ticketCtrl', ticketCtrl

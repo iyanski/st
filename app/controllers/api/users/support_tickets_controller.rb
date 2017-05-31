@@ -5,8 +5,8 @@ class Api::Users::SupportTicketsController < Api::UsersController
 
   def chat
     recipient = params[:recipient_type] == "Customer" ? Customer.find(params[:recipient_id]) : Expert.find(params[:recipient_id])
-    @ticket = current_user.support_tickets.where(id: params[:id]).first
-    @ticket.chat_to current_user, recipient, params[:content]
+    @ticket = SupportTicket.where(id: params[:id]).first
+    @ticket.chat current_user, recipient, params[:content], current_company.id
     render json: {content: params[:content]}
   end
 end

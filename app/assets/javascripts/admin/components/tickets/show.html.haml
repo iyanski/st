@@ -48,14 +48,14 @@
                 %span {{message.sender}}
                 %span{ng: {bind: {html: "message.content | nl2br | str2link"}}}
             .p-b-10.clearfix{ng: {show: "message.sender_type"}}
-              %span{ng: {show: "message.sender_type == 'Customer'"}}
+              %span{ng: {show: "message.sender_type == 'User'"}}
                 %strong you
                 %small.pull-right {{ message.created_at }}
-              %span{ng: {show: "message.sender_type == 'Expert'"}}
-                %strong {{message.sender}}
+              %span{ng: {show: "message.sender_type != 'User'"}}
+                %strong {{message.sender}} ({{message.sender_type}})
                 %small.pull-right {{ message.created_at }}
               %div{ng: {bind: {html: "message.content | nl2br | str2link"}}}
-      %div
+      .p-t-10.p-b-10
         .input-group
           %input.form-control.input-lg{rows: 2, ng: {model: "msg", keyUp: "sendMessage($event)"}}
           .input-group-btn

@@ -18,11 +18,11 @@
       .clearfix
     .email-content
       #details.email-content-header
-        %span{ng: {show: "ticket.expert"}}
+        %span{ng: {show: "ticket.customer"}}
           .thumbnail-wrapper.d48.circular.bordered.m-r-10
-            %img{:alt => "", "data-src" => "{{ticket.expert.avatar}}", "data-src-retina" => "{{ticket.expert.avatar}}", :height => "40", :src => "{{ticket.expert.avatar}}", :width => "40"}/
+            %img{:alt => "", "data-src" => "{{ticket.customer.avatar}}", "data-src-retina" => "{{ticket.customer.avatar}}", :height => "40", :src => "{{ticket.customer.avatar}}", :width => "40"}/
           .sender.inline
-            %p.name.no-margin.bold {{ticket.expert.name}}
+            %p.name.no-margin.bold {{ticket.customer.name}}
           .clearfix
         .subject.m-t-20.m-b-20.semi-bold
           .subject.m-t-20.m-b-20.semi-bold
@@ -48,10 +48,10 @@
                 %span {{message.sender}}
                 %span{ng: {bind: {html: "message.content | nl2br | str2link"}}}
             .p-b-10.clearfix{ng: {show: "message.sender_type"}}
-              %span{ng: {show: "message.sender_type == 'Customer'"}}
+              %span{ng: {show: "message.sender_type == 'Expert'"}}
                 %strong you
                 %small.pull-right {{ message.created_at }}
-              %span{ng: {show: "message.sender_type != 'Customer'"}}
+              %span{ng: {show: "message.sender_type != 'Expert'"}}
                 %strong {{message.sender}}
                 %small.pull-right {{ message.created_at }}
               %div{ng: {bind: {html: "message.content | nl2br | str2link"}}}

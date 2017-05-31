@@ -4,6 +4,9 @@ do ->
     $scope.jobs = gon.rabl
     $scope.content = pageview.page[$route.current.activepage]
     $scope.activemenu = $route.current.activemenu
+    $scope.activemenu = $route.current.activemenu
+    $scope.aid = gon.aid
+    $scope.expert = gon.expert
 
   viewControllers = angular.module('app.root.controller', [])
   viewControllers.controller 'rootPageCtrl', rootPageCtrl

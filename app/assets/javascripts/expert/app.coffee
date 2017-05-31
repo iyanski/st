@@ -26,6 +26,11 @@
   'app.transactions.controller'
   'app.transactions.directive'
 
+  'app.tickets.controller'
+  'app.tickets.directive'
+  'app.ticket.controller'
+  'app.ticket.directive'
+
   'app.sidebar.directive'
   'app.pageview.factory'
   
@@ -69,3 +74,8 @@
       return
 
   }
+.filter 'ticket_status', ->
+  (text) ->
+    if text == 0 then "New"
+    else if text == 1 then "Ongoing"
+    else if text == 2 then "Resolved"

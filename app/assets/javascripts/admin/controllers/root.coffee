@@ -6,6 +6,7 @@ do ->
     $scope.activemenu = $route.current.activemenu
     $scope.jobs = gon.rabl
     $scope.user = gon.user
+    $scope.aid = gon.aid
 
   viewControllers = angular.module('app.root.controller', [])
   viewControllers.controller 'rootPageCtrl', rootPageCtrl

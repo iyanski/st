@@ -25,7 +25,7 @@
               .datetime {{item.updated_at | amDateFormat:'MMM DD, YYYY hh:mm a'}}
               .clearfix
   / END SPLIT LIST VIEW
-  %ticket
+  %ticket{ng: {if: "ticket"}}
   / END SPLIT DETAILS
   / START COMPOSE BUTTON FOR TABS
   .compose-wrapper.visible-xs

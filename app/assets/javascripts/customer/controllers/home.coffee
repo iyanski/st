@@ -3,15 +3,16 @@ do ->
     $scope.page_title = "Dashboard"
     $scope.online = []
     $scope.offline = []
-    $scope.selectJob = {}
-    $scope.rate = gon.rate
-    $scope.customer = gon.customer
-    $scope.jobs = gon.rabl
     $scope.content = pageview.page[$route.current.activepage]
     $scope.activepage = $route.current.activepage
     $scope.activemenu = $route.current.activemenu
+    $scope.selectJob = {}
+    $scope.rate = gon.rate
+    $scope.customer = gon.customer
     $scope.interactive = false
+    $scope.jobs = gon.rabl
     $scope.show_mode = 1
+    $scope.aid = gon.aid
 
     $scope.find_job_by_id = (job_id, callback)->
       job = null

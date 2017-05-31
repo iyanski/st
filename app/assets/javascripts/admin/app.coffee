@@ -53,6 +53,8 @@
   'app.settings.controller'
   'app.settings.directive'
 
+  'app.header.controller'
+  'app.header.directive'
   'app.sidebar.directive'
 
   'app.pageview.factory'

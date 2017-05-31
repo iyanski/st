@@ -1,8 +1,6 @@
 do ->
   dashboardCtrl = ($scope, $location, Job, Service, Company) ->
     console.log "dashboard controller"
-    $scope.company = gon.company
-    $scope.store = gon.store
 
     Service.query (data, xhr)->
       $scope.services = data

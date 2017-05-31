@@ -54,6 +54,8 @@ $(document).ready(function() {
     {
       $(".alert.alert-warning").removeClass("hide").html(err);
     }
+  }).on("ajax:error", function(e, xhr, status, error) {
+    console.log(error);
   });
 
   $("#new_user").on("ajax:success", function(e, data, status, xhr) {

@@ -2,7 +2,76 @@
   .col-md-6.col-md-offset-3
     %h4.bold Welcome to SmallTaskers
     %h5 Now, let's get you started
-
+    -# .notification-panel.full-width
+    -#   .scroll-wrapper.notification-body.scrollable{:style => "position: relative;"}
+    -#     .notification-body.scrollable.scroll-content{:style => "height: auto; margin-bottom: 0px; margin-right: 0px; max-height: 345px;"}
+    -#       .notification-item.unread.clearfix
+    -#         .heading.open
+    -#           %a.text-complete.pull-left{:href => "#"}
+    -#             %i.pg-map.fs-16.m-r-10
+    -#             %span.bold Carrot Design
+    -#             %span.fs-12.m-l-10 David Nester
+    -#           .pull-right
+    -#             .thumbnail-wrapper.d16.circular.inline.m-t-15.m-r-10.toggle-more-details
+    -#               %div
+    -#                 %i.fa.fa-angle-left
+    -#             %span.time few sec ago
+    -#           .more-details
+    -#             .more-details-inner
+    -#               %h5.semi-bold.fs-16
+    -#                 “Apple’s Motivation - Innovation
+    -#                 %br/
+    -#                 distinguishes between
+    -#                 %br/
+    -#                 A leader and a follower.”
+    -#               %p.small.hint-text
+    -#                 Commented on john Smiths wall.
+    -#                 %br/
+    -#                 via pages framework.
+    -#         .option{"data-original-title" => "mark as read", "data-placement" => "left", "data-toggle" => "tooltip", :title => ""}
+    -#           %a.mark{:href => "#"}
+    -#       .notification-item.clearfix
+    -#         .heading
+    -#           %a.text-danger.pull-left{:href => "#"}
+    -#             %i.fa.fa-exclamation-triangle.m-r-10
+    -#             %span.bold 98% Server Load
+    -#             %span.fs-12.m-l-10 Take Action
+    -#           %span.pull-right.time 2 mins ago
+    -#         .option
+    -#           %a.mark{:href => "#"}
+    -#       .notification-item.clearfix
+    -#         .heading
+    -#           %a.text-warning-dark.pull-left{:href => "#"}
+    -#             %i.fa.fa-exclamation-triangle.m-r-10
+    -#             %span.bold Warning Notification
+    -#             %span.fs-12.m-l-10 Buy Now
+    -#           %span.pull-right.time yesterday
+    -#         .option
+    -#           %a.mark{:href => "#"}
+    -#       .notification-item.unread.clearfix
+    -#         .heading
+    -#           .thumbnail-wrapper.d24.circular.b-white.m-r-5.b-a.b-white.m-t-10.m-r-10
+    -#             %img{:alt => "", "data-src" => "assets/img/profiles/1.jpg", "data-src-retina" => "assets/img/profiles/1x.jpg", :height => "30", :src => "assets/img/profiles/1x.jpg", :width => "30"}/
+    -#           %a.text-complete.pull-left{:href => "#"}
+    -#             %span.bold Revox Design Labs
+    -#             %span.fs-12.m-l-10 Owners
+    -#           %span.pull-right.time 11:00pm
+    -#         .option{"data-original-title" => "mark as read", "data-placement" => "left", "data-toggle" => "tooltip", :title => ""}
+    -#           %a.mark{:href => "#"}
+    -#     .scroll-element.scroll-x
+    -#       .scroll-element_outer
+    -#         .scroll-element_size
+    -#         .scroll-element_track
+    -#         .scroll-bar{:style => "width: 96px;"}
+    -#     .scroll-element.scroll-y
+    -#       .scroll-element_outer
+    -#         .scroll-element_size
+    -#         .scroll-element_track
+    -#         .scroll-bar{:style => "height: 95px;"}
+    -#   .notification-footer.text-center
+    -#     %a{:href => "#"} Read all notifications
+    -#     %a.portlet-refresh.text-black.pull-right{"data-toggle" => "refresh", :href => "#"}
+    -#       %i.pg-refresh_new
     .panel.panel-default{ng: {hide: "hasStoreFront()"}}
       .panel-heading
         .panel-title

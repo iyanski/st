@@ -92,10 +92,7 @@
           %p.m-t-10
             %span.label.label-default {{job.category.name}}
       #conversation.conversation.m-t-20{ng: {show: "show_mode == 2"}}
-        %p.text-center.m-y-1{ng: {show: "job.status == 1"}}
-          %i 
-            No conversations so far
-        %ul.chat{ng: {show: "job.status > 1"}}
+        %ul.chat
           .text-center{ng: {show: "!messages.length"}} Loading...
           %li{ng: {repeat: "message in messages"}}
             .p-b-10.clearfix{ng: {show: "!message.sender_type"}}

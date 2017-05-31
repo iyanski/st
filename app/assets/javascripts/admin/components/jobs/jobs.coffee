@@ -6,6 +6,7 @@ do ->
 
     $scope.initJobUpdates = ->
       jobsRef = ChatService.ref("updates/" + $scope.company.id).limitToLast(1)
+      jobsRef.off 'child_added'
       jobsRef.on 'child_added', (snapshot)->
         if $scope.loadUpdates
           job = new Job(id: snapshot.val().job_id)
@@ -60,6 +61,7 @@ do ->
       if $scope.on and $scope.job
         $scope.msg = ""
         $scope.notificationsRef = ChatService.ref("messages/" + $scope.company.id + "/" + $scope.job.id + "/" + $scope.job.conversation.code)
+        $scope.notificationsRef.off 'value'
         $scope.notificationsRef.on 'value', (snapshot)->
           convos = snapshot.val()
           if convos
@@ -89,6 +91,7 @@ do ->
 
     $scope.initPresence = ->
       presenceRef = ChatService.ref(['presence',$scope.company.id,'customers'].join("/"))
+      presenceRef.off 'value'
       presenceRef.on 'value', (snap)->
         angular.forEach snap.val(), (value, key)->
           $scope.showOnline('customer', key)
@@ -96,6 +99,7 @@ do ->
         $scope.showOffline('customer', snap.key)
 
       presenceRef = ChatService.ref(['presence',$scope.company.id,'experts'].join("/"))
+      presenceRef.off 'value'
       presenceRef.on 'value', (snap)->
         angular.forEach snap.val(), (value, key)->
           $scope.showOnline('expert', key)

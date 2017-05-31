@@ -61,6 +61,7 @@ class HomeController < ApplicationController
   def app
     gon.aid = current_company.user.id
     gon.company = current_company
+    gon.store = current_company.store
     gon.customer = current_customer
     gon.services = Service.where(service_type: 0)
     gon.avatar = current_customer.avatar.try(:url)
@@ -73,6 +74,7 @@ class HomeController < ApplicationController
   def dashboard
     gon.aid = current_company.user.id
     gon.company = current_company
+    gon.store = current_company.store
     gon.expert = current_expert
     gon.avatar = current_expert.avatar.try(:url)
     gon.settings = current_expert.expert_setting
@@ -90,6 +92,7 @@ class HomeController < ApplicationController
       gon.store = Store.last
     end
     gon.company = current_company
+    gon.store = current_company.store
     gon.user = current_user
     gon.avatar = current_user.avatar.try(:url)
     @jobs = Job.all.order("updated_at DESC")

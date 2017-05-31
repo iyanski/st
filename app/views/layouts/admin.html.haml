@@ -29,69 +29,6 @@
   %body.fixed-header
     / START PAGE-CONTAINER
     .page-container
-      / START HEADER
-      .header
-        / START MOBILE CONTROLS
-        / LEFT SIDE
-        .pull-left.full-height.visible-sm.visible-xs
-          / START ACTION BAR
-          .sm-action-bar
-            %a.btn-link.toggle-sidebar{"data-toggle" => "sidebar", :href => "#"}
-              %span.icon-set.menu-hambuger
-          / END ACTION BAR
-          .sm-action-bar
-            %a#horizontal-menu-toggle.hidden{:href => "#"}
-              %span.icon-set.menu-hambuger
-        / RIGHT SIDE
-        .pull-right.full-height.visible-sm.visible-xs
-          / START ACTION BAR
-          .sm-action-bar
-            %a.btn-link{"data-toggle" => "quickview", "data-toggle-element" => "#quickview", :href => "#"}
-              %span.icon-set.menu-hambuger-plus
-          / END ACTION BAR
-        / END MOBILE CONTROLS
-        .pull-center.sm-table
-          .header-inner
-            %a.toggle-secondary-sidebar{:href => "#"}
-              Inbox
-              %span.text-info (12)
-              %span.caret
-            .brand.inline.text-left.m-l-20
-              - if current_store.logo.present?
-                %img{:alt => current_company.name, "data-src" => asset_path(current_store.logo), "data-src-retina" => asset_path(current_store.logo), :height => "48", :src => asset_path(current_store.logo)}/
-              - else
-                %h4
-                  = current_company.name
-        .pull-right
-          / START User Info
-          - if current_user
-            .visible-lg.visible-md.m-t-10
-              .pull-left.p-r-10.p-t-10.fs-16.font-heading
-                %span.semi-bold= current_user.first_name
-                %span.text-master= current_user.last_name
-              .dropdown.pull-right
-                %button.profile-dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
-                  %span.thumbnail-wrapper.d32.circular.inline.m-t-5
-                    %img{:alt => "", "data-src" => asset_path(current_user.avatar.url), "data-src-retina" => asset_path(current_user.avatar.url), :height => "32", :src => asset_path(current_user.avatar.url), :width => "32"}/
-                %ul.dropdown-menu.profile-dropdown{:role => "menu"}
-                  %li
-                    %a{:href => "#/settings"}
-                      %i.pg-settings_small
-                      Settings
-                  %li
-                    %a{:href => "#"}
-                      %i.pg-outdent
-                      Feedback
-                  %li
-                    %a{:href => "#"}
-                      %i.pg-signals
-                      Help
-                  %li.bg-master-lighter
-                    %a.clearfix{:href => "/users/sign_out"}
-                      %span.pull-left Logout
-                      %span.pull-right
-                        %i.pg-power
-          / END User Info
       / END HEADER
       / START PAGE CONTENT WRAPPER
       = yield

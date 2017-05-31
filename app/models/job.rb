@@ -44,7 +44,7 @@ class Job < ApplicationRecord
 
       channel = "updates/#{self.company_id}"
       puts channel
-      response = firebase.push(channel, {sender: sender.name, job_id: self.id, created_at: Time.now, system: true, expert_id: sender.id, customer_id: self.customer.id})
+      response = firebase.push(channel, {sender: sender.name, job_id: self.id, content: message, created_at: Time.now, system: true, expert_id: sender.id, customer_id: self.customer.id})
     end
   end
 
@@ -81,15 +81,15 @@ class Job < ApplicationRecord
       firebase = Firebase::Client.new(ENV["firebase_base_uri"], ENV["firebase_secret_key"])
       channel = "jobs/#{company.id}/#{id}"
       response = firebase.set(channel, {sender: self.customer.name, job_id: self.id, content: message, created_at: Time.now, system: true})
+
+      channel = "updates/#{self.company_id}"
+      response = firebase.push(channel, {sender: self.expert.name, job_id: self.id, content: message, created_at: Time.now, system: true, expert_id: self.expert.id, customer_id: self.customer.id})
     else
       self.save
     end
   end
 
   def claim_by(expert)
-    puts "==============================================================="
-    puts self.company.inspect
-    puts "==============================================================="
     self.update_attributes(status: 2, claimed_at: Time.new, expert_id: expert.id)
     message = "claimed this job"
     firebase = Firebase::Client.new(ENV["firebase_base_uri"], ENV["firebase_secret_key"])
@@ -97,7 +97,7 @@ class Job < ApplicationRecord
     response = firebase.push(channel, {sender: self.expert.name, content: message, created_at: Time.now, system: true})
 
     channel = "updates/#{self.company_id}"
-    response = firebase.push(channel, {sender: self.expert.name, job_id: self.id, created_at: Time.now, system: true, expert_id: self.expert.id, customer_id: self.customer.id})
+    response = firebase.push(channel, {sender: self.expert.name, job_id: self.id, content: message, created_at: Time.now, system: true, expert_id: self.expert.id, customer_id: self.customer.id})
 
     UserMailer.claim(self).deliver_later
   end
@@ -109,7 +109,7 @@ class Job < ApplicationRecord
     response = firebase.push(channel, {sender: self.expert.name, content: message, created_at: Time.now, system: true})
 
     channel = "updates/#{self.company_id}"
-    response = firebase.push(channel, {sender: self.expert.name, job_id: self.id, created_at: Time.now, system: true, expert_id: self.expert.id, customer_id: self.customer.id})
+    response = firebase.push(channel, {sender: self.expert.name, job_id: self.id, content: message, created_at: Time.now, system: true, expert_id: self.expert.id, customer_id: self.customer.id})
     
     self.update_attributes(status: 1, claimed_at: Time.new, expert_id: nil)
 

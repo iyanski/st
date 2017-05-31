@@ -1,0 +1,89 @@
+/ START MOBILE CONTROLS
+/ LEFT SIDE
+.pull-left.full-height.visible-sm.visible-xs
+  / START ACTION BAR
+  .sm-action-bar
+    %a.btn-link.toggle-sidebar{"data-toggle" => "sidebar", :href => "#"}
+      %span.icon-set.menu-hambuger
+  / END ACTION BAR
+  .sm-action-bar
+    %a#horizontal-menu-toggle.hidden{:href => "#"}
+      %span.icon-set.menu-hambuger
+/ RIGHT SIDE
+.pull-right.full-height.visible-sm.visible-xs
+  / START ACTION BAR
+  .sm-action-bar
+    %a.btn-link{"data-toggle" => "quickview", "data-toggle-element" => "#quickview", :href => "#"}
+      %span.icon-set.menu-hambuger-plus
+  / END ACTION BAR
+/ END MOBILE CONTROLS
+.pull-center.sm-table
+  .header-inner
+    %a.toggle-secondary-sidebar{:href => "#"}
+      Inbox
+      %span.text-info (12)
+      %span.caret
+    .brand.inline.text-left.m-l-20
+      %img{ng: {if: "store"}, :alt => "{{store.title}}", :height => "48", ng: {:src => "{{store.logo.url}}"}}/
+      %h4{ng: {if: "!store"}} {{store.logo}}
+    .notification-list
+      .dropdown
+        %a#notification-center.icon-set.globe-fill{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "javascript:;", ng: {click: "clearNotifications()"}}
+          %span.bubble.hide
+        .dropdown-menu.notification-toggle{"aria-labelledby" => "notification-center", :role => "menu"}
+          .notification-panel
+            .scroll-wrapper.notification-body.scrollable{:style => "position: relative;"}
+              .notification-body.scrollable.scroll-content{:style => "height: auto; margin-bottom: 0px; margin-right: 0px; max-height: 345px;"}
+                .notification-item.clearfix.unread{ng: {repeat: "item in notifications"}}
+                  .heading
+                    %a.text-master.pull-left{:href => "#"}
+                      %i.fa.fa-user.fs-16.m-r-10
+                      %span.bold {{item.sender}}
+                      %span.fs-12.m-l-10 {{item.content}}
+                    %span.pull-right.time {{item.created_at}}
+                  .option
+                    %a.mark{:href => "#"}
+              .scroll-element.scroll-x
+                .scroll-element_outer
+                  .scroll-element_size
+                  .scroll-element_track
+                  .scroll-bar{:style => "width: 96px;"}
+              .scroll-element.scroll-y
+                .scroll-element_outer
+                  .scroll-element_size
+                  .scroll-element_track
+                  .scroll-bar{:style => "height: 95px;"}
+            .notification-footer.text-center
+              %a{:href => "#"} Read all notifications
+              %a.portlet-refresh.text-black.pull-right{"data-toggle" => "refresh", :href => "#"}
+                %i.pg-refresh_new
+
+.pull-right
+  / START User Info
+  .visible-lg.visible-md.m-t-10
+    .pull-left.p-r-10.p-t-10.fs-16.font-heading
+      %span.semi-bold {{user.first_name}}
+      %span.text-master {{user.last_name}}
+    .dropdown.pull-right
+      %button.profile-dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+        %span.thumbnail-wrapper.d32.circular.inline.m-t-5
+          %img{:alt => "", :height => "32", ng: {:src => "{{user.avatar.url}}"}, :width => "32"}/
+      %ul.dropdown-menu.profile-dropdown{:role => "menu"}
+        %li
+          %a{:href => "#/settings"}
+            %i.pg-settings_small
+            Settings
+        %li
+          %a{:href => "#"}
+            %i.pg-outdent
+            Feedback
+        %li
+          %a{:href => "#"}
+            %i.pg-signals
+            Help
+        %li.bg-master-lighter
+          %a.clearfix{:href => "/users/sign_out"}
+            %span.pull-left Logout
+            %span.pull-right
+              %i.pg-power
+  / END User Info

@@ -6,7 +6,7 @@
     %img{:alt => current_company.name, "data-src" => image_url(current_store.logo), "data-src-retina" => image_url(current_store.logo), :height => "48", :src => image_url(current_store.logo)}/
 %p.p-t-35 Sign into your account
 
-= form_for(resource, as: resource_name, url: user_session_path(resource_name), remote: true, html: {id: "new_user_session", class: "p-t-15", role: "form"}) do |f|
+= form_for(resource, as: resource_name, url: new_user_session_path, remote: true, html: {id: "new_user_session", class: "p-t-15", role: "form"}) do |f|
   
   = devise_error_messages!
   .m-t-20.m-b-10.hide.alert.alert-warning.alert-dismissible.fade.in{role: "alert"}

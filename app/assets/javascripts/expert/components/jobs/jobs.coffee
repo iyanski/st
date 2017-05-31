@@ -1,5 +1,5 @@
 do ->
-  jobsCtrl = ($scope, $location, Job, ChatService, $routeParams, Ticket) ->
+  jobsCtrl = ($scope, $location, Job, $routeParams, Ticket, ChatService) ->
     console.log 'jobs controller'
     $scope.showUploader = false
     $scope.loadUpdates = false
@@ -48,7 +48,7 @@ do ->
       gallery.init()
 
     $scope.initPresence = ->
-      presenceRef = ChatService.ref(['presence',gon.company.id,'users'].join("/"))
+      presenceRef = ChatService.ref(['presence',gon.company.id,'customers'].join("/"))
       presenceRef.on 'value', (snap)->
         angular.forEach snap.val(), (value, key)->
           $scope.showOnline(key)
@@ -88,7 +88,6 @@ do ->
             $scope.loadImagePreviewer(job)
             setTimeout ->
               $scope.$apply()
-              $scope.scrollToBottom()
             , 100
 
     $scope.initChat = ->
@@ -97,13 +96,11 @@ do ->
         $scope.msg = ""
         $scope.notificationsRef = ChatService.ref("messages/" + gon.company.id + "/" + $scope.job.id + "/" + $scope.job.conversation.code)
         $scope.notificationsRef.on 'child_added', (snapshot)->
-          console.log snapshot.val()
           if !$scope.interactive
             $scope.pushMessage snapshot.val()
           else if $scope.interactive && snapshot.val().sender_type is "Customer"
             $scope.pushMessage snapshot.val()
           setTimeout ->
-            $scope.scrollToBottom()
             $scope.$apply()
           , 100
 
@@ -116,7 +113,6 @@ do ->
 
     $scope.sendReport = ->
       $scope.ticket.$save (data, xhr)->
-        console.log data
         toastr.success "Report sent"
       , (res)->
         toastr.warning res.data.error
@@ -131,7 +127,7 @@ do ->
     
   viewControllers = angular.module('app.jobs.controller', [])
   viewControllers.controller 'jobsCtrl', jobsCtrl
-  jobsCtrl.$inject = [ '$scope', '$location', 'Job', 'ChatService', '$routeParams', 'Ticket']
+  jobsCtrl.$inject = [ '$scope', '$location', 'Job', '$routeParams', 'Ticket', 'ChatService']
 
 do ->
   jobs = ->
@@ -150,7 +146,7 @@ do ->
 
 
 do ->
-  jobCtrl = ($scope, $location, Job, Message) ->
+  jobCtrl = ($scope, $location, Job, ChatMessage) ->
     console.log 'job controller'
     $scope.on = true
     $scope.messages = []
@@ -268,7 +264,7 @@ do ->
       $scope.interactive = true
       $scope.scrollToBottom()
       
-      message = new Message(id: $scope.job.id)
+      message = new ChatMessage(id: $scope.job.id)
       message.$chat content: msg, (data, xhr)->
         console.log payload
 
@@ -281,11 +277,21 @@ do ->
         sender: payload.sender
         created_at: moment(payload.created_at).fromNow()
       $scope.messages.push data
+      setTimeout ->
+        $scope.scrollToBottom()
+      , 100
 
     $scope.scrollToBottom = ->
-      target = angular.element('.chat')
+      console.log "scrolling"
+      offset = angular.element('.conversation').height()
+      splittarget = angular.element('.split-details')
+      target = angular.element('.email-content-wrapper')
+
+      splittarget.animate
+        scrollTop: offset
+      , 100
       target.animate
-        scrollTop: target[0].scrollHeight
+        scrollTop: offset
       , 100
 
     $scope.makeEstimate = (job)->
@@ -352,14 +358,18 @@ do ->
     $scope.showConversations = (e)->
       e.preventDefault()
       $scope.show_mode = 2
+      setTimeout ->
+        $scope.scrollToBottom()
+      , 50
 
     $scope.showFiles = (e)->
       e.preventDefault()
       $scope.show_mode = 3
 
+
   viewControllers = angular.module('app.job.controller', [])
   viewControllers.controller 'jobCtrl', jobCtrl
-  jobCtrl.$inject = [ '$scope', '$location', 'Job', 'Message']
+  jobCtrl.$inject = [ '$scope', '$location', 'Job', 'ChatMessage']
 
 do ->
   job = ->

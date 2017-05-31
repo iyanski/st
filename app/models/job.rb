@@ -43,6 +43,7 @@ class Job < ApplicationRecord
       end
 
       channel = "updates/#{self.company_id}"
+      puts channel
       response = firebase.push(channel, {sender: sender.name, job_id: self.id, created_at: Time.now, system: true, expert_id: sender.id, customer_id: self.customer.id})
     end
   end
@@ -86,6 +87,9 @@ class Job < ApplicationRecord
   end
 
   def claim_by(expert)
+    puts "==============================================================="
+    puts self.company.inspect
+    puts "==============================================================="
     self.update_attributes(status: 2, claimed_at: Time.new, expert_id: expert.id)
     message = "claimed this job"
     firebase = Firebase::Client.new(ENV["firebase_base_uri"], ENV["firebase_secret_key"])

@@ -136,7 +136,7 @@
                   %strong Attachment-{{$index}}
                   %img.thumbnail.img-responsive{ng: {src: "{{item.file.thumb.url}}"}}
 
-      %div{ng: {show: "show_mode == 2"}}
+      .p-t-10.p-b-10{ng: {show: "show_mode == 2"}}
         .input-group
           %input.form-control.input-lg{rows: 2, ng: {model: "msg", keyUp: "sendMessage($event)", show: "job.status > 1 && messages.length"}}
           .input-group-btn

@@ -17,6 +17,7 @@ class JobsController < ApplicationController
     else
       job = Job.new job_params
       job.customer = current_customer
+      job.company = current_company
       unless job.save
         render json: {error: job.errors.full_messages.first}, status: 401
       else

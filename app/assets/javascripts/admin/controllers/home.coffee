@@ -4,6 +4,7 @@ do ->
     $scope.activepage = $route.current.activepage
     $scope.activemenu = $route.current.activemenu
     $scope.selectJob = {}
+    $scope.company = gon.company
     $scope.user = gon.user
     $scope.interactive = false
     $scope.jobs = gon.rabl
@@ -26,13 +27,15 @@ do ->
       callback(job)
 
 
-    $scope.showOnline = (id)->
-      angular.element(".user-avatar[data-user-id=" + id + "]").addClass("b-success").removeClass('b-grey')
-      console.log angular.element(".user-avatar").length
-      console.log id
+    $scope.showOnline = (user_type, id)->
+      console.log user_type, id, 'online', ".user-" + user_type + "[data-" + user_type + "-id=" + id + "]"
+      angular.element(".user-" + user_type + "[data-" + user_type + "-id=" + id + "]").addClass("b-success").removeClass('b-grey')
+      true
 
-    $scope.showOffline = (id)->
-      angular.element(".user-avatar[data-user-id=" + id + "]").removeClass("b-success").addClass('b-grey')
+    $scope.showOffline = (user_type, id)->
+      console.log user_type, id, 'offline', ".user-" + user_type + "[data-" + user_type + "-id=" + id + "]"
+      angular.element(".user-" + user_type + "[data-" + user_type + "-id=" + id + "]").removeClass("b-success").addClass('b-grey')
+      true
 
     $scope.loadImagePreviewer = (job)->
       items = []

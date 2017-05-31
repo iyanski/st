@@ -55,7 +55,7 @@ do ->
           $scope.showOnline(key)
       presenceRef.on 'child_removed', (snap)->
         $scope.showOffline(snap.key)
-        angular.element(".user-avatar[data-user-id=" + snap.key + "]").removeClass("b-success").addClass('b-grey')
+        angular.element(".expert-avatar[data-expert-id=" + snap.key + "]").removeClass("b-success").addClass('b-grey')
   
     $scope.initPresence()
 
@@ -89,7 +89,6 @@ do ->
             $scope.loadImagePreviewer(job)
             setTimeout ->
               $scope.$apply()
-              $scope.scrollToBottom()
             , 100
 
     $scope.initChat = ->
@@ -104,7 +103,6 @@ do ->
           else if $scope.interactive && snapshot.val().sender_type is "Expert"
             $scope.pushMessage snapshot.val()
           setTimeout ->
-            $scope.scrollToBottom()
             $scope.$apply()
           , 100
 
@@ -157,7 +155,7 @@ do ->
 
 
 do ->
-  jobCtrl = ($scope, $location, Job, ChatService, Message, Ticket) ->
+  jobCtrl = ($scope, $location, Job, ChatService, ChatMessage, Ticket) ->
     console.log 'job controller'
     $scope.on = true
     $scope.messages = []
@@ -288,9 +286,8 @@ do ->
         created_at: moment()
       $scope.pushMessage(payload)
       $scope.interactive = true
-      $scope.scrollToBottom()
       
-      message = new Message(id: $scope.job.id)
+      message = new ChatMessage(id: $scope.job.id)
       message.$chat content: msg, (data, xhr)->
         console.log "sent"
 
@@ -303,11 +300,20 @@ do ->
         sender: payload.sender
         created_at: moment(payload.created_at).fromNow()
       $scope.messages.push data
+      setTimeout ->
+        $scope.scrollToBottom()
+      , 100
 
     $scope.scrollToBottom = ->
-      target = angular.element('.chat')
+      offset = angular.element('.conversation').height()
+      splittarget = angular.element('.split-details')
+      target = angular.element('.email-content-wrapper')
+      console.log "scrolling", offset
+      splittarget.animate
+        scrollTop: offset
+      , 100
       target.animate
-        scrollTop: target[0].scrollHeight
+        scrollTop: offset
       , 100
 
     $scope.showUploaderScreen = ->
@@ -320,6 +326,9 @@ do ->
     $scope.showConversations = (e)->
       e.preventDefault()
       $scope.show_mode = 2
+      setTimeout ->
+        $scope.scrollToBottom()
+      , 50
 
     $scope.showFiles = (e)->
       e.preventDefault()
@@ -342,7 +351,7 @@ do ->
 
   viewControllers = angular.module('app.job.controller', [])
   viewControllers.controller 'jobCtrl', jobCtrl
-  jobCtrl.$inject = [ '$scope', '$location', 'Job', 'ChatService', 'Message', 'Ticket']
+  jobCtrl.$inject = [ '$scope', '$location', 'Job', 'ChatService', 'ChatMessage', 'Ticket']
 
 do ->
   job = ->

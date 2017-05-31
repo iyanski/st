@@ -7,6 +7,7 @@ do ->
     $scope.activemenu = $route.current.activemenu
     $scope.aid = gon.aid
     $scope.expert = gon.expert
+    $scope.company = gon.company
 
   viewControllers = angular.module('app.root.controller', [])
   viewControllers.controller 'rootPageCtrl', rootPageCtrl

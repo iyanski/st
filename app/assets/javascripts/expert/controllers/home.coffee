@@ -13,6 +13,7 @@ do ->
     $scope.jobs = gon.rabl
     $scope.show_mode = 1
     $scope.aid = gon.aid
+    $scope.company = gon.company
     
     $scope.find_job_by_id = (job_id, callback)->
       job = null
@@ -22,13 +23,10 @@ do ->
       callback(job)
 
     $scope.showOnline = (id)->
-      angular.element(".user-avatar[data-user-id=" + id + "]").addClass("b-success").removeClass('b-grey')
-      # console.log angular.element(".user-avatar").length
-      # console.log id
-      true
+      angular.element(".customer-avatar[data-customer-id=" + id + "]").addClass("b-success").removeClass('b-grey')
 
     $scope.showOffline = (id)->
-      angular.element(".user-avatar[data-user-id=" + id + "]").removeClass("b-success").addClass('b-grey')
+      angular.element(".customer-avatar[data-customer-id=" + id + "]").removeClass("b-success").addClass('b-grey')
     
     $scope.compose = ->
       $scope.newJob = new Job()
@@ -46,6 +44,7 @@ do ->
           con = presenceRef.push true
           con.onDisconnect().remove()
 
+    $scope.initMyPresence()
     $scope.initNewJobRequest = ->
       # console.log angular.element(".user-avatar").length
       notificationsRef = ChatService.ref("jobs/" + gon.company.id).limitToLast(1)
@@ -69,8 +68,13 @@ do ->
               else
                 console.log "Job found"
 
+    $scope.updatePresence = ->
+      angular.forEach $scope.online, (item)->
+        $scope.showOnline(item)
+      angular.forEach $scope.offline, (item)->
+        $scope.showOffline(item)
+
     $scope.initNewJobRequest()
-    $scope.initMyPresence()
     $scope.loadImagePreviewer = (job)->
       items = []
       if job.job_attachments

@@ -7,6 +7,7 @@ do ->
     $scope.jobs = gon.rabl
     $scope.user = gon.user
     $scope.aid = gon.aid
+    $scope.company = gon.company
 
   viewControllers = angular.module('app.root.controller', [])
   viewControllers.controller 'rootPageCtrl', rootPageCtrl

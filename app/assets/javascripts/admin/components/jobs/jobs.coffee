@@ -5,7 +5,7 @@ do ->
     $scope.activities = []
 
     $scope.initJobUpdates = ->
-      jobsRef = ChatService.ref("updates/" + gon.company.id).limitToLast(1)
+      jobsRef = ChatService.ref("updates/" + $scope.company.id).limitToLast(1)
       jobsRef.on 'child_added', (snapshot)->
         if $scope.loadUpdates
           job = new Job(id: snapshot.val().job_id)
@@ -14,7 +14,7 @@ do ->
               $scope.jobs[$scope.jobs.indexOf(item)] = data
               if $scope.job and $scope.job.id is job.id
                 $scope.job = data
-                $scope.refreshCurrentJob(job)
+                # $scope.refreshCurrentJob(job)
                 console.log "You are looking at the current job"
               else
                 console.log "A job has been updated"
@@ -41,7 +41,6 @@ do ->
           $scope.loadImagePreviewer(job)
           setTimeout ->
             $scope.$apply()
-            $scope.scrollToBottom()
           , 100
 
     $scope.openImagePreview = (index, $event)->
@@ -57,23 +56,19 @@ do ->
     $scope.initChat = ->
       console.log "init job"
       $scope.interactive = false
+      # console.log $scope.company
       if $scope.on and $scope.job
         $scope.msg = ""
-        $scope.notificationsRef = ChatService.ref("messages/" + gon.company.id + "/" + $scope.job.id + "/" + $scope.job.conversation.code)
+        $scope.notificationsRef = ChatService.ref("messages/" + $scope.company.id + "/" + $scope.job.id + "/" + $scope.job.conversation.code)
         $scope.notificationsRef.on 'value', (snapshot)->
           convos = snapshot.val()
-          Object.keys(convos).forEach (item)->
-            if convos.hasOwnProperty(item)
-              console.log $scope.activities.indexOf(item)
-              if $scope.activities.indexOf(item) < 0
-                $scope.pushMessage convos[item]
-                $scope.activities.push item
-          # for item in convos
-          #   console.log item
-          #   if convos.hasOwnProperty(item)
-          #     $scope.pushMessage convos[item]
+          if convos
+            Object.keys(convos).forEach (item)->
+              if convos.hasOwnProperty(item)
+                if $scope.activities.indexOf(item) < 0
+                  $scope.pushMessage convos[item]
+                  $scope.activities.push item
           setTimeout ->
-            $scope.scrollToBottom()
             $scope.$apply()
           , 100
 
@@ -91,6 +86,22 @@ do ->
       , (res)->
         toastr.warning "Job not found"
         $location.path("/jobs")
+
+    $scope.initPresence = ->
+      presenceRef = ChatService.ref(['presence',$scope.company.id,'customers'].join("/"))
+      presenceRef.on 'value', (snap)->
+        angular.forEach snap.val(), (value, key)->
+          $scope.showOnline('customer', key)
+      presenceRef.on 'child_removed', (snap)->
+        $scope.showOffline('customer', snap.key)
+
+      presenceRef = ChatService.ref(['presence',$scope.company.id,'experts'].join("/"))
+      presenceRef.on 'value', (snap)->
+        angular.forEach snap.val(), (value, key)->
+          $scope.showOnline('expert', key)
+      presenceRef.on 'child_removed', (snap)->
+        $scope.showOffline('expert', snap.key)
+    $scope.initPresence()
     
   viewControllers = angular.module('app.jobs.controller', [])
   viewControllers.controller 'jobsCtrl', jobsCtrl
@@ -126,10 +137,17 @@ do ->
         sender: payload.sender
         created_at: moment(payload.created_at).fromNow()
       $scope.messages.push data
+      setTimeout ->
+        $scope.scrollToBottom()
+      , 100
 
     $scope.scrollToBottom = ->
-      offset = angular.element('.conversation').height
-      target = angular.element('.conversation')
+      offset = angular.element('.conversation').height()
+      splittarget = angular.element('.split-details')
+      target = angular.element('.email-content-wrapper')
+      splittarget.animate
+        scrollTop: offset
+      , 100
       target.animate
         scrollTop: offset
       , 100
@@ -141,6 +159,9 @@ do ->
     $scope.showConversations = (e)->
       e.preventDefault()
       $scope.show_mode = 2
+      setTimeout ->
+        $scope.scrollToBottom()
+      , 50
 
     $scope.showFiles = (e)->
       e.preventDefault()

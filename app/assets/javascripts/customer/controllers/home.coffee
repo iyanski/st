@@ -13,6 +13,7 @@ do ->
     $scope.jobs = gon.rabl
     $scope.show_mode = 1
     $scope.aid = gon.aid
+    $scope.company = gon.company
 
     $scope.find_job_by_id = (job_id, callback)->
       job = null
@@ -36,20 +37,21 @@ do ->
       $scope.composeJob = false
 
     $scope.initMyPresence = ->
-      presenceRef = ChatService.ref(['presence',gon.company.id,'users',$scope.customer.id,'connections'].join("/"))
+      presenceRef = ChatService.ref(['presence',gon.company.id,'customers',$scope.customer.id,'connections'].join("/"))
       connectedRef = ChatService.ref('.info/connected')
       connectedRef.on 'value', (snap)->
         if snap.val() is true
           con = presenceRef.push true
           con.onDisconnect().remove()
 
+    $scope.initMyPresence()
+    
     $scope.updatePresence = ->
       angular.forEach $scope.online, (item)->
         $scope.showOnline(item)
       angular.forEach $scope.offline, (item)->
         $scope.showOffline(item)
 
-    $scope.initMyPresence()
     $scope.loadImagePreviewer = (job)->
       items = []
       if job.job_attachments

@@ -14,8 +14,6 @@
               .inline.m-l-15
                 %p.recipients.no-margin.hint-text.small{ng: {show: "item.customer.name.length"}} {{item.customer.name}}
                 %p.recipients.no-margin.hint-text.small{ng: {show: "!item.customer.name.length"}} Unknown Customer
-                %p.recipients.no-margin.hint-text.small{ng: {show: "!item.expert && item.status == 0"}} Draft
-                %p.recipients.no-margin.hint-text.small{ng: {show: "!item.expert && item.status == 1"}} Unclaimed
                 %p.subject.no-margin Task# {{item.code}}: {{item.title}}
                 %p.body.no-margin{ng: {bind: {html: "item.description | stripTags"}}}
                 %span.label.label-default {{item.status | job_status}}

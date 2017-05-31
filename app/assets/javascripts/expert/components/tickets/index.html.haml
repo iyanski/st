@@ -14,7 +14,7 @@
                 %p.recipients.no-margin.hint-text.small{ng: {show: "item.expert"}} {{item.expert.name}}
                 %p.subject.no-margin Ticket#: {{item.code}}
                 %p.body.no-margin{ng: {bind: {html: "item.title"}}}
-                %span.label{ng: {class: "{'label-default': item.status == 0, 'label-info': item.status == 1, 'label-succces': item.status == 2}"}} {{item.status | ticket_status}}
+                -# %span.label{ng: {class: "{'label-default': item.status == 0, 'label-info': item.status == 1, 'label-succces': item.status == 2}"}} {{item.status | ticket_status}}
               .datetime {{item.updated_at | amDateFormat:'MMM DD, YYYY hh:mm a'}}
               .clearfix
   / END SPLIT LIST VIEW

@@ -24,12 +24,23 @@
       .clearfix
     .email-content
       #details.email-content-header{ng: {show: "show_mode == 1"}}
-        %span{ng: {show: "job.user"}}
-          .thumbnail-wrapper.d48.circular.bordered
-            %img{:alt => "", "data-src" => "{{job.user.avatar}}", "data-src-retina" => "{{job.user.avatar}}", :height => "40", :src => "{{job.user.avatar}}", :width => "40"}/
-          .sender.inline.m-l-10
-            %p.name.no-margin.bold {{job.customer.name}}
-          .clearfix
+        .row.m-t-20
+          .col-md-6
+            %span{ng: {show: "job.customer"}}
+              .thumbnail-wrapper.d48.circular
+                %img{:alt => "", "data-src" => "{{job.customer.avatar}}", "data-src-retina" => "{{job.customer.avatar}}", :height => "40", :src => "{{job.customer.avatar}}", :width => "40"}/
+              .sender.inline.m-l-10
+                %p.name.no-margin.bold {{job.customer.name}}
+                %span Customer
+              .clearfix
+          .col-md-6
+            %span{ng: {show: "job.expert"}}
+              .thumbnail-wrapper.d48.circular
+                %img{:alt => "", "data-src" => "{{job.expert.avatar}}", "data-src-retina" => "{{job.expert.avatar}}", :height => "40", :src => "{{job.expert.avatar}}", :width => "40"}/
+              .sender.inline.m-l-10
+                %p.name.no-margin.bold {{job.expert.name}}
+                %span Expert
+              .clearfix
         .subject.m-t-20.m-b-20.semi-bold
           .subject.m-t-20.m-b-20.semi-bold
             %h4 Job# {{job.code}}: {{job.title}}

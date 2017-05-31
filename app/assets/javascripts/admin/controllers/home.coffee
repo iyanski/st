@@ -1,5 +1,5 @@
 do ->
-  homePageCtrl = ($scope, $route, pageview, $location) ->
+  homePageCtrl = ($scope, $route, pageview, $location, ChatService) ->
     $scope.page_title = "Dashboard"
     $scope.activepage = $route.current.activepage
     $scope.activemenu = $route.current.activemenu
@@ -51,6 +51,12 @@ do ->
             h: height
       $scope.slides = items
 
+    $scope.initJobUpdates = ->
+      jobsRef = ChatService.ref("updates/" + gon.company.id).limitToLast(1)
+      jobsRef.on 'child_added', (snapshot)->
+        console.log snapshot.val()
+    $scope.initJobUpdates()
+
   viewControllers = angular.module('app.home.page.controller', [])
   viewControllers.controller 'homePageCtrl', homePageCtrl
-  homePageCtrl.$inject = [ '$scope', '$route', 'pageview', '$location']
+  homePageCtrl.$inject = [ '$scope', '$route', 'pageview', '$location', 'ChatService']

@@ -45,9 +45,9 @@
     .email-content
       #details.email-content-header{ng: {show: "show_mode == 1"}}
         %span{ng: {show: "job.expert"}}
-          .thumbnail-wrapper.d48.circular.bordered.m-r-10{ng: {show: ""}}
+          .thumbnail-wrapper.d48.circular.bordered
             %img{:alt => "", "data-src" => "{{job.expert.avatar}}", "data-src-retina" => "{{job.expert.avatar}}", :height => "40", :src => "{{job.expert.avatar}}", :width => "40"}/
-          .sender.inline
+          .sender.inline.m-l-10
             %p.name.no-margin.bold {{job.expert.name}}
           .clearfix
         .subject.m-t-20.m-b-20.semi-bold

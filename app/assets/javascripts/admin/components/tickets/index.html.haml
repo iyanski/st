@@ -9,11 +9,11 @@
         .list-view-group-container
           %ul.no-padding
             %li.item.padding-15{"data-email-id" => "{{item.id}}", ng: {repeat: "item in tickets | orderBy:'-updated_at'", click: "selectTicket(item)", class: "{'active' : item.id == ticket.id}"}}
-              .thumbnail-wrapper.d32.circular.bordered.customer-avatar.b-grey{ng: {show: "item.customer"}, data: {customer: {id: "{{item.customer.id}}"}}}
+              .thumbnail-wrapper.d32.circular.bordered.customer-avatar.b-grey{ng: {if: "item.customer"}, data: {customer: {id: "{{item.customer.id}}"}}}
                 %img{:alt => "", :height => "40", ng: {src: "{{item.customer.avatar.url}}", show: "item.customer.avatar.url"}, :width => "40"}/
                 %img{:alt => "", :height => "40", ng: {src: "/images/missing/thumb/missing.png", hide: "item.customer"}, :width => "40"}/
 
-              .thumbnail-wrapper.d32.circular.bordered.expert-avatar.b-grey{ng: {show: "item.expert"}, data: {expert: {id: "{{item.expert.id}}"}}}
+              .thumbnail-wrapper.d32.circular.bordered.expert-avatar.b-grey{ng: {if: "item.expert"}, data: {expert: {id: "{{item.expert.id}}"}}}
                 %img{:alt => "", :height => "40", ng: {src: "{{item.expert.avatar.url}}", show: "item.expert.avatar.url"}, :width => "40"}/
                 %img{:alt => "", :height => "40", ng: {src: "/images/missing/thumb/missing.png", hide: "item.expert"}, :width => "40"}/
               .inline.m-l-15

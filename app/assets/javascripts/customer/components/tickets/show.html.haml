@@ -20,7 +20,7 @@
       #details.email-content-header
         %span{ng: {show: "ticket.expert"}}
           .thumbnail-wrapper.d48.circular.bordered.m-r-10
-            %img{:alt => "", "data-src" => "{{ticket.expert.avatar}}", "data-src-retina" => "{{ticket.expert.avatar}}", :height => "40", :src => "{{ticket.expert.avatar}}", :width => "40"}/
+            %img{ng: {src: "{{ticket.expert.avatar}}"}, :alt => "", "data-src" => "{{ticket.expert.avatar}}", "data-src-retina" => "{{ticket.expert.avatar}}", :height => "40", :width => "40"}/
           .sender.inline
             %p.name.no-margin.bold {{ticket.expert.name}}
           .clearfix

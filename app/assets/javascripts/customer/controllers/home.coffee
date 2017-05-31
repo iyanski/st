@@ -67,6 +67,12 @@ do ->
               h: height
       $scope.slides = items
 
+    $scope.initJobUpdates = ->
+      jobsRef = ChatService.ref("updates/" + gon.company.id).limitToLast(1)
+      jobsRef.on 'child_added', (snapshot)->
+        console.log snapshot.val()
+    $scope.initJobUpdates()
+
     
   viewControllers = angular.module('app.home.page.controller', [])
   viewControllers.controller 'homePageCtrl', homePageCtrl

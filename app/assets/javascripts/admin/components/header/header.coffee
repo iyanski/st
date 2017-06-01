@@ -9,8 +9,10 @@ do ->
       jobsRef.on 'child_added', (snapshot)->
         console.log snapshot.val()
         data = 
+          job_id: snapshot.val().job_id
           sender: snapshot.val().sender
           content: snapshot.val().content
+          action: snapshot.val().action
           created_at: moment(snapshot.val().created_at).fromNow()
         angular.element("span.bubble").removeClass("hide")
         $scope.notifications.push data
@@ -20,6 +22,10 @@ do ->
     $scope.clearNotifications = ->
       angular.element("span.bubble").addClass("hide")
       true
+
+    $scope.gotoJob = (id, e)->
+      e.preventDefault()
+      $location.path("/job/" + id)
 
 
   viewControllers = angular.module('app.header.controller', [])

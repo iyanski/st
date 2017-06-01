@@ -25,13 +25,13 @@
             %i.fa.fa-angle-left
             All Inboxes
         %li.no-padding{ng: {show: "job.status == 2"}}
-          %a{ng: {click: "makeEstimate(job)"}} Make an Estimate
+          %a{ng: {click: "makeEstimate(job)"}} Make an Offer
         %li.no-padding{ng: {show: "job.status == 2"}}
           %a.text-danger{ng: {click: "unClaim(job)"}} Unclaim
         %li.no-padding{ng: {show: "job.status == 3"}}
-          %a{ng: {click: "editEstimate()"}} Change Estimate
+          %a{ng: {click: "editEstimate()"}} Change Offer
         %li.no-padding{ng: {show: "job.status == 3"}}
-          %a.text-danger{ng: {click: "cancelEstimate(job)"}} Cancel Estimate
+          %a.text-danger{ng: {click: "cancelEstimate(job)"}} Cancel Offer
         %li.no-padding{ng: {show: "job.status == 4"}}
           %a{ng: {click: "submit(job)"}} Submit for Review
         %li.no-padding{ng: {show: "job.status > 0"}}

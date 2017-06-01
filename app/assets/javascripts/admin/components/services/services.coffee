@@ -37,6 +37,16 @@ do ->
     $scope.benefits = []
     $scope.requirements = []
     $scope.faqs = []
+    $scope.service_types = [
+      { value: 1, name: "Hour"}
+      { value: 2, name: "Day"}
+      { value: 3, name: "Week"}
+      { value: 4, name: "Month"}
+      { value: 5, name: "Page"}
+      { value: 6, name: "Trip"}
+      { value: 7, name: "Job"}
+      { value: 8, name: "Task"}
+    ]
 
     $scope.benefit = new Benefit()
     $scope.requirement = new Requirement()
@@ -163,11 +173,13 @@ do ->
     $scope.save = ->
       if $scope.service.id
         $scope.service.$update (data, xhr)->
+          console.log $scope.service
           toastr.success [$scope.service.title, "is successfully saved"].join(" ")
         , (res)->
           toastr.warning res.data.error
       else
         $scope.service.$save (data, xhr)->
+          console.log $scope.service
           toastr.success [$scope.service.title, "is successfully saved"].join(" ")
           $location.path("/service/" + data.id)
           setTimeout ->

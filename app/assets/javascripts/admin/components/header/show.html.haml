@@ -34,13 +34,13 @@
           .notification-panel
             .scroll-wrapper.notification-body.scrollable{:style => "position: relative;"}
               .notification-body.scrollable.scroll-content{:style => "height: auto; margin-bottom: 0px; margin-right: 0px; max-height: 345px;"}
-                .notification-item.clearfix.unread{ng: {repeat: "item in notifications"}}
-                  .heading
-                    %a.text-master.pull-left{:href => "#"}
-                      %i.fa.fa-user.fs-16.m-r-10
-                      %span.bold {{item.sender}}
-                      %span.fs-12.m-l-10 {{item.content}}
-                    %span.pull-right.time {{item.created_at}}
+                .notification-item.clearfix.unread{ng: {repeat: "item in notifications | orderBy:'+':true"}}
+                  %a.heading.text-master.pull-left{:href => "#", ng: {click: "gotoJob(item.job_id, $event)"}}
+                    %i.fa.fa-user.fs-16.m-r-10
+                    %span.bold {{item.sender}}
+                    %span.fs-12.m-l-10 {{item.content}}
+                    %br
+                    %span.time {{item.created_at}}
                   .option
                     %a.mark{:href => "#"}
               .scroll-element.scroll-x

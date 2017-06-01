@@ -29,26 +29,28 @@
             %label{for: "tags"} Tags
             %input.form-control#tags{:required => "", :type => "text", ng: {model: "service.tags"}, placeholder: "web, development, service"}/
           .row
-            .col-sm-8
-              .form-group
-                %label Service Type
-                .radio.radio-success
-                  .row
-                    .col-md-6
-                      %input#yes{ng: {model: "service.service_type"}, value: "0", type: "radio"}/
-                      %label{:for => "yes"} Hourly
-                    -# .col-md-6
-                    -#   %input#no{ng: {model: "service.service_type"}, value: "1", type: "radio"}/
-                    -#   %label{:for => "no"} Monthly
+            .col-sm-12
               .row
-                .col-md-6
+                .col-md-4
                   .form-group.required
-                    %label Price per {{service.service_type ? 'month' : 'hour'}}
+                    %label Price per {{service.service_type | service_type_filter}}
                     .input-group
                       %input.form-control.text-right{:required => "", :type => "number", ng: {model: "service.price"}, minLimit: 20}/
                       .input-group-addon
-                        USD
-                .col-md-6
+                        USD/
+                .col-md-4
+                  .form-group
+                    %label Service Unit
+                    %select.form-control{ng: {model: "service.service_type"}}
+                      %option{value: "1"} Hour
+                      %option{value: "2"} Day
+                      %option{value: "3"} Week
+                      %option{value: "4"} Month
+                      %option{value: "5"} Page
+                      %option{value: "6"} Trip
+                      %option{value: "7"} Project
+                      %option{value: "8"} Task
+                .col-md-4
                   .form-group.required
                     %label Expert's Commission
                     .input-group

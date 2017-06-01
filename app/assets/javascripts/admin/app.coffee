@@ -88,10 +88,16 @@
     else if text == 6 then "Completed"
     else if text == 7 then "Closed"
 
-.filter 'service_type', ->
+.filter 'service_type_filter', ->
   (text) ->
-    if text == 0 then "Hourly"
-    else if text == 1 then "Monthly"
+    text = parseInt(text)
+    if text == 1 then "Hour"
+    else if text == 2 then "Month"
+    else if text == 3 then "Word"
+    else if text == 4 then "Page"
+    else if text == 5 then "Trip"
+    else if text == 6 then "Project"
+    else if text == 7 then "Task"
 .filter 'ticket_status', ->
   (text) ->
     if text == 0 then "New"

@@ -18,4 +18,17 @@ class Service < ApplicationRecord
   validates :description, presence: true
   validates :price, numericality: true
   validates :service_type, presence: true
+
+  def unit
+    unit = Array.new
+    unit[1] = "Hour"
+    unit[2] = "Day"
+    unit[3] = "Week"
+    unit[4] = "Month"
+    unit[5] = "Page"
+    unit[6] = "Trip"
+    unit[7] = "Job"
+    unit[8] = "Task"
+    unit[service_type]
+  end
 end

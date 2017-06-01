@@ -44,7 +44,7 @@
                 %td.text-right
                   %span.hint-text.small {{item.estimate}} hr(s)
                 %td.text-right.b-r.b-dashed.b-grey
-                  %span.hint-text.small {{item.service.service_type | service_type}}
+                  %span.hint-text.small {{item.service.service_type | service_type_filter}}
                 %td
                   %span.font-montserrat.fs-18 {{(item.service.price * item.estimate) | currency : "$" : 2}}
         .padding-25

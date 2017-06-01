@@ -11,25 +11,11 @@
       .modal-body
         %form.form
           .form-group
-            %label Estimated Hours:
+            %label Estimated Units: 
+            %p.small.hint (Number of any units. e.g. hours, pages, words, days, weeks)
             .clearfix
             .radio.radio-success
-              %input#option1{ng: {model: "estimate.hours"}, :name => "estimate", :type => "text"}/
-              -# %label{:for => "option1"} 1
-              -# %input#option2{ng: {model: "estimate.hours"}, :name => "estimate", :type => "radio", :value => 2}/
-              -# %label{:for => "option2"} 2
-              -# %input#option3{ng: {model: "estimate.hours"}, :name => "estimate", :type => "radio", :value => 3}/
-              -# %label{:for => "option3"} 3
-              -# %input#option4{ng: {model: "estimate.hours"}, :name => "estimate", :type => "radio", :value => 4}/
-              -# %label{:for => "option4"} 4
-              -# %input#option5{ng: {model: "estimate.hours"}, :name => "estimate", :type => "radio", :value => 5}/
-              -# %label{:for => "option5"} 5
-              -# %input#option6{ng: {model: "estimate.hours"}, :name => "estimate", :type => "radio", :value => 6}/
-              -# %label{:for => "option6"} 6
-              -# %input#option7{ng: {model: "estimate.hours"}, :name => "estimate", :type => "radio", :value => 7}/
-              -# %label{:for => "option7"} 7
-              -# %input#option8{ng: {model: "estimate.hours"}, :name => "estimate", :type => "radio", :value => 8}/
-              -# %label{:for => "option8"} 8
+              %input.form-control.input-lg#option1{ng: {model: "estimate.hours"}, :name => "estimate", :type => "number"}/
           .clearfix
           .form-group
             %label{for: "etc"} Turn-around Time
@@ -38,7 +24,8 @@
               %option{value: 2} 2 Days
               %option{value: 3} 3 Days
           .form-group
-            %label{for: "starts_at"} Start Date
+            %label{for: "starts_at"} Soonest date you can start
+            %p.small.hint Start date will officially commence upon client's acceptance of the offer
             #start-date.input-group.date.col-sm-12
               %input.form-control{ng: {model: "estimate.starts_at"}, :type => "text"}/
               %span.input-group-addon

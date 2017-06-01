@@ -10,6 +10,7 @@ class Api::Customers::JobsController < Api::CustomersController
     Apartment::Tenant.switch!(current_company.subdomain)
     @job = current_customer.jobs.build job_params
     @job.company = current_company
+    puts @job.inspect
     if job_params[:status].to_i == 1
       unless @job.save_and_publish
         render json: {error: @job.errors.full_messages.first}, status: 401

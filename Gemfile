@@ -100,4 +100,4 @@ gem 'sidekiq'
 gem 'redis-namespace'
 gem "mini_magick"
 gem 'apartment'
-gem 'asset_sync'
+# gem 'asset_sync'

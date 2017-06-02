@@ -1,23 +1,23 @@
-= content_for :scripts do
-  :javascript
-    $(document).ready(function() {
-      $('#summernote').summernote({
-        height: 400,
-        focus: true,
-        toolbar: [
-          // [groupName, [list of button]]
-          ['style', ['bold', 'italic', 'underline', 'clear']],
-          ['font', ['strikethrough', 'superscript', 'subscript']],
-          ['fontsize', ['fontsize']],
-          ['color', ['color']],
-          ['para', ['ul', 'ol', 'paragraph']],
-          ['height', ['height']]
-        ]
-      });
-      $(document).on("click", "#area", function(e){
-        $("#summernote").focus();
-      });
-    });
+-# = content_for :scripts do
+-#   :javascript
+-#     $(document).ready(function() {
+-#       $('#summernote').summernote({
+-#         height: 400,
+-#         focus: true,
+-#         toolbar: [
+-#           // [groupName, [list of button]]
+-#           ['style', ['bold', 'italic', 'underline', 'clear']],
+-#           ['font', ['strikethrough', 'superscript', 'subscript']],
+-#           ['fontsize', ['fontsize']],
+-#           ['color', ['color']],
+-#           ['para', ['ul', 'ol', 'paragraph']],
+-#           ['height', ['height']]
+-#         ]
+-#       });
+-#       $(document).on("click", "#area", function(e){
+-#         $("#summernote").focus();
+-#       });
+-#     });
 %section.p-b-85.p-t-75.p-b-65.p-t-55#area
   .container
     .row
@@ -32,10 +32,9 @@
               = f.text_field :title, class: "input-lg form-control", autofocus: true
             .form-group
               %label Tell us about what you need to get done
-              .summernote-wrapper.m-b-20
-                #summernote
+              = f.text_area :description, class: "input-lg form-control", rows: 20
             .form-group
-              = f.submit "Send", data: { "disable-with": "Sending..." }, class: "btn-lg btn btn-primary p-l-60 p-r-60"
+              = f.submit "Send", class: "btn-lg btn btn-primary p-l-60 p-r-60 m-t-10 col-md-12 submit-job"
         .col-md-4
           - unless @service.requirements.blank?
             %p.p-b-25

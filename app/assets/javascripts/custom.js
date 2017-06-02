@@ -140,6 +140,7 @@ $(document).ready(function() {
         e.preventDefault();
         e.stopPropagation();
         $(".job.alert.alert-warning").removeClass("hide");
+        $(".submit-job").addClass("disabled").val("Sending...");
         var request = $.ajax({
             url: "/jobs",
             method: "post",
@@ -152,6 +153,7 @@ $(document).ready(function() {
             },
             beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
             success: function(data, xhr){
+              $(".submit-job").removeClass("disabled").val("Sending...");
               setTimeout(function(){
                 location.href = "/app";
               }, 100);
@@ -159,6 +161,7 @@ $(document).ready(function() {
             error: function(data, status){
               var response = JSON.parse(data.responseText);
               $(".job.alert.alert-warning").removeClass("hide").html(response.error);
+              $(".submit-job").removeClass("disabled").val("Send");
             }
         });
     });

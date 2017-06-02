@@ -47,6 +47,7 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+  # config.action_mailer.perform_deliveries = true
 
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
@@ -55,7 +56,6 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :letter_opener
 
-  config.action_cable.mount_path = '/suck8ts'
   config.action_cable.disable_request_forgery_protection = true
   config.active_job.queue_adapter     = :sidekiq
 

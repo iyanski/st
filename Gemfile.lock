@@ -69,6 +69,9 @@ GEM
     apartment (1.2.0)
       activerecord (>= 3.1.2, < 6.0)
       rack (>= 1.3.6)
+    apartment-sidekiq (1.1.0)
+      apartment (~> 1.0)
+      sidekiq (>= 2.11)
     arel (7.1.4)
     autoprefixer-rails (6.7.7.2)
       execjs
@@ -320,6 +323,7 @@ DEPENDENCIES
   activeresource!
   angular-rails-templates
   apartment
+  apartment-sidekiq
   aws-sdk (~> 2.3.0)
   bootstrap (~> 4.0.0.alpha5)
   byebug

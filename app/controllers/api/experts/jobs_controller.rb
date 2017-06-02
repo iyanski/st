@@ -15,7 +15,7 @@ class Api::Experts::JobsController < Api::ExpertsController
     if current_expert.jobs.where(status: 2).count == 3
       render json: {error: "Sorry, you can only claim 3 tasks at a time"}, status: 401
     else
-      unless @job.claim_by current_expert
+      unless @job.claim_by current_expert, job_url(@job, r: 'c')
         render json: {error: "Task not found"}, status: 401
       end
     end
@@ -23,30 +23,28 @@ class Api::Experts::JobsController < Api::ExpertsController
 
   def unclaim
     @job = Job.find(params[:id])
-    unless @job.unclaim_by current_expert
-      puts @job.inspect
+    unless @job.unclaim_by current_expert, job_url(@job, r: 'c')
       render json: {error: "Task not found"}, status: 401
     end
   end
 
   def estimate
     @job = Job.find(params[:id])
-    puts params[:job].inspect
-    unless @job.estimates params[:job][:estimate], Date.strptime(params[:job][:starts_at], "%m/%d/%Y"), params[:job][:etc]
+    unless @job.estimates params[:job][:estimate], Date.strptime(params[:job][:starts_at], "%m/%d/%Y"), params[:job][:etc], job_url(@job, r: 'c')
       render json: {error: "Task not found"}, status: 401
     end
   end
 
   def cancel
     @job = Job.find(params[:id])
-    unless @job.cancel_estimate
+    unless @job.cancel_estimate job_url(@job, r: 'c')
       render json: {error: "Task not found"}, status: 401
     end
   end
 
   def submit
     @job = Job.find(params[:id])
-    unless @job.submit
+    unless @job.submit job_url(@job, r: 'c')
       render json: {error: "Task not found"}, status: 401
     end
   end
@@ -59,7 +57,7 @@ class Api::Experts::JobsController < Api::ExpertsController
 
   def upload
     @job = Job.find(params[:id])
-    unless @job.attach params[:file], nil, current_expert
+    unless @job.attach params[:file], nil, current_expert, job_url(@job, r: 'c')
       render json: {error: @job.errors.full_messages.first}, status: 401
     end
   end

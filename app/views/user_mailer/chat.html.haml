@@ -599,25 +599,22 @@
                                         %tbody
                                           %tr
                                             %td.mcnTextContent{:style => "padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;", :valign => "top"}
-                                              You have a new message regarding <strong>Job# #{@job.code}: "#{@job.title}</strong>.
+                                              You have a new message regarding the following job:
                                               %br/
                                               %br/
                                               #{@sender}: #{@message.html_safe}
                                               %br/
                                               %br/
-                                              Follow us on Twitter at
-                                              = succeed "," do
-                                                %a{:href => "#"} @smalltaskers
+                                              %a{href: @url} Job #{@job.code}: #{@job.title}
                                               %br/
-                                              = link_to "Read the Message", job_url(@job)
                                               %br/
                                               %br/
                                               Sincerely,
                                               %br/
                                               %br/
-                                              Ian Bert Tusil
+                                              #{@job.company.user.first_name}
                                               %br/
-                                              %em CEO, SmallTaskers
+                                              %em #{@job.company.store.title}
                                               %br/
                                                
                                       /[if mso]
@@ -660,7 +657,7 @@
                                         %tbody
                                           %tr
                                             %td.mcnTextContent{:style => "padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;", :valign => "top"}
-                                              %em Copyright © #{Time.now.year} SmallTaskers, All rights reserved.
+                                              %em Copyright © #{Time.now.year} #{@job.company.name}, All rights reserved.
                                       /[if mso]
                                         </td>
                                       /[if mso]

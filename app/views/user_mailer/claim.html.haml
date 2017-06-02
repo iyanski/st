@@ -556,7 +556,7 @@
                                         %tbody
                                           %tr
                                             %td.mcnImageContent{:style => "padding-right: 9px; padding-left: 9px; padding-top: 0; padding-bottom: 0; text-align:center;", :valign => "top"}
-                                              %img.mcnImage{:align => "center", :alt => "", :src => "https://gallery.mailchimp.com/6e25e5be378aa9058b993055d/images/0ff7532a-6e96-4aff-8e2d-bfb321157ceb.png", :style => "max-width:300px; padding-bottom: 0; display: inline !important; vertical-align: bottom;", :width => "300"}/
+                                            #{@job.company.store.title}
                   / // END HEADER
               %tr
                 %td{:align => "center", :valign => "top"}
@@ -599,15 +599,16 @@
                                         %tbody
                                           %tr
                                             %td.mcnTextContent{:style => "padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;", :valign => "top"}
+                                              %br/
                                               Thank you for posting this job.
                                               %br/
                                               %br/
-                                              #{@expert.name} will be getting in touch with your shortly to discuss about your job# #{@job.code}: #{@job.title}.
+                                              %strong #{@expert.name}
+                                              will be getting in touch with your shortly to discuss about: 
                                               %br/
                                               %br/
-                                              Follow us on Twitter at
-                                              = succeed "," do
-                                                %a{:href => "#"} @smalltaskers
+                                              %a{href: @url} Task #{@job.code}: #{@job.title}
+                                              %br/
                                               %br/
                                               %br/
                                               Sincerely,
@@ -615,7 +616,7 @@
                                               %br/
                                               Ian Bert Tusil
                                               %br/
-                                              %em CEO, SmallTaskers
+                                              %em #{@job.company.store.title}
                                               %br/
                                                
                                       /[if mso]
@@ -658,7 +659,7 @@
                                         %tbody
                                           %tr
                                             %td.mcnTextContent{:style => "padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;", :valign => "top"}
-                                              %em Copyright © #{Time.now.year} SmallTaskers, All rights reserved.
+                                              %em Copyright © #{Time.now.year} #{@job.company.name}, All rights reserved.
                                       /[if mso]
                                         </td>
                                       /[if mso]

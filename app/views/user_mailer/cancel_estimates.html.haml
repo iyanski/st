@@ -599,24 +599,22 @@
                                           %tbody
                                             %tr
                                               %td.mcnTextContent{:style => "padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;", :valign => "top"}
-                                                #{@expert.name} unclaimed this job# #{@job.code}: #{@job.title}.
+                                                #{@expert.name} unclaimed the following job.
                                                 %br/
                                                 %br/
                                                 Another agent will be claiming this job in a while. We will keep you posted.
                                                 %br/
-                                                Follow us on Twitter at
-                                                = succeed "," do
-                                                  %a{:href => "#"} @smalltaskers
                                                 %br/
-                                                = link_to "Open Job", job_url(@job, r: 'e')
+                                                %a{href: @url} Job #{@job.code}: #{@job.title}
+                                                %br/
                                                 %br/
                                                 %br/
                                                 Sincerely,
                                                 %br/
                                                 %br/
-                                                Ian Bert Tusil
+                                                #{@job.company.user.first_name}
                                                 %br/
-                                                %em CEO, SmallTaskers
+                                                %em #{@job.company.store.title}
                                                 %br/
                                                  
                                         /[if mso]
@@ -659,7 +657,7 @@
                                           %tbody
                                             %tr
                                               %td.mcnTextContent{:style => "padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;", :valign => "top"}
-                                                %em Copyright © #{Time.now.year} SmallTaskers, All rights reserved.
+                                                %em Copyright © #{Time.now.year} #{@job.company.name}, All rights reserved.s
                                         /[if mso]
                                           </td>
                                         /[if mso]

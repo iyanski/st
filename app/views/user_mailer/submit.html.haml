@@ -599,22 +599,19 @@
                                         %tbody
                                           %tr
                                             %td.mcnTextContent{:style => "padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;", :valign => "top"}
-                                              The <strong>Job# #{@job.code}: "#{@job.title}</strong> is submitted to you for review, checking and approval.
+                                              The following job is available for to you for review, checking and approval.
                                               %br/
                                               %br/
-                                              Follow us on Twitter at
-                                              = succeed "," do
-                                                %a{:href => "#"} @smalltaskers
+                                              %a{href: @url} Job #{@job.code}: #{@job.title}
                                               %br/
-                                              = link_to "Open Job", job_url(@job, r: 'u')
                                               %br/
                                               %br/
                                               Sincerely,
                                               %br/
                                               %br/
-                                              Ian Bert Tusil
+                                              #{@job.company.user.first_name}
                                               %br/
-                                              %em CEO, SmallTaskers
+                                              %em #{@job.company.store.title}
                                               %br/
                                                
                                       /[if mso]
@@ -657,7 +654,7 @@
                                         %tbody
                                           %tr
                                             %td.mcnTextContent{:style => "padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;", :valign => "top"}
-                                              %em Copyright © #{Time.now.year} SmallTaskers, All rights reserved.
+                                              %em Copyright © #{Time.now.year} #{@job.company.name}, All rights reserved.
                                       /[if mso]
                                         </td>
                                       /[if mso]

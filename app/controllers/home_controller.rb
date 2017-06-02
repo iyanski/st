@@ -67,6 +67,7 @@ class HomeController < ApplicationController
     gon.avatar = current_customer.avatar.try(:url)
     gon.settings = current_customer.customer_setting
     @jobs = current_customer.jobs.order("updated_at DESC")
+    gon.job_id = session[:job_id]
     gon.rabl
     render 'app', layout: "app"
   end
@@ -79,6 +80,7 @@ class HomeController < ApplicationController
     gon.avatar = current_expert.avatar.try(:url)
     gon.settings = current_expert.expert_setting
     @jobs = Job.pending + current_expert.jobs.order("updated_at DESC")
+    gon.job_id = session[:job_id]
     gon.rabl
     render 'app', layout: "dashboard"
   end
@@ -96,6 +98,7 @@ class HomeController < ApplicationController
     gon.user = current_user
     gon.avatar = current_user.avatar.try(:url)
     @jobs = Job.all.order("updated_at DESC")
+    gon.job_id = session[:job_id]
     gon.rabl
     render 'app', layout: "admin"
   end

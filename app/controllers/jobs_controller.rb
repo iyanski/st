@@ -21,6 +21,7 @@ class JobsController < ApplicationController
       unless job.save
         render json: {error: job.errors.full_messages.first}, status: 401
       else
+        job.publish job_url(job, r: 'e')
         render json: {success: "Job Posted"}
       end
     end

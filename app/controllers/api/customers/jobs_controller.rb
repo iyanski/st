@@ -10,10 +10,11 @@ class Api::Customers::JobsController < Api::CustomersController
     Apartment::Tenant.switch!(current_company.subdomain)
     @job = current_customer.jobs.build job_params
     @job.company = current_company
-    puts @job.inspect
     if job_params[:status].to_i == 1
-      unless @job.save_and_publish
+      unless @job.save
         render json: {error: @job.errors.full_messages.first}, status: 401
+      else
+        @job.publish job_url(@job, r: 'e')
       end
     else
       unless @job.save
@@ -38,21 +39,21 @@ class Api::Customers::JobsController < Api::CustomersController
 
   def publish
     @job = current_customer.jobs.where(id: params[:id]).first
-    unless @job.publish
+    unless @job.publish job_url(@job, r: 'e')
       render json: {error: "Job not found"}, status: 401
     end
   end
 
   def unpublish
     @job = current_customer.jobs.where(id: params[:id]).first
-    unless @job.unpublish
+    unless @job.unpublish job_url(@job, r: 'e')
       render json: {error: "Job not found"}, status: 401
     end
   end
 
   def decline
     @job = current_customer.jobs.where(id: params[:id]).first
-    unless @job.decline
+    unless @job.decline job_url(@job, r: 'e')
       render json: {error: "Job not found"}, status: 401
     else
       render :show
@@ -61,7 +62,7 @@ class Api::Customers::JobsController < Api::CustomersController
 
   def complete
     @job = current_customer.jobs.where(id: params[:id]).first
-    unless @job.complete
+    unless @job.complete job_url(@job, r: 'e')
       render json: {error: "Job not found"}, status: 401
     else
       render :show
@@ -70,7 +71,7 @@ class Api::Customers::JobsController < Api::CustomersController
 
   def cancel
     @job = current_customer.jobs.where(id: params[:id]).first
-    unless @job.cancel
+    unless @job.cancel job_url(@job, r: 'e')
       render json: {error: "Job not found"}, status: 401
     else
       render json: {message: "Job successfully removed"}
@@ -79,7 +80,7 @@ class Api::Customers::JobsController < Api::CustomersController
 
   def chat
     @job = current_customer.jobs.where(id: params[:id]).first
-    @job.chat_to @job.expert, params[:content]
+    @job.chat_to @job.expert, params[:content], job_url(@job, r: 'e')
     render json: {content: params[:content]}
   end
 

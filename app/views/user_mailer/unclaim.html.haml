@@ -556,7 +556,7 @@
                                         %tbody
                                           %tr
                                             %td.mcnImageContent{:style => "padding-right: 9px; padding-left: 9px; padding-top: 0; padding-bottom: 0; text-align:center;", :valign => "top"}
-                                              %img.mcnImage{:align => "center", :alt => "", :src => "https://gallery.mailchimp.com/6e25e5be378aa9058b993055d/images/0ff7532a-6e96-4aff-8e2d-bfb321157ceb.png", :style => "max-width:300px; padding-bottom: 0; display: inline !important; vertical-align: bottom;", :width => "300"}/
+                                              %img.mcnImage{:align => "center", :alt => "", :src => @job.company.store.logo.url, :style => "max-width:300px; padding-bottom: 0; display: inline !important; vertical-align: bottom;"}/
                   / // END HEADER
               %tr
                 %td{:align => "center", :valign => "top"}
@@ -599,25 +599,22 @@
                                         %tbody
                                           %tr
                                             %td.mcnTextContent{:style => "padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;", :valign => "top"}
-                                              #{@expert.name} unclaimed this job# #{@job.code}: #{@job.title}.
+                                              #{@expert.name} unclaimed the following job.
                                               %br/
                                               %br/
                                               Another agent will be claiming this job in a while. We will keep you posted.
                                               %br/
                                               %br/
-                                              Follow us on Twitter at
-                                              = succeed "," do
-                                                %a{:href => "#"} @smalltaskers
+                                              %a{href: @url} Job #{@job.code}: #{@job.title}
                                               %br/
-                                              = link_to "Open Job", job_url(@job, r: 'e')
                                               %br/
                                               %br/
                                               Sincerely,
                                               %br/
                                               %br/
-                                              Ian Bert Tusil
+                                              #{@job.company.user.first_name}
                                               %br/
-                                              %em CEO, SmallTaskers
+                                              %em #{@job.company.store.title}
                                               %br/
                                                
                                       /[if mso]
@@ -660,7 +657,7 @@
                                         %tbody
                                           %tr
                                             %td.mcnTextContent{:style => "padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;", :valign => "top"}
-                                              %em Copyright © #{Time.now.year} SmallTaskers, All rights reserved.
+                                              %em Copyright © #{Time.now.year} #{@job.company.name}, All rights reserved.
                                       /[if mso]
                                         </td>
                                       /[if mso]

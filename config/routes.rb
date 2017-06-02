@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   # mount ActionCable.server => '/suck8ts'
-  
+  require 'sidekiq/web'  
   devise_for :customers, controllers: {
     sessions: 'customers/sessions',
     passwords: 'customers/passwords',

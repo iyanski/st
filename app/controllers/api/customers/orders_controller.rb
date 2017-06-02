@@ -5,18 +5,16 @@ class Api::Customers::OrdersController < Api::CustomersController
     random = SecureRandom.hex(10)
     session[:cart] = random
     job = Job.find params[:job_id]
-    details = Hash({quantity: 1, name: "Task #: #{job.id}", description: job.title, amount: job.price_in_cents})
+    details = Hash({quantity: 1, name: "Job #: #{job.id}", description: job.title, amount: job.price_in_cents})
     items.push details
     customs.push Hash({job: job.id})
     total_amount_in_cents = job.price_in_cents
     Cart[random] = Hash({job: job.id, details: details})
 
-    # if total_amount_in_cents > 0.0
       response = EXPRESS_GATEWAY.setup_purchase(total_amount_in_cents,
         ip: request.remote_ip,
         return_url: new_order_url,
-        notify_url: "http://0b165243.ngrok.io/notify",
-        # notify_url: notify_url,
+        notify_url: notify_url,
         cancel_return_url: cancel_orders_url,
         currency: "USD",
         allow_guest_checkout: true,

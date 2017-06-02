@@ -59,9 +59,8 @@
             %span.bold Posted On:
             {{job.created_at | amDateFormat:'MMM DD, YYYY hh:mm a'}}
           %p.no-margin{ng: {show: "job.estimate"}}
-            %span.bold Estimate:
-            %span{ng: {show: "job.estimate == 1"}} {{job.estimate}} hour - {{rate * job.estimate | currency : "$" : 2}}
-            %span{ng: {show: "job.estimate > 1"}} {{job.estimate}} hours - {{rate * job.estimate | currency : "$" : 2}}
+            %span.bold Estimate: 
+            %span {{job.service.price * job.estimate | currency : "$" : 2}}
           %p.no-margin{ng: {show: "job.etc"}}
             %span.bold Turn Around Time:
             Next Day Delivery

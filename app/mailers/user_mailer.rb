@@ -1,12 +1,18 @@
 class UserMailer < ApplicationMailer
-  def new_job(expert_id)
-    @recipient = Expert.find expert_id
-    mail(:to => @recipient.email, :subject => "This is just a test email") do |format|
+  def new_job(expert, job, url)
+    tenant = job.company
+    Apartment::Tenant.switch!(tenant.subdomain)
+    @url = url
+    @job = job
+    @recipient = expert
+    mail(:to => expert.email, :subject => "A new job has been posted") do |format|
       format.html
     end
   end
 
-  def claim(job)
+  def claim(job, url)
+    @url = url
+    Apartment::Tenant.switch!(job.company.subdomain)
     @job = job
     @recipient = job.customer
     @expert = job.expert
@@ -16,17 +22,22 @@ class UserMailer < ApplicationMailer
     end
   end
 
-  def unclaim(job, expert)
+  def unclaim(job, expert, url)
+    @url = url
+    Apartment::Tenant.switch!(job.company.subdomain)
     @job = job
     @recipient = job.customer
     @expert = expert
     @name = job.customer.name
+    puts "Unclaiming......"
     mail(:to => @recipient.email, :subject => "#{@expert.name} unclaimed the job# #{job.code}: #{job.title}") do |format|
       format.html
     end
   end
 
-  def estimates(job)
+  def estimates(job, url)
+    @url = url
+    Apartment::Tenant.switch!(job.company.subdomain)
     @job = job
     @recipient = job.customer
     @name = job.customer.name
@@ -35,7 +46,9 @@ class UserMailer < ApplicationMailer
     end
   end
 
-  def approved(job)
+  def approved(job, url)
+    @url = url
+    Apartment::Tenant.switch!(job.company.subdomain)
     @job = job
     @recipient = job.expert
     @name = job.expert.name
@@ -44,7 +57,9 @@ class UserMailer < ApplicationMailer
     end
   end
 
-  def submit(job)
+  def submit(job, url)
+    @url = url
+    Apartment::Tenant.switch!(job.company.subdomain)
     @job = job
     @recipient = job.customer
     @name = job.customer.name
@@ -53,7 +68,9 @@ class UserMailer < ApplicationMailer
     end
   end
 
-  def cancel_estimates(job, expert)
+  def cancel_estimates(job, expert, url)
+    @url = url
+    Apartment::Tenant.switch!(job.company.subdomain)
     @job = job
     @recipient = expert
     @name = expert.name
@@ -62,7 +79,9 @@ class UserMailer < ApplicationMailer
     end
   end
 
-  def cancel(job)
+  def cancel(job, url)
+    @url = url
+    Apartment::Tenant.switch!(job.company.subdomain)
     @job = job
     @recipient = job.expert
     @name = job.expert.name
@@ -71,7 +90,9 @@ class UserMailer < ApplicationMailer
     end
   end
 
-  def decline(job, expert)
+  def decline(job, expert, url)
+    @url = url
+    Apartment::Tenant.switch!(job.company.subdomain)
     @job = job
     @recipient = expert
     @name = expert.name
@@ -80,7 +101,9 @@ class UserMailer < ApplicationMailer
     end
   end
 
-  def completed(job)
+  def completed(job, url)
+    @url = url
+    Apartment::Tenant.switch!(job.company.subdomain)
     @job = job
     @recipient = job.expert
     @name = job.expert.name
@@ -89,7 +112,9 @@ class UserMailer < ApplicationMailer
     end
   end
 
-  def chat(job, message, recipient, sender)
+  def chat(job, message, recipient, sender, url)
+    @url = url
+    Apartment::Tenant.switch!(job.company.subdomain)
     @job = job
     @message = message
     @recipient = recipient
@@ -101,6 +126,7 @@ class UserMailer < ApplicationMailer
   end
 
   def send_expert_registration_information(expert, password, url)
+    Apartment::Tenant.switch!(expert.company.subdomain)
     @url = url
     @expert = expert
     @password = password

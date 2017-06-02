@@ -599,22 +599,19 @@
                                         %tbody
                                           %tr
                                             %td.mcnTextContent{:style => "padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;", :valign => "top"}
-                                              We're very sorry to inform you that <strong>Job# #{@job.code}: "#{@job.title}</strong> has been cancelled by the client.
+                                              We're very sorry to inform you that your submission has been declined by the client. Please get in touch with the client right away.
                                               %br/
                                               %br/
-                                              Follow us on Twitter at
-                                              = succeed "," do
-                                                %a{:href => "#"} @smalltaskers
+                                              %a{href: @url} Job #{@job.code}: #{@job.title}
                                               %br/
-                                              = link_to "Open Job", job_url(@job, r: 'e')
                                               %br/
                                               %br/
                                               Sincerely,
                                               %br/
                                               %br/
-                                              Ian Bert Tusil
+                                              #{@job.company.user.first_name}
                                               %br/
-                                              %em CEO, SmallTaskers
+                                              %em #{@job.company.store.title}
                                               %br/
                                                
                                       /[if mso]
@@ -657,7 +654,7 @@
                                         %tbody
                                           %tr
                                             %td.mcnTextContent{:style => "padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;", :valign => "top"}
-                                              %em Copyright © #{Time.now.year} SmallTaskers, All rights reserved.
+                                              %em Copyright © #{Time.now.year} #{@job.company.name}, All rights reserved.
                                       /[if mso]
                                         </td>
                                       /[if mso]

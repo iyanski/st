@@ -4,8 +4,8 @@
       %a{"data-toggle" => "tab", ng: {click: "openTab('tab2Account')"}} Account
     -# %li
     -#   %a{"data-toggle" => "tab", ng: {click: "openTab('tab2Profile')"}} Profile
-    %li
-      %a{"data-toggle" => "tab", ng: {click: "openTab('tab2Notifications')"}} Notification
+    -# %li
+    -#   %a{"data-toggle" => "tab", ng: {click: "openTab('tab2Notifications')"}} Notification
     %li
       %a{"data-toggle" => "tab", ng: {click: "openTab('tab2Secure')"}} Security
       
@@ -47,31 +47,31 @@
                     %small or click here
                   .fallback.hide
                     %input#uploadField{:name => "file", :type => "file"}/
-    #tab2Notifications.tab-pane
-      .row
-        .col-md-12
-          %h3
-            Notification Settings
-          .panel.panel-default
-            .panel-heading
-              .panel-title
-                Email me when...
-            .panel-body
-              .checkbox.check-success
-                %input#checkbox1{ng: {model: "settings.email_when_expert_claims", true: {value: "true"}, false: {value: "false"}, change: "updateSetting()"}, :type => "checkbox"}/
-                %label{:for => "checkbox1"} an expert claims my job request.
-              .checkbox.check-success
-                %input#checkbox2{ng: {model: "settings.email_when_expert_waives_claims", true: {value: "true"}, false: {value: "false"}, change: "updateSetting()"}, :type => "checkbox"}/
-                %label{:for => "checkbox2"} an expert waives his claim to my job request.
-              .checkbox.check-success
-                %input#checkbox3{ng: {model: "settings.email_when_expert_sends_estimate", true: {value: "true"}, false: {value: "false"}, change: "updateSetting()"}, :type => "checkbox"}/
-                %label{:for => "checkbox3"} an expert sends me an estimate.
-              .checkbox.check-success
-                %input#checkbox4{ng: {model: "settings.email_when_expert_cancels_estimate", true: {value: "true"}, false: {value: "false"}, change: "updateSetting()"}, :type => "checkbox"}/
-                %label{:for => "checkbox4"} an expert cancelled his/her estimate.
-              .checkbox.check-success
-                %input#checkbox5{ng: {model: "settings.email_when_expert_submits_work", true: {value: "true"}, false: {value: "false"}, change: "updateSetting()"}, :type => "checkbox"}/
-                %label{:for => "checkbox5"} an expert submits his work for approval.
+    -# #tab2Notifications.tab-pane
+    -#   .row
+    -#     .col-md-12
+    -#       %h3
+    -#         Notification Settings
+    -#       .panel.panel-default
+    -#         .panel-heading
+    -#           .panel-title
+    -#             Email me when...
+    -#         .panel-body
+    -#           .checkbox.check-success
+    -#             %input#checkbox1{ng: {model: "settings.email_when_expert_claims", true: {value: "true"}, false: {value: "false"}, change: "updateSetting()"}, :type => "checkbox"}/
+    -#             %label{:for => "checkbox1"} an expert claims my job request.
+    -#           .checkbox.check-success
+    -#             %input#checkbox2{ng: {model: "settings.email_when_expert_waives_claims", true: {value: "true"}, false: {value: "false"}, change: "updateSetting()"}, :type => "checkbox"}/
+    -#             %label{:for => "checkbox2"} an expert waives his claim to my job request.
+    -#           .checkbox.check-success
+    -#             %input#checkbox3{ng: {model: "settings.email_when_expert_sends_estimate", true: {value: "true"}, false: {value: "false"}, change: "updateSetting()"}, :type => "checkbox"}/
+    -#             %label{:for => "checkbox3"} an expert sends me an estimate.
+    -#           .checkbox.check-success
+    -#             %input#checkbox4{ng: {model: "settings.email_when_expert_cancels_estimate", true: {value: "true"}, false: {value: "false"}, change: "updateSetting()"}, :type => "checkbox"}/
+    -#             %label{:for => "checkbox4"} an expert cancelled his/her estimate.
+    -#           .checkbox.check-success
+    -#             %input#checkbox5{ng: {model: "settings.email_when_expert_submits_work", true: {value: "true"}, false: {value: "false"}, change: "updateSetting()"}, :type => "checkbox"}/
+    -#             %label{:for => "checkbox5"} an expert submits his work for approval.
 
     #tab2Secure.tab-pane
       .row.column-seperation

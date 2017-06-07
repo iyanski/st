@@ -24,7 +24,7 @@
       %span.text-info (12)
       %span.caret
     .brand.inline.text-left.m-l-20
-      %img.logo{ng: {if: "store"}, :alt => "{{store.title}}", :height => "48", ng: {:src => "{{store.logo.url}}"}}/
+      %img.logo{ng: {if: "store"}, :alt => "{{store.title}}", ng: {:src => "{{store.logo.url}}"}}/
       %h4{ng: {if: "!store"}} {{store.logo}}
     .notification-list
       .dropdown

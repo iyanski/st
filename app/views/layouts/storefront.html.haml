@@ -31,8 +31,8 @@
               - if current_store.logo.blank?
                 %h1.bold #{current_company.subdomain}
               - else
-                %img.logo{:alt => current_store.title, "data-src-retina" => asset_path(current_store.logo.url), :height => "48", :src => asset_path(current_store.logo.url)}/
-                %img.alt{:alt => current_store.title, "data-src-retina" => asset_path(current_store.logo.url), :height => "48", :src => asset_path(current_store.logo.url)}/
+                %img.logo{:alt => current_store.title, "data-src-retina" => asset_path(current_store.logo.url), :src => asset_path(current_store.logo.url)}/
+                %img.alt{:alt => current_store.title, "data-src-retina" => asset_path(current_store.logo.url), :src => asset_path(current_store.logo.url)}/
         / BEGIN HEADER TOGGLE FOR MOBILE & TABLET
         .pull-right
           .header-inner

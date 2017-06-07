@@ -28,8 +28,8 @@
               - if current_store.logo.blank?
                 %h1.bold #{current_company.subdomain}
               - else
-                %img.logo{:alt => current_store.title, "data-src-retina" => asset_path(current_store.logo.url), :height => "48", :src => asset_path(current_store.logo.url)}/
-                %img.alt{:alt => current_store.title, "data-src-retina" => asset_path(current_store.logo.url), :height => "48", :src => asset_path(current_store.logo.url)}/
+                %img.logo{:alt => current_store.title, "data-src-retina" => asset_path(current_store.logo.url), :src => asset_path(current_store.logo.url)}/
+                %img.alt{:alt => current_store.title, "data-src-retina" => asset_path(current_store.logo.url), :src => asset_path(current_store.logo.url)}/
         .pull-right
           .header-inner
             .visible-sm-inline.visible-xs-inline.menu-toggler.pull-right.p-l-10{"data-pages" => "header-toggle", "data-pages-element" => "#header"}

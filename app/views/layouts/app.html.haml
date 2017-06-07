@@ -58,7 +58,7 @@
               %span.caret
             .brand.inline.text-left.m-l-20
               - if current_store.logo.present?
-                %img{:alt => current_company.name, "data-src" => asset_path(current_store.logo), "data-src-retina" => asset_path(current_store.logo), :height => "48", :src => asset_path(current_store.logo)}/
+                %img.logo{:alt => current_company.name, "data-src" => asset_path(current_store.logo), "data-src-retina" => asset_path(current_store.logo), :src => asset_path(current_store.logo)}/
               - else
                 %h4
                   = current_company.name

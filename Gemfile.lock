@@ -105,10 +105,13 @@ GEM
     capistrano-sidekiq (0.10.0)
       capistrano
       sidekiq (>= 3.4)
-    carrierwave (1.0.0)
+    carrierwave (1.1.0)
       activemodel (>= 4.0.0)
       activesupport (>= 4.0.0)
       mime-types (>= 1.16)
+    carrierwave-aws (1.1.0)
+      aws-sdk (~> 2.0)
+      carrierwave (>= 0.7, < 2.0)
     chronic (0.10.2)
     climate_control (0.1.0)
     cocaine (0.5.8)
@@ -332,7 +335,8 @@ DEPENDENCIES
   capistrano-rails (~> 1.2)
   capistrano-rvm
   capistrano-sidekiq
-  carrierwave (= 1.0.0)
+  carrierwave (= 1.1.0)
+  carrierwave-aws
   chronic
   coffee-rails (~> 4.2)
   devise

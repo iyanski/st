@@ -90,7 +90,7 @@ gem 'chronic'
 gem 'friendly_id'
 
 gem "letter_opener", :group => :development
-gem "carrierwave", "1.0.0"
+gem "carrierwave", "1.1.0"
 
 gem 'firebase'
 gem 'stripe'
@@ -102,3 +102,4 @@ gem "mini_magick"
 gem 'apartment'
 gem 'apartment-sidekiq'
 # gem 'asset_sync'
+gem 'carrierwave-aws'

@@ -32,7 +32,9 @@ Rails.application.config.middleware.use Apartment::Elevators::Generic, Proc.new 
   if request.host_with_port == ENV["app_url"]
     "public"
   else
-    request.host_with_port
+    puts Company.where(domain: request.host_with_port).first.inspect
+    company = Company.where(domain: request.host_with_port).first
+    "#{company.subdomain}.#{ENV['app_url']}"
   end
 }
 # Rails.application.config.middleware.use 'Apartment::Elevators::Subdomain'

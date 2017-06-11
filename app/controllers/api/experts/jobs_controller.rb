@@ -51,7 +51,7 @@ class Api::Experts::JobsController < Api::ExpertsController
 
   def chat
     @job = current_expert.jobs.where(id: params[:id]).first
-    @job.chat_to @job.customer, params[:content]
+    @job.chat_to @job.customer, params[:content], job_url(@job, r: 'c')
     render json: {content: params[:content]}
   end
 

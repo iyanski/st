@@ -56,7 +56,7 @@
             {{job.created_at | amDateFormat:'MMM DD, YYYY hh:mm a'}}
           %p.no-margin{ng: {show: "job.estimate"}}
             %span.bold Estimate:
-            %span {{job.service.experts_rate * job.estimate | currency : "$" : 2}}
+            %span {{(job.service.price * job.service.experts_rate / 100) * job.estimate | currency : "$" : 2}}
           %p.no-margin{ng: {show: "job.etc"}}
             %span.bold Turn Around Time:
             Next Day Delivery
@@ -93,7 +93,8 @@
                 %strong you
                 %small.pull-right {{ message.created_at }}
               %span{ng: {show: "message.sender_type == 'Customer'"}}
-                %strong {{message.sender}}
+                %strong{ng: {if: "message.sender.length"}} {{message.sender}}
+                %strong{ng: {if: "!message.sender.length"}} Customer
                 %small.pull-right {{ message.created_at }}
               %div{"ng-bind-html" => "message.content | nl2br | str2link"}
       #attachments{ng: {show: "show_mode == 3 && job.status > 1"}}

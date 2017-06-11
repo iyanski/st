@@ -8,7 +8,7 @@ class Api::Users::ExpertsController < Api::UsersController
     @expert = Expert.new email: expert_params[:email], first_name: expert_params[:first_name], last_name: expert_params[:last_name], company_id: current_company.id, password: password, password_confirmation: password
     @expert.company = current_company
     if @expert.save
-      UserMailer.send_expert_registration_information(@expert, password, "http://#{request.host_with_port}/experts/sign_in").deliver
+      UserMailer.send_expert_registration_information(current_company.user, @expert, password, "http://#{request.host_with_port}/experts/sign_in").deliver
     else
       render json: {error: @expert.errors.full_messages.first}, status: 401
     end
@@ -40,7 +40,7 @@ class Api::Users::ExpertsController < Api::UsersController
     @expert = Expert.find(params[:id])
     @expert.password = password
     if @expert.save
-      UserMailer.send_expert_registration_information(@expert, password, "http://#{request.host_with_port}/experts/sign_in").deliver
+      UserMailer.send_expert_registration_information(current_user, @expert, password, "http://#{request.host_with_port}/experts/sign_in").deliver
       render :create
     else
       render json: {error: "Failed to send invitation"}, status: 401

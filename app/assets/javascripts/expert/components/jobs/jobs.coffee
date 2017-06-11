@@ -96,6 +96,7 @@ do ->
         $scope.msg = ""
         $scope.notificationsRef = ChatService.ref("messages/" + gon.company.id + "/" + $scope.job.id + "/" + $scope.job.conversation.code)
         $scope.notificationsRef.on 'child_added', (snapshot)->
+          console.log snapshot.val()
           if !$scope.interactive
             $scope.pushMessage snapshot.val()
           else if $scope.interactive && snapshot.val().sender_type is "Customer"

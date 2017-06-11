@@ -25,12 +25,7 @@ class Company < ApplicationRecord
 
   private
     def create_tenant
-      puts "===================================================="
-      puts "Apartment::Tenant.create(company.subdomain)"
-      Apartment::Tenant.create(subdomain)
-      puts "DB_NAME=#{subdomain} bundle exec rake db:migrate"
-      # system("DB_NAME=#{subdomain} bundle exec rake db:migrate")
-      puts "===================================================="
+      Apartment::Tenant.create(domain)
     end
 
     def create_store

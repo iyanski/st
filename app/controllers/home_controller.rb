@@ -63,7 +63,7 @@ class HomeController < ApplicationController
     gon.company = current_company
     gon.store = current_company.store
     gon.customer = current_customer
-    gon.services = Service.where(service_type: 0)
+    gon.services = Service.all
     gon.avatar = current_customer.avatar.try(:url)
     gon.settings = current_customer.customer_setting
     @jobs = current_customer.jobs.order("updated_at DESC")

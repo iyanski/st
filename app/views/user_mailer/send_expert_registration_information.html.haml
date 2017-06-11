@@ -611,9 +611,7 @@
                                               Sincerely,
                                               %br/
                                               %br/
-                                              #{@job.company.user.first_name}
-                                              %br/
-                                              %em #{@job.company.store.title}
+                                              %em #{@company.name}
                                               %br/
                                                
                                       /[if mso]
@@ -656,7 +654,7 @@
                                         %tbody
                                           %tr
                                             %td.mcnTextContent{:style => "padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;", :valign => "top"}
-                                              %em Copyright © #{Time.now.year} #{@job.company.name}, All rights reserved.
+                                              %em Copyright © #{Time.now.year} #{@company.name}, All rights reserved.
                                       /[if mso]
                                         </td>
                                       /[if mso]

@@ -1,7 +1,8 @@
 require_relative 'boot'
 
 require 'rails/all'
-require 'apartment/elevators/subdomain'
+# require 'apartment/elevators/domain'
+# require 'apartment/elevators/subdomain'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -12,7 +13,7 @@ module Smalltasker
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
-    config.middleware.use 'Apartment::Elevators::Subdomain'
+    # config.middleware.use Apartment::Elevators::Domain
     config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
     config.assets.paths << Rails.root.join("app", "assets", "fonts")
     config.assets.paths << File.join(Rails.root, "/vendor/pages")

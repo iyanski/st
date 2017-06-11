@@ -125,8 +125,9 @@ class UserMailer < ApplicationMailer
     end
   end
 
-  def send_expert_registration_information(expert, password, url)
+  def send_expert_registration_information(company, expert, password, url)
     Apartment::Tenant.switch!(expert.company.subdomain)
+    @company = company
     @url = url
     @expert = expert
     @password = password

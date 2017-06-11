@@ -60,7 +60,7 @@
             {{job.created_at | amDateFormat:'MMM DD, YYYY hh:mm a'}}
           %p.no-margin{ng: {show: "job.estimate"}}
             %span.bold Estimate: 
-            %span {{job.service.price * job.estimate | currency : "$" : 2}}
+            %span {{job.service.price | currency : "$" : 2}}
           %p.no-margin{ng: {show: "job.etc"}}
             %span.bold Turn Around Time:
             Next Day Delivery
@@ -90,11 +90,12 @@
                 %span {{message.sender}}
                 %span{ng: {bind: {html: "message.content | nl2br | str2link"}}}
             .p-b-10.clearfix{ng: {show: "message.sender_type"}}
-              %span{ng: {show: "message.sender_type == 'Customer'"}}
+              %span{ng: {show: "message.sender_type == 'Expert'"}}
                 %strong you
                 %small.pull-right {{ message.created_at }}
               %span{ng: {show: "message.sender_type == 'Expert'"}}
-                %strong {{message.sender}}
+                %strong{ng: {if: "message.sender.length"}} {{message.sender}}
+                %strong{ng: {if: "!message.sender.length"}} Agent
                 %small.pull-right {{ message.created_at }}
               %div{ng: {bind: {html: "message.content | nl2br | str2link"}}}
       #attachments{ng: {show: "show_mode == 3"}}
